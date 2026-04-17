@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MCI Presenter Training</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #002D72;
+      --navy-dark: #001f52;
+      --orange: #D86018;
+      --orange-light: #f0752a;
+      --white: #FFFFFF;
+      --bg: #F4F6FA;
+      --text: #1a1a2e;
+      --text-muted: #5a6475;
+      --border: #d8deea;
+      --correct: #1a7a4a;
+      --correct-bg: #e8f5ee;
+      --wrong: #c0392b;
+      --wrong-bg: #fdf0ee;
+    }
+
+    html, body { height: 100%; background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--text); }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes barFill { from { width: 0; } to { width: var(--target-width); } }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.6; } }
+
+    .fade-in { animation: fadeIn 0.5s ease forwards; }
+    .slide-in { animation: slideIn 0.4s ease forwards; }
+
+    /* ── Layout ── */
+    .app-shell { min-height: 100vh; display: flex; flex-direction: column; }
+
+    .top-bar {
+      background: var(--navy);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,45,114,.25);
+    }
+    .logo-area { display: flex; align-items: center; gap: 12px; }
+    .logo-badge {
+      width: 38px; height: 38px;
+      background: var(--orange);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; font-weight: 700;
+      color: white;
+    }
+    .logo-text { color: white; font-size: 15px; font-weight: 600; letter-spacing: .3px; }
+    .logo-sub { color: rgba(255,255,255,.6); font-size: 12px; font-weight: 400; }
+
+    .progress-track {
+      flex: 1;
+      max-width: 340px;
+      margin: 0 32px;
+    }
+    .progress-steps { display: flex; gap: 4px; align-items: center; }
+    .progress-step {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255,255,255,.2);
+      transition: background .4s;
+    }
+    .progress-step.done { background: var(--orange); }
+    .progress-step.active { background: rgba(255,255,255,.7); }
+    .progress-label { color: rgba(255,255,255,.55); font-size: 11px; margin-bottom: 4px; }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 24px 60px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,45,114,.08);
+      width: 100%;
+      max-width: 760px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: var(--navy);
+      padding: 28px 36px 24px;
+      color: white;
+    }
+    .module-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 8px;
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+    }
+    .card-body { padding: 36px; }
+
+    /* ── Registration screen ── */
+    .reg-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      align-items: start;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 600px) { .reg-intro { grid-template-columns: 1fr; } }
+
+    .reg-about h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .reg-about p { font-size: 14px; line-height: 1.7; color: var(--text-muted); margin-bottom: 10px; }
+
+    .reg-meta { display: flex; flex-direction: column; gap: 10px; }
+    .meta-chip {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+    .meta-chip .icon { font-size: 20px; }
+    .meta-chip strong { color: var(--navy); display: block; font-size: 12px; font-weight: 600; margin-bottom: 1px; }
+
+    .form-group { margin-bottom: 20px; }
+    .form-label { display: block; font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+    .form-input {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+    }
+    .form-input:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(0,45,114,.1); }
+    .form-error { font-size: 12px; color: var(--wrong); margin-top: 4px; }
+
+    /* ── Content screen ── */
+    .slide-counter { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+    .slide-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .slide-body { font-size: 15px; line-height: 1.75; color: #333; margin-bottom: 20px; }
+
+    .callout-box {
+      background: linear-gradient(135deg, #fff3e8, #fde8d4);
+      border-left: 4px solid var(--orange);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; color: var(--orange); text-transform: uppercase; margin-bottom: 6px; }
+    .callout-text { font-size: 14px; line-height: 1.6; color: #5a2800; }
+
+    .myth-box {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 8px 0;
+      border: 1px solid var(--border);
+    }
+    .myth-q { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+    .myth-q::before { content: '❓ '; }
+    .myth-a { font-size: 13px; line-height: 1.6; color: var(--text-muted); }
+    .myth-a::before { content: '✓ '; color: var(--correct); font-weight: 700; }
+
+    /* ── SVG diagram area ── */
+    .visual-block {
+      background: linear-gradient(135deg, #eef2ff, #f4f6fa);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 160px;
+    }
+
+    /* ── Slide nav ── */
+    .slide-dots {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin: 24px 0 8px;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: all .3s;
+    }
+    .dot.active { background: var(--navy); width: 22px; border-radius: 4px; }
+
+    /* ── Quiz screen ── */
+    .quiz-header { margin-bottom: 24px; }
+    .quiz-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .quiz-subtitle { font-size: 13px; color: var(--text-muted); }
+
+    .question-block { margin-bottom: 28px; }
+    .question-text { font-size: 15px; font-weight: 500; line-height: 1.6; margin-bottom: 12px; color: var(--text); }
+    .question-number { color: var(--orange); font-weight: 700; }
+
+    .options-list { display: flex; flex-direction: column; gap: 8px; }
+    .option-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      transition: all .2s;
+    }
+    .option-btn:hover:not(:disabled) { border-color: var(--navy); background: #f0f4ff; }
+    .option-btn:disabled { cursor: default; }
+    .option-btn.selected { border-color: var(--navy); background: #eef2ff; }
+    .option-btn.correct { border-color: var(--correct); background: var(--correct-bg); color: var(--correct); }
+    .option-btn.wrong { border-color: var(--wrong); background: var(--wrong-bg); color: var(--wrong); }
+    .option-btn.reveal-correct { border-color: var(--correct); background: var(--correct-bg); }
+    .option-letter {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700;
+      flex-shrink: 0;
+      transition: all .2s;
+    }
+    .option-btn.correct .option-letter, .option-btn.reveal-correct .option-letter { background: var(--correct); color: white; }
+    .option-btn.wrong .option-letter { background: var(--wrong); color: white; }
+    .option-btn.selected .option-letter { background: var(--navy); color: white; }
+
+    .tf-options { display: flex; gap: 12px; }
+    .tf-options .option-btn { flex: 1; justify-content: center; }
+
+    .missed-indicator {
+      font-size: 12px;
+      color: var(--wrong);
+      margin-top: 6px;
+      padding-left: 4px;
+    }
+    .explanation-box {
+      background: var(--correct-bg);
+      border: 1px solid #a3d9b8;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #1a5c3a;
+    }
+
+    /* ── Results banner ── */
+    .result-banner {
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .result-banner.pass { background: var(--correct-bg); border: 1.5px solid #a3d9b8; }
+    .result-banner.fail { background: var(--wrong-bg); border: 1.5px solid #e8b0aa; }
+    .result-icon { font-size: 36px; }
+    .result-title { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 4px; }
+    .result-banner.pass .result-title { color: var(--correct); }
+    .result-banner.fail .result-title { color: var(--wrong); }
+    .result-sub { font-size: 13px; color: var(--text-muted); }
+
+    .score-bar-wrap { margin: 20px 0; }
+    .score-bar-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+    .score-bar-track { height: 10px; background: var(--border); border-radius: 5px; overflow: hidden; }
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 5px;
+      background: var(--navy);
+      transition: width 1s ease;
+    }
+    .score-bar-fill.pass-color { background: var(--correct); }
+    .score-bar-fill.fail-color { background: var(--orange); }
+
+    /* ── Stub/stub screen ── */
+    .stub-card {
+      text-align: center;
+      padding: 48px 36px;
+    }
+    .stub-icon { font-size: 56px; margin-bottom: 16px; }
+    .stub-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .stub-text { font-size: 14px; color: var(--text-muted); line-height: 1.7; max-width: 480px; margin: 0 auto 28px; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all .2s;
+    }
+    .btn-primary { background: var(--navy); color: white; }
+    .btn-primary:hover { background: var(--navy-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,45,114,.3); }
+    .btn-primary:disabled { background: #a0aabb; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-secondary { background: transparent; color: var(--navy); border: 1.5px solid var(--navy); }
+    .btn-secondary:hover { background: #eef2ff; }
+    .btn-orange { background: var(--orange); color: white; }
+    .btn-orange:hover { background: var(--orange-light); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(216,96,24,.35); }
+
+    .btn-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 24px; }
+    .btn-row.right { justify-content: flex-end; }
+    .btn-row.center { justify-content: center; }
+    .btn-row.space { justify-content: space-between; }
+
+    /* ── Misc ── */
+    .divider { height: 1px; background: var(--border); margin: 24px 0; }
+    .tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: .4px; }
+    .tag-navy { background: #eef2ff; color: var(--navy); }
+    .tag-orange { background: #fff0e6; color: var(--orange); }
+
+    @media print {
+      .top-bar, .btn { display: none !important; }
+      .card { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+// ─── Content data ───────────────────────────────────────────────────────────
+
+const MODULE1_SLIDES = [
+  {
+    id: 1,
+    headline: "The Unintended Pregnancy Problem",
+    body: "Approximately 45% of all pregnancies globally are unintended — that's 121 million each year. Despite this staggering number, the responsibility for contraception has historically fallen almost entirely on women, who have access to more than 10 different methods. Men have two: condoms and vasectomy.",
+    callout: {
+      label: "Key Fact",
+      text: "121 million unintended pregnancies occur globally every year — and women carry nearly all the contraceptive burden."
+    },
+    visual: <svg viewBox="0 0 420 140" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+      <rect x="10" y="20" width="100" height="28" rx="6" fill="#002D72"/>
+      <text x="60" y="39" textAnchor="middle" fill="white" fontSize="13" fontFamily="DM Sans,sans-serif" fontWeight="600">Women: 10+ methods</text>
+      <rect x="10" y="60" width="24" height="28" rx="6" fill="#D86018"/>
+      <text x="140" y="79" fill="#333" fontSize="13" fontFamily="DM Sans,sans-serif">Men: 2 methods</text>
+      <text x="10" y="118" fill="#888" fontSize="11" fontFamily="DM Sans,sans-serif">45% of pregnancies are unintended → 121 million/year</text>
+      <circle cx="360" cy="70" r="36" fill="none" stroke="#D86018" strokeWidth="3"/>
+      <text x="360" y="66" textAnchor="middle" fill="#D86018" fontSize="22" fontFamily="Playfair Display,serif" fontWeight="700">45%</text>
+      <text x="360" y="83" textAnchor="middle" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">unintended</text>
+    </svg>
+  },
+  {
+    id: 2,
+    headline: "What Men Actually Want",
+    body: "MCI consumer research tells a clear story: 8 in 10 men aged 18–44 in the U.S. are actively trying to prevent pregnancy. Of those, 8.1 million say they are very likely to use a new male method. Their preferences: 80% prefer non-hormonal options, and 89% want something reversible. This appears to be a global pattern — not a uniquely American one.",
+    callout: {
+      label: "Key Fact",
+      text: "The barrier to male contraceptive use isn't willingness — it's the absence of trusted, accessible options."
+    },
+    visual: <svg viewBox="0 0 420 130" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+      {[
+        {label:"Actively preventing pregnancy",pct:80,y:18},
+        {label:"Prefer non-hormonal",pct:80,y:52},
+        {label:"Want reversible method",pct:89,y:86},
+      ].map(({label,pct,y})=>(
+        <g key={y}>
+          <text x="10" y={y+14} fill="#333" fontSize="12" fontFamily="DM Sans,sans-serif">{label}</text>
+          <rect x="10" y={y+18} width="300" height="14" rx="7" fill="#eee"/>
+          <rect x="10" y={y+18} width={pct*3} height="14" rx="7" fill={pct===89?"#D86018":"#002D72"}/>
+          <text x={320} y={y+30} fill="#333" fontSize="13" fontFamily="DM Sans,sans-serif" fontWeight="700">{pct}%</text>
+        </g>
+      ))}
+      <text x="10" y="122" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">Source: MCI U.S. Consumer Research</text>
+    </svg>
+  },
+  {
+    id: 3,
+    headline: "Why This Matters Beyond Pregnancy",
+    body: "Male contraception is a reproductive equity issue. Expanding options connects directly to the UN Sustainable Development Goals: reducing poverty, advancing gender equality, and improving health outcomes. When contraception is shared, couples gain agency together. This isn't about men 'stepping up' — it's about giving everyone more choices.",
+    callout: {
+      label: "Key Framing",
+      text: "\"Reproductive autonomy for all\" — not a transaction where one partner acts and the other benefits."
+    },
+    visual: <svg viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+      {[
+        {x:30,label:"SDG 1",sub:"No Poverty",color:"#D86018"},
+        {x:120,label:"SDG 3",sub:"Good Health",color:"#002D72"},
+        {x:210,label:"SDG 5",sub:"Gender Equality",color:"#D86018"},
+        {x:300,label:"SDG 10",sub:"Reduced Inequalities",color:"#002D72"},
+      ].map(({x,label,sub,color})=>(
+        <g key={x}>
+          <rect x={x} y="15" width="72" height="72" rx="12" fill={color}/>
+          <text x={x+36} y="48" textAnchor="middle" fill="white" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
+          <text x={x+36} y="63" textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
+        </g>
+      ))}
+      <text x="210" y="108" textAnchor="middle" fill="#888" fontSize="11" fontFamily="DM Sans,sans-serif">Male contraception advances multiple SDGs</text>
+    </svg>
+  },
+  {
+    id: 4,
+    headline: "MCI's Role in the Field",
+    body: "MCI — the Male Contraceptive Initiative — is a nonprofit funder. We don't have an in-house lab or develop drugs ourselves. We fund researchers at universities and biotech companies to develop the next generation of non-hormonal, reversible male contraceptives. As a presenter, you are part of MCI's field-building work: building public awareness and trust in a scientific field that has been historically underfunded.",
+    callout: {
+      label: "Key Fact",
+      text: "MCI funds the research. You are part of building the ecosystem that makes new methods possible."
+    },
+    visual: <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+      <rect x="30" y="30" width="80" height="50" rx="10" fill="#002D72"/>
+      <text x="70" y="52" textAnchor="middle" fill="white" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="700">MCI</text>
+      <text x="70" y="68" textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="DM Sans,sans-serif">Nonprofit</text>
+      <line x1="112" y1="55" x2="150" y2="55" stroke="#D86018" strokeWidth="2" markerEnd="url(#arr)"/>
+      <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#D86018"/></marker></defs>
+      <rect x="152" y="20" width="82" height="30" rx="8" fill="#eef2ff"/>
+      <text x="193" y="39" textAnchor="middle" fill="#002D72" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">Universities</text>
+      <rect x="152" y="60" width="82" height="30" rx="8" fill="#fff0e6"/>
+      <text x="193" y="79" textAnchor="middle" fill="#D86018" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">Biotech cos.</text>
+      <line x1="236" y1="35" x2="270" y2="55" stroke="#aaa" strokeWidth="1.5"/>
+      <line x1="236" y1="75" x2="270" y2="55" stroke="#aaa" strokeWidth="1.5"/>
+      <rect x="272" y="35" width="90" height="40" rx="8" fill="#002D72"/>
+      <text x="317" y="55" textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">New Male</text>
+      <text x="317" y="68" textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="10" fontFamily="DM Sans,sans-serif">Contraceptives</text>
+    </svg>
+  }
+];
+
+const MODULE1_MISCONCEPTIONS = [
+  { q: "\"We already have condoms — why do we need more?\"", a: "Condoms are barrier methods with real-world failure rates. Women have 10+ methods; men have 2. More options means more couples can find what works for them." },
+  { q: "\"Men won't use new methods.\"", a: "Consumer data says otherwise — 8 in 10 men are already trying to prevent pregnancy. The question is whether trusted, accessible options exist." },
+  { q: "\"This is a Western issue.\"", a: "Unintended pregnancy rates are highest in low- and middle-income countries. Demand for male methods exists globally." },
+];
+
+const MODULE1_QUIZ = [
+  {
+    id: 1,
+    type: "mc",
+    text: "Approximately what percentage of pregnancies globally are unintended?",
+    options: ["15%", "30%", "45%", "60%"],
+    correct: 2,
+    explanation: "Approximately 45% of all pregnancies globally are unintended, translating to roughly 121 million per year."
+  },
+  {
+    id: 2,
+    type: "mc",
+    text: "According to MCI's consumer research, what percentage of men prefer a non-hormonal contraceptive method?",
+    options: ["38%", "55%", "65%", "80%"],
+    correct: 3,
+    explanation: "MCI's U.S. consumer research found that 80% of surveyed men prefer a non-hormonal method, and 89% want something reversible."
+  },
+  {
+    id: 3,
+    type: "mc",
+    text: "Which of the following is NOT a reason new male contraceptive methods are needed?",
+    options: [
+      "Women bear a disproportionate burden of contraception",
+      "Men have expressed interest in new options",
+      "Male contraception would eliminate STIs",
+      "More options allow couples to share responsibility"
+    ],
+    correct: 2,
+    explanation: "Male contraceptives prevent pregnancy but do NOT protect against STIs. Only condoms provide STI protection."
+  },
+  {
+    id: 4,
+    type: "mc",
+    text: "MCI is best described as:",
+    options: [
+      "A pharmaceutical company developing drugs in-house",
+      "A nonprofit that funds external researchers",
+      "A government agency",
+      "A clinical trial site"
+    ],
+    correct: 1,
+    explanation: "MCI is a nonprofit funder — it does not run an in-house lab but funds researchers at universities and biotech companies."
+  },
+  {
+    id: 5,
+    type: "tf",
+    text: "True or False: Consumer research suggests that interest in new male contraceptive methods is limited to men in the United States.",
+    options: ["True", "False"],
+    correct: 1,
+    explanation: "False. While MCI's primary consumer data is U.S.-based, the evidence points to a global pattern. Unintended pregnancy rates are highest in low- and middle-income countries."
+  }
+];
+
+// ─── Utility ─────────────────────────────────────────────────────────────────
+
+function ScoreBar({ pct, animated = true }) {
+  const [display, setDisplay] = useState(animated ? 0 : pct);
+  useEffect(() => {
+    if (!animated) return;
+    const t = setTimeout(() => setDisplay(pct), 100);
+    return () => clearTimeout(t);
+  }, [pct]);
+  const cls = pct >= 80 ? 'pass-color' : 'fail-color';
+  return (
+    <div className="score-bar-wrap">
+      <div className="score-bar-label">
+        <span>Score</span><strong>{pct}%</strong>
+      </div>
+      <div className="score-bar-track">
+        <div className="score-bar-fill" style={{width: display+'%', transition:'width 1s ease'}}
+          class={`score-bar-fill ${cls}`}/>
+      </div>
+    </div>
+  );
+}
+
+// ─── TopBar ──────────────────────────────────────────────────────────────────
+
+function TopBar({ phase }) {
+  const steps = ['Intro','Module 1','Results'];
+  const currentIdx = phase === 'registration' ? 0 : phase === 'stub' ? 2 : 1;
+  return (
+    <div className="top-bar">
+      <div className="logo-area">
+        <div className="logo-badge">M</div>
+        <div>
+          <div className="logo-text">MCI Presenter Training</div>
+          <div className="logo-sub">Male Contraceptive Initiative</div>
+        </div>
+      </div>
+      <div className="progress-track">
+        <div className="progress-label">Your progress</div>
+        <div className="progress-steps">
+          {steps.map((s, i) => (
+            <div key={s} className={`progress-step ${i < currentIdx ? 'done' : i === currentIdx ? 'active' : ''}`} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Registration screen ──────────────────────────────────────────────────────
+
+function RegistrationScreen({ onBegin }) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [errors, setErrors] = useState({});
+
+  function validate() {
+    const e = {};
+    if (!name.trim()) e.name = 'Please enter your full name.';
+    if (!email.trim()) e.email = 'Please enter your email address.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = 'Please enter a valid email address.';
+    return e;
+  }
+
+  function handleBegin() {
+    const e = validate();
+    if (Object.keys(e).length) { setErrors(e); return; }
+    onBegin({ name: name.trim(), email: email.trim() });
+  }
+
+  return (
+    <div className="fade-in">
+      <div className="card">
+        <div className="card-header">
+          <div className="module-tag">MCI · Presenter Training</div>
+          <div className="card-title">Welcome to the MCI<br/>Presenter Training Module</div>
+        </div>
+        <div className="card-body">
+          <div className="reg-intro">
+            <div className="reg-about">
+              <h3>What is this?</h3>
+              <p>This self-paced module prepares you to speak accurately and confidently about male contraception to broad community audiences — including the science, the pipeline, and how to address common questions.</p>
+              <p>It's designed for MCI-affiliated presenters, not for the audiences themselves. Complete all 5 modules to earn your completion certificate.</p>
+              <div style={{marginTop:12,display:'flex',gap:8,flexWrap:'wrap'}}>
+                <span className="tag tag-navy">5 Modules</span>
+                <span className="tag tag-orange">20–40 min</span>
+                <span className="tag tag-navy">≥80% to pass each</span>
+              </div>
+            </div>
+            <div className="reg-meta">
+              <div className="meta-chip">
+                <span className="icon">⏱️</span>
+                <div><strong>Estimated time</strong>20–40 minutes total</div>
+              </div>
+              <div className="meta-chip">
+                <span className="icon">📋</span>
+                <div><strong>Format</strong>Content slides + knowledge check quiz per module</div>
+              </div>
+              <div className="meta-chip">
+                <span className="icon">✅</span>
+                <div><strong>Passing score</strong>≥80% on each module quiz</div>
+              </div>
+              <div className="meta-chip">
+                <span className="icon">🔄</span>
+                <div><strong>Retries</strong>Unlimited — review content and retake any quiz</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="divider"/>
+
+          <div style={{maxWidth:480}}>
+            <div style={{marginBottom:20,fontSize:14,fontWeight:600,color:'var(--navy)'}}>Enter your details to get started</div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="reg-name">Full name</label>
+              <input
+                id="reg-name"
+                className="form-input"
+                type="text"
+                placeholder="e.g. Sabey Boswell"
+                value={name}
+                onChange={e => { setName(e.target.value); setErrors(ev=>({...ev,name:''})); }}
+              />
+              {errors.name && <div className="form-error">{errors.name}</div>}
+            </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="reg-email">Email address</label>
+              <input
+                id="reg-email"
+                className="form-input"
+                type="email"
+                placeholder="e.g. you@malecontraceptive.org"
+                value={email}
+                onChange={e => { setEmail(e.target.value); setErrors(ev=>({...ev,email:''})); }}
+              />
+              {errors.email && <div className="form-error">{errors.email}</div>}
+            </div>
+            <div className="btn-row">
+              <button className="btn btn-primary" onClick={handleBegin}>
+                Begin Training →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Content slide ────────────────────────────────────────────────────────────
+
+function ContentScreen({ slide, total, onNext, onBack, slideIndex }) {
+  return (
+    <div className="slide-in" key={slideIndex}>
+      <div className="card">
+        <div className="card-header">
+          <div className="module-tag">Module 1 · Why Male Contraception Matters</div>
+          <div className="card-title">{slide.headline}</div>
+        </div>
+        <div className="card-body">
+          <div className="slide-counter">Slide {slideIndex + 1} of {total}</div>
+
+          <div className="visual-block">
+            {slide.visual}
+          </div>
+
+          <p className="slide-body">{slide.body}</p>
+
+          {slide.callout && (
+            <div className="callout-box">
+              <div className="callout-label">{slide.callout.label}</div>
+              <div className="callout-text">{slide.callout.text}</div>
+            </div>
+          )}
+
+          <div className="slide-dots">
+            {Array.from({length: total}).map((_, i) => (
+              <div key={i} className={`dot ${i === slideIndex ? 'active' : ''}`}/>
+            ))}
+          </div>
+
+          <div className="btn-row space">
+            <button className="btn btn-secondary" onClick={onBack} disabled={slideIndex === 0}>
+              ← Back
+            </button>
+            <button className="btn btn-primary" onClick={onNext}>
+              {slideIndex === total - 1 ? 'Take Knowledge Check →' : 'Next →'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Misconceptions review ────────────────────────────────────────────────────
+
+function MisconceptionsScreen({ onContinue }) {
+  return (
+    <div className="fade-in">
+      <div className="card">
+        <div className="card-header">
+          <div className="module-tag">Module 1 · Before the Quiz</div>
+          <div className="card-title">Common Misconceptions to Address</div>
+        </div>
+        <div className="card-body">
+          <p style={{fontSize:14,color:'var(--text-muted)',marginBottom:20,lineHeight:1.7}}>
+            These are the questions and objections you're most likely to hear from audiences. Review them before taking the knowledge check.
+          </p>
+          {MODULE1_MISCONCEPTIONS.map((m, i) => (
+            <div className="myth-box" key={i}>
+              <div className="myth-q">{m.q}</div>
+              <div className="myth-a">{m.a}</div>
+            </div>
+          ))}
+          <div className="btn-row right">
+            <button className="btn btn-primary" onClick={onContinue}>
+              Start Knowledge Check →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Quiz screen ──────────────────────────────────────────────────────────────
+
+function QuizScreen({ attempt, onSubmit }) {
+  const [answers, setAnswers] = useState({});
+
+  function choose(qid, idx) {
+    setAnswers(a => ({ ...a, [qid]: idx }));
+  }
+
+  const allAnswered = MODULE1_QUIZ.every(q => answers[q.id] !== undefined);
+
+  function handleSubmit() {
+    const results = MODULE1_QUIZ.map(q => ({
+      id: q.id,
+      chosen: answers[q.id],
+      correct: q.correct,
+      passed: answers[q.id] === q.correct
+    }));
+    onSubmit(results);
+  }
+
+  return (
+    <div className="fade-in">
+      <div className="card">
+        <div className="card-header">
+          <div className="module-tag">Module 1 · Knowledge Check {attempt > 1 ? `(Attempt ${attempt})` : ''}</div>
+          <div className="card-title">Test Your Understanding</div>
+        </div>
+        <div className="card-body">
+          <div className="quiz-header">
+            <div className="quiz-subtitle">Answer all 5 questions. You need 4 out of 5 correct (80%) to pass.</div>
+          </div>
+
+          {MODULE1_QUIZ.map((q, qi) => (
+            <div className="question-block" key={q.id}>
+              <div className="question-text">
+                <span className="question-number">Q{qi + 1}. </span>{q.text}
+              </div>
+              <div className={q.type === 'tf' ? 'tf-options' : 'options-list'}>
+                {q.options.map((opt, oi) => (
+                  <button
+                    key={oi}
+                    className={`option-btn ${answers[q.id] === oi ? 'selected' : ''}`}
+                    onClick={() => choose(q.id, oi)}
+                  >
+                    {q.type !== 'tf' && (
+                      <span className="option-letter">{['A','B','C','D'][oi]}</span>
+                    )}
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <div className="btn-row right">
+            <button className="btn btn-primary" onClick={handleSubmit} disabled={!allAnswered}>
+              Submit Answers →
+            </button>
+          </div>
+          {!allAnswered && (
+            <p style={{fontSize:12,color:'var(--text-muted)',textAlign:'right',marginTop:8}}>
+              Answer all questions to submit.
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Quiz results screen ──────────────────────────────────────────────────────
+
+function QuizResultsScreen({ results, attempt, passed, onRetry, onContinue }) {
+  const score = Math.round((results.filter(r => r.passed).length / results.length) * 100);
+
+  return (
+    <div className="fade-in">
+      <div className="card">
+        <div className="card-header">
+          <div className="module-tag">Module 1 · Knowledge Check Results</div>
+          <div className="card-title">{passed ? 'Well done — you passed!' : 'Not quite — let\'s review'}</div>
+        </div>
+        <div className="card-body">
+          <div className={`result-banner ${passed ? 'pass' : 'fail'}`}>
+            <div className="result-icon">{passed ? '🎉' : '📖'}</div>
+            <div>
+              <div className="result-title">
+                {passed ? `${score}% — Module 1 Passed` : `${score}% — Need 80% to pass`}
+              </div>
+              <div className="result-sub">
+                {passed
+                  ? `You got ${results.filter(r=>r.passed).length} out of ${results.length} questions correct.`
+                  : `You got ${results.filter(r=>r.passed).length} out of ${results.length} correct. Review the missed questions below and try again.`}
+              </div>
+            </div>
+          </div>
+
+          <ScoreBar pct={score} />
+
+          <div className="divider"/>
+
+          {MODULE1_QUIZ.map((q, qi) => {
+            const r = results.find(r => r.id === q.id);
+            const missed = !r.passed;
+            return (
+              <div className="question-block" key={q.id}>
+                <div className="question-text">
+                  <span style={{marginRight:6}}>{missed ? '❌' : '✅'}</span>
+                  <span className="question-number">Q{qi + 1}. </span>{q.text}
+                </div>
+                <div className={q.type === 'tf' ? 'tf-options' : 'options-list'}>
+                  {q.options.map((opt, oi) => {
+                    let cls = '';
+                    if (oi === r.chosen && !r.passed) cls = 'wrong';
+                    if (oi === q.correct && passed) cls = 'correct';
+                    if (oi === q.correct && !passed && missed) cls = 'reveal-correct';
+                    return (
+                      <button key={oi} className={`option-btn ${cls}`} disabled>
+                        {q.type !== 'tf' && (
+                          <span className="option-letter">{['A','B','C','D'][oi]}</span>
+                        )}
+                        {opt}
+                      </button>
+                    );
+                  })}
+                </div>
+                {missed && !passed && (
+                  <div className="missed-indicator">You selected this incorrectly. Review the module content and try again.</div>
+                )}
+                {passed && (
+                  <div className="explanation-box">{q.explanation}</div>
+                )}
+              </div>
+            );
+          })}
+
+          <div className="btn-row space">
+            {!passed && (
+              <button className="btn btn-secondary" onClick={onRetry}>
+                ← Review Content & Retry
+              </button>
+            )}
+            {passed && (
+              <button className="btn btn-orange" onClick={onContinue}>
+                Continue to Module 2 →
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Module 2 stub ────────────────────────────────────────────────────────────
+
+function Module2Stub({ user, module1Score }) {
+  return (
+    <div className="fade-in">
+      <div className="card">
+        <div className="card-body stub-card">
+          <div className="stub-icon">🚧</div>
+          <div className="stub-title">Module 2 Coming Soon</div>
+          <p className="stub-text">
+            Great work completing Module 1, {user.name.split(' ')[0]}! You scored <strong>{module1Score}%</strong> on the knowledge check.
+            <br/><br/>
+            Modules 2–5 are being built. This prototype covers Module 1: <em>Why Male Contraception Matters</em>.
+            Logan and Sabey will review the format, tone, and visual direction before the remaining modules are developed.
+          </p>
+          <div style={{display:'flex',gap:10,justifyContent:'center',flexWrap:'wrap'}}>
+            {['Module 2: Biology','Module 3: Methods','Module 4: Pipeline','Module 5: Audiences'].map(m=>(
+              <span key={m} className="tag tag-navy" style={{padding:'6px 14px',fontSize:12}}>{m}</span>
+            ))}
+          </div>
+          <div style={{marginTop:28,padding:'16px 20px',background:'var(--bg)',borderRadius:12,border:'1px solid var(--border)',maxWidth:480,margin:'28px auto 0',textAlign:'left'}}>
+            <div style={{fontSize:12,fontWeight:700,color:'var(--orange)',textTransform:'uppercase',letterSpacing:'1px',marginBottom:8}}>Your progress so far</div>
+            <div style={{fontSize:14,color:'var(--text-muted)',lineHeight:1.7}}>
+              ✅ Module 1 — {module1Score}% (Passed)<br/>
+              ⬜ Module 2 — Not yet available<br/>
+              ⬜ Module 3 — Not yet available<br/>
+              ⬜ Module 4 — Not yet available<br/>
+              ⬜ Module 5 — Not yet available
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── App ──────────────────────────────────────────────────────────────────────
+
+function App() {
+  const [user, setUser] = useState(null);
+  const [phase, setPhase] = useState('registration'); // registration | slides | misconceptions | quiz | results | stub
+  const [slideIndex, setSlideIndex] = useState(0);
+  const [quizAttempt, setQuizAttempt] = useState(1);
+  const [quizResults, setQuizResults] = useState(null);
+  const [module1Passed, setModule1Passed] = useState(false);
+  const [module1Score, setModule1Score] = useState(0);
+
+  function handleBegin(userData) {
+    setUser(userData);
+    setPhase('slides');
+    setSlideIndex(0);
+  }
+
+  function handleSlideNext() {
+    if (slideIndex < MODULE1_SLIDES.length - 1) {
+      setSlideIndex(i => i + 1);
+    } else {
+      setPhase('misconceptions');
+    }
+  }
+
+  function handleSlideBack() {
+    if (slideIndex > 0) setSlideIndex(i => i - 1);
+  }
+
+  function handleStartQuiz() {
+    setPhase('quiz');
+  }
+
+  function handleQuizSubmit(results) {
+    const correct = results.filter(r => r.passed).length;
+    const pct = Math.round((correct / results.length) * 100);
+    const passed = correct >= 4; // ≥80% = 4/5
+    setQuizResults(results);
+    setModule1Score(pct);
+    if (passed) setModule1Passed(true);
+    setPhase('results');
+  }
+
+  function handleRetry() {
+    setQuizAttempt(a => a + 1);
+    setSlideIndex(0);
+    setPhase('slides');
+  }
+
+  function handleContinue() {
+    setPhase('stub');
+  }
+
+  return (
+    <div className="app-shell">
+      <TopBar phase={phase} />
+      <div className="main-content">
+        {phase === 'registration' && (
+          <RegistrationScreen onBegin={handleBegin} />
+        )}
+        {phase === 'slides' && (
+          <ContentScreen
+            key={`slide-${slideIndex}`}
+            slide={MODULE1_SLIDES[slideIndex]}
+            total={MODULE1_SLIDES.length}
+            slideIndex={slideIndex}
+            onNext={handleSlideNext}
+            onBack={handleSlideBack}
+          />
+        )}
+        {phase === 'misconceptions' && (
+          <MisconceptionsScreen onContinue={handleStartQuiz} />
+        )}
+        {phase === 'quiz' && (
+          <QuizScreen attempt={quizAttempt} onSubmit={handleQuizSubmit} />
+        )}
+        {phase === 'results' && (
+          <QuizResultsScreen
+            results={quizResults}
+            attempt={quizAttempt}
+            passed={module1Passed}
+            onRetry={handleRetry}
+            onContinue={handleContinue}
+          />
+        )}
+        {phase === 'stub' && (
+          <Module2Stub user={user} module1Score={module1Score} />
+        )}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
