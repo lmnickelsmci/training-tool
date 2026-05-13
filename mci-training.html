@@ -389,6 +389,38 @@
 <script type="text/babel">
 const { useState, useEffect, useRef } = React;
 
+// ─── Completion logging ───────────────────────────────────────────────────────
+
+const APPS_SCRIPT_URL = "https://script.google.com/a/macros/malecontraceptive.org/s/AKfycbzoagsWMRbUnkqdExJLyCDOI6l_dJM_HWEZmMXrnBG2b9LlD_pZyoaVXcbwfEn7uZvoeA/exec";
+
+function logCompletion(user, scores, attempts) {
+  const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+  const passed = scores.every(s => s >= 80);
+  const payload = {
+    timestamp: new Date().toISOString(),
+    name: user.name,
+    email: user.email,
+    mod1_score: scores[0] ?? null,
+    mod2_score: scores[1] ?? null,
+    mod3_score: scores[2] ?? null,
+    mod4_score: scores[3] ?? null,
+    mod5_score: scores[4] ?? null,
+    avg_score: avg,
+    passed: passed,
+    attempts_mod1: attempts[0] ?? null,
+    attempts_mod2: attempts[1] ?? null,
+    attempts_mod3: attempts[2] ?? null,
+    attempts_mod4: attempts[3] ?? null,
+    attempts_mod5: attempts[4] ?? null,
+  };
+  fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  }).catch(err => console.warn("Completion log failed:", err));
+}
+
 // ─── Content data ───────────────────────────────────────────────────────────
 
 const MODULE1_SLIDES = [
@@ -1012,6 +1044,7 @@ function App() {
   }
 
   function handleContinue() {
+    logCompletion(user, [module1Score], [quizAttempt]);
     setPhase('stub');
   }
 
