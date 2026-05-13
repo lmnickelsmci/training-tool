@@ -12,599 +12,775 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --navy: #002D72;
-      --navy-dark: #001f52;
-      --orange: #D86018;
-      --orange-light: #f0752a;
-      --white: #FFFFFF;
-      --bg: #F4F6FA;
-      --text: #1a1a2e;
-      --text-muted: #5a6475;
-      --border: #d8deea;
-      --correct: #1a7a4a;
-      --correct-bg: #e8f5ee;
-      --wrong: #c0392b;
-      --wrong-bg: #fdf0ee;
+      --navy: #002D72; --navy-dark: #001f52; --orange: #D86018; --orange-light: #f0752a;
+      --white: #FFFFFF; --bg: #F4F6FA; --text: #1a1a2e; --text-muted: #5a6475;
+      --border: #d8deea; --correct: #1a7a4a; --correct-bg: #e8f5ee; --wrong: #c0392b; --wrong-bg: #fdf0ee;
     }
-
     html, body { height: 100%; background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--text); }
-
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
-    @keyframes barFill { from { width: 0; } to { width: var(--target-width); } }
-    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.6; } }
-
+    @keyframes fadeIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes slideIn { from { opacity:0; transform:translateX(30px); } to { opacity:1; transform:translateX(0); } }
     .fade-in { animation: fadeIn 0.5s ease forwards; }
     .slide-in { animation: slideIn 0.4s ease forwards; }
-
-    /* ── Layout ── */
-    .app-shell { min-height: 100vh; display: flex; flex-direction: column; }
-
+    .app-shell { min-height:100vh; display:flex; flex-direction:column; }
     .top-bar {
-      background: var(--navy);
-      padding: 0 32px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 12px rgba(0,45,114,.25);
+      background:var(--navy); padding:0 32px; height:64px; display:flex; align-items:center;
+      justify-content:space-between; position:sticky; top:0; z-index:100;
+      box-shadow:0 2px 12px rgba(0,45,114,.25);
     }
-    .logo-area { display: flex; align-items: center; gap: 12px; }
+    .logo-area { display:flex; align-items:center; gap:12px; }
     .logo-badge {
-      width: 38px; height: 38px;
-      background: var(--orange);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 18px; font-weight: 700;
-      color: white;
+      width:38px; height:38px; background:var(--orange); border-radius:8px;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Playfair Display',serif; font-size:18px; font-weight:700; color:white;
     }
-    .logo-text { color: white; font-size: 15px; font-weight: 600; letter-spacing: .3px; }
-    .logo-sub { color: rgba(255,255,255,.6); font-size: 12px; font-weight: 400; }
-
-    .progress-track {
-      flex: 1;
-      max-width: 340px;
-      margin: 0 32px;
-    }
-    .progress-steps { display: flex; gap: 4px; align-items: center; }
-    .progress-step {
-      flex: 1;
-      height: 4px;
-      border-radius: 2px;
-      background: rgba(255,255,255,.2);
-      transition: background .4s;
-    }
-    .progress-step.done { background: var(--orange); }
-    .progress-step.active { background: rgba(255,255,255,.7); }
-    .progress-label { color: rgba(255,255,255,.55); font-size: 11px; margin-bottom: 4px; }
-
-    .main-content {
-      flex: 1;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 40px 24px 60px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(0,45,114,.08);
-      width: 100%;
-      max-width: 760px;
-      overflow: hidden;
-    }
-
-    .card-header {
-      background: var(--navy);
-      padding: 28px 36px 24px;
-      color: white;
-    }
-    .module-tag {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 8px;
-    }
-    .card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 26px;
-      font-weight: 700;
-      line-height: 1.25;
-      color: white;
-    }
-    .card-body { padding: 36px; }
-
-    /* ── Registration screen ── */
-    .reg-intro {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 36px;
-      align-items: start;
-      margin-bottom: 32px;
-    }
-    @media (max-width: 600px) { .reg-intro { grid-template-columns: 1fr; } }
-
-    .reg-about h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
-      color: var(--navy);
-      margin-bottom: 10px;
-    }
-    .reg-about p { font-size: 14px; line-height: 1.7; color: var(--text-muted); margin-bottom: 10px; }
-
-    .reg-meta { display: flex; flex-direction: column; gap: 10px; }
-    .meta-chip {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-    }
-    .meta-chip .icon { font-size: 20px; }
-    .meta-chip strong { color: var(--navy); display: block; font-size: 12px; font-weight: 600; margin-bottom: 1px; }
-
-    .form-group { margin-bottom: 20px; }
-    .form-label { display: block; font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
-    .form-input {
-      width: 100%;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 11px 14px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      color: var(--text);
-      transition: border-color .2s, box-shadow .2s;
-      outline: none;
-    }
-    .form-input:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(0,45,114,.1); }
-    .form-error { font-size: 12px; color: var(--wrong); margin-top: 4px; }
-
-    /* ── Content screen ── */
-    .slide-counter { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
-    .slide-headline {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 16px;
-      line-height: 1.3;
-    }
-    .slide-body { font-size: 15px; line-height: 1.75; color: #333; margin-bottom: 20px; }
-
-    .callout-box {
-      background: linear-gradient(135deg, #fff3e8, #fde8d4);
-      border-left: 4px solid var(--orange);
-      border-radius: 0 10px 10px 0;
-      padding: 16px 20px;
-      margin: 20px 0;
-    }
-    .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; color: var(--orange); text-transform: uppercase; margin-bottom: 6px; }
-    .callout-text { font-size: 14px; line-height: 1.6; color: #5a2800; }
-
-    .myth-box {
-      background: var(--bg);
-      border-radius: 12px;
-      padding: 16px 20px;
-      margin: 8px 0;
-      border: 1px solid var(--border);
-    }
-    .myth-q { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
-    .myth-q::before { content: '❓ '; }
-    .myth-a { font-size: 13px; line-height: 1.6; color: var(--text-muted); }
-    .myth-a::before { content: '✓ '; color: var(--correct); font-weight: 700; }
-
-    /* ── SVG diagram area ── */
-    .visual-block {
-      background: linear-gradient(135deg, #eef2ff, #f4f6fa);
-      border-radius: 12px;
-      padding: 24px;
-      margin: 20px 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 160px;
-    }
-
-    /* ── Slide nav ── */
-    .slide-dots {
-      display: flex;
-      gap: 6px;
-      justify-content: center;
-      margin: 24px 0 8px;
-    }
-    .dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--border);
-      transition: all .3s;
-    }
-    .dot.active { background: var(--navy); width: 22px; border-radius: 4px; }
-
-    /* ── Quiz screen ── */
-    .quiz-header { margin-bottom: 24px; }
-    .quiz-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
-      color: var(--navy);
-      margin-bottom: 6px;
-    }
-    .quiz-subtitle { font-size: 13px; color: var(--text-muted); }
-
-    .question-block { margin-bottom: 28px; }
-    .question-text { font-size: 15px; font-weight: 500; line-height: 1.6; margin-bottom: 12px; color: var(--text); }
-    .question-number { color: var(--orange); font-weight: 700; }
-
-    .options-list { display: flex; flex-direction: column; gap: 8px; }
-    .option-btn {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      background: white;
-      cursor: pointer;
-      text-align: left;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      color: var(--text);
-      transition: all .2s;
-    }
-    .option-btn:hover:not(:disabled) { border-color: var(--navy); background: #f0f4ff; }
-    .option-btn:disabled { cursor: default; }
-    .option-btn.selected { border-color: var(--navy); background: #eef2ff; }
-    .option-btn.correct { border-color: var(--correct); background: var(--correct-bg); color: var(--correct); }
-    .option-btn.wrong { border-color: var(--wrong); background: var(--wrong-bg); color: var(--wrong); }
-    .option-btn.reveal-correct { border-color: var(--correct); background: var(--correct-bg); }
-    .option-letter {
-      width: 26px; height: 26px;
-      border-radius: 50%;
-      background: var(--bg);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 700;
-      flex-shrink: 0;
-      transition: all .2s;
-    }
-    .option-btn.correct .option-letter, .option-btn.reveal-correct .option-letter { background: var(--correct); color: white; }
-    .option-btn.wrong .option-letter { background: var(--wrong); color: white; }
-    .option-btn.selected .option-letter { background: var(--navy); color: white; }
-
-    .tf-options { display: flex; gap: 12px; }
-    .tf-options .option-btn { flex: 1; justify-content: center; }
-
-    .missed-indicator {
-      font-size: 12px;
-      color: var(--wrong);
-      margin-top: 6px;
-      padding-left: 4px;
-    }
-    .explanation-box {
-      background: var(--correct-bg);
-      border: 1px solid #a3d9b8;
-      border-radius: 8px;
-      padding: 12px 14px;
-      margin-top: 10px;
-      font-size: 13px;
-      line-height: 1.6;
-      color: #1a5c3a;
-    }
-
-    /* ── Results banner ── */
-    .result-banner {
-      border-radius: 12px;
-      padding: 20px 24px;
-      margin-bottom: 28px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .result-banner.pass { background: var(--correct-bg); border: 1.5px solid #a3d9b8; }
-    .result-banner.fail { background: var(--wrong-bg); border: 1.5px solid #e8b0aa; }
-    .result-icon { font-size: 36px; }
-    .result-title { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 4px; }
-    .result-banner.pass .result-title { color: var(--correct); }
-    .result-banner.fail .result-title { color: var(--wrong); }
-    .result-sub { font-size: 13px; color: var(--text-muted); }
-
-    .score-bar-wrap { margin: 20px 0; }
-    .score-bar-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
-    .score-bar-track { height: 10px; background: var(--border); border-radius: 5px; overflow: hidden; }
-    .score-bar-fill {
-      height: 100%;
-      border-radius: 5px;
-      background: var(--navy);
-      transition: width 1s ease;
-    }
-    .score-bar-fill.pass-color { background: var(--correct); }
-    .score-bar-fill.fail-color { background: var(--orange); }
-
-    /* ── Stub/stub screen ── */
-    .stub-card {
-      text-align: center;
-      padding: 48px 36px;
-    }
-    .stub-icon { font-size: 56px; margin-bottom: 16px; }
-    .stub-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 24px;
-      color: var(--navy);
-      margin-bottom: 12px;
-    }
-    .stub-text { font-size: 14px; color: var(--text-muted); line-height: 1.7; max-width: 480px; margin: 0 auto 28px; }
-
-    /* ── Buttons ── */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 13px 28px;
-      border-radius: 10px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: all .2s;
-    }
-    .btn-primary { background: var(--navy); color: white; }
-    .btn-primary:hover { background: var(--navy-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,45,114,.3); }
-    .btn-primary:disabled { background: #a0aabb; cursor: not-allowed; transform: none; box-shadow: none; }
-    .btn-secondary { background: transparent; color: var(--navy); border: 1.5px solid var(--navy); }
-    .btn-secondary:hover { background: #eef2ff; }
-    .btn-orange { background: var(--orange); color: white; }
-    .btn-orange:hover { background: var(--orange-light); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(216,96,24,.35); }
-
-    .btn-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 24px; }
-    .btn-row.right { justify-content: flex-end; }
-    .btn-row.center { justify-content: center; }
-    .btn-row.space { justify-content: space-between; }
-
-    /* ── Misc ── */
-    .divider { height: 1px; background: var(--border); margin: 24px 0; }
-    .tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: .4px; }
-    .tag-navy { background: #eef2ff; color: var(--navy); }
-    .tag-orange { background: #fff0e6; color: var(--orange); }
-
+    .logo-text { color:white; font-size:15px; font-weight:600; letter-spacing:.3px; }
+    .logo-sub { color:rgba(255,255,255,.6); font-size:12px; }
+    .progress-track { flex:1; max-width:380px; margin:0 32px; }
+    .progress-label { color:rgba(255,255,255,.55); font-size:11px; margin-bottom:4px; }
+    .progress-steps { display:flex; gap:4px; }
+    .progress-step { flex:1; height:4px; border-radius:2px; background:rgba(255,255,255,.2); transition:background .4s; }
+    .progress-step.done { background:var(--orange); }
+    .progress-step.active { background:rgba(255,255,255,.7); }
+    .main-content { flex:1; display:flex; align-items:flex-start; justify-content:center; padding:40px 24px 60px; }
+    .card { background:white; border-radius:16px; box-shadow:0 4px 24px rgba(0,45,114,.08); width:100%; max-width:760px; overflow:hidden; }
+    .card-header { background:var(--navy); padding:28px 36px 24px; }
+    .module-tag { font-size:11px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; color:var(--orange); margin-bottom:8px; }
+    .card-title { font-family:'Playfair Display',serif; font-size:26px; font-weight:700; line-height:1.25; color:white; }
+    .card-body { padding:36px; }
+    .reg-intro { display:grid; grid-template-columns:1fr 1fr; gap:36px; align-items:start; margin-bottom:32px; }
+    @media(max-width:600px){ .reg-intro { grid-template-columns:1fr; } }
+    .reg-about h3 { font-family:'Playfair Display',serif; font-size:20px; color:var(--navy); margin-bottom:10px; }
+    .reg-about p { font-size:14px; line-height:1.7; color:var(--text-muted); margin-bottom:10px; }
+    .reg-meta { display:flex; flex-direction:column; gap:10px; }
+    .meta-chip { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:10px; font-size:13px; }
+    .meta-chip .icon { font-size:20px; }
+    .meta-chip strong { color:var(--navy); display:block; font-size:12px; font-weight:600; margin-bottom:1px; }
+    .form-group { margin-bottom:20px; }
+    .form-label { display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px; }
+    .form-input { width:100%; border:1.5px solid var(--border); border-radius:8px; padding:11px 14px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--text); transition:border-color .2s,box-shadow .2s; outline:none; }
+    .form-input:focus { border-color:var(--navy); box-shadow:0 0 0 3px rgba(0,45,114,.1); }
+    .form-error { font-size:12px; color:var(--wrong); margin-top:4px; }
+    .slide-counter { font-size:12px; color:var(--text-muted); margin-bottom:6px; }
+    .slide-body { font-size:15px; line-height:1.75; color:#333; margin-bottom:20px; }
+    .callout-box { background:linear-gradient(135deg,#fff3e8,#fde8d4); border-left:4px solid var(--orange); border-radius:0 10px 10px 0; padding:16px 20px; margin:20px 0; }
+    .callout-label { font-size:10px; font-weight:700; letter-spacing:1.2px; color:var(--orange); text-transform:uppercase; margin-bottom:6px; }
+    .callout-text { font-size:14px; line-height:1.6; color:#5a2800; }
+    .myth-box { background:var(--bg); border-radius:12px; padding:16px 20px; margin:8px 0; border:1px solid var(--border); }
+    .myth-q { font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px; }
+    .myth-q::before { content:'❓ '; }
+    .myth-a { font-size:13px; line-height:1.6; color:var(--text-muted); }
+    .myth-a::before { content:'✓ '; color:var(--correct); font-weight:700; }
+    .visual-block { background:linear-gradient(135deg,#eef2ff,#f4f6fa); border-radius:12px; padding:24px; margin:20px 0; display:flex; align-items:center; justify-content:center; min-height:160px; }
+    .slide-dots { display:flex; gap:6px; justify-content:center; margin:24px 0 8px; }
+    .dot { width:8px; height:8px; border-radius:50%; background:var(--border); transition:all .3s; }
+    .dot.active { background:var(--navy); width:22px; border-radius:4px; }
+    .quiz-subtitle { font-size:13px; color:var(--text-muted); margin-bottom:24px; }
+    .question-block { margin-bottom:28px; }
+    .question-text { font-size:15px; font-weight:500; line-height:1.6; margin-bottom:12px; color:var(--text); }
+    .question-number { color:var(--orange); font-weight:700; }
+    .options-list { display:flex; flex-direction:column; gap:8px; }
+    .option-btn { display:flex; align-items:center; gap:12px; padding:12px 16px; border:1.5px solid var(--border); border-radius:10px; background:white; cursor:pointer; text-align:left; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--text); transition:all .2s; }
+    .option-btn:hover:not(:disabled) { border-color:var(--navy); background:#f0f4ff; }
+    .option-btn:disabled { cursor:default; }
+    .option-btn.selected { border-color:var(--navy); background:#eef2ff; }
+    .option-btn.correct { border-color:var(--correct); background:var(--correct-bg); color:var(--correct); }
+    .option-btn.wrong { border-color:var(--wrong); background:var(--wrong-bg); color:var(--wrong); }
+    .option-btn.reveal-correct { border-color:var(--correct); background:var(--correct-bg); }
+    .option-letter { width:26px; height:26px; border-radius:50%; background:var(--bg); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; transition:all .2s; }
+    .option-btn.correct .option-letter,.option-btn.reveal-correct .option-letter { background:var(--correct); color:white; }
+    .option-btn.wrong .option-letter { background:var(--wrong); color:white; }
+    .option-btn.selected .option-letter { background:var(--navy); color:white; }
+    .tf-options { display:flex; gap:12px; }
+    .tf-options .option-btn { flex:1; justify-content:center; }
+    .missed-indicator { font-size:12px; color:var(--wrong); margin-top:6px; padding-left:4px; }
+    .explanation-box { background:var(--correct-bg); border:1px solid #a3d9b8; border-radius:8px; padding:12px 14px; margin-top:10px; font-size:13px; line-height:1.6; color:#1a5c3a; }
+    .result-banner { border-radius:12px; padding:20px 24px; margin-bottom:28px; display:flex; align-items:center; gap:16px; }
+    .result-banner.pass { background:var(--correct-bg); border:1.5px solid #a3d9b8; }
+    .result-banner.fail { background:var(--wrong-bg); border:1.5px solid #e8b0aa; }
+    .result-icon { font-size:36px; }
+    .result-title { font-family:'Playfair Display',serif; font-size:20px; margin-bottom:4px; }
+    .result-banner.pass .result-title { color:var(--correct); }
+    .result-banner.fail .result-title { color:var(--wrong); }
+    .result-sub { font-size:13px; color:var(--text-muted); }
+    .score-bar-wrap { margin:16px 0; }
+    .score-bar-label { display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px; }
+    .score-bar-track { height:10px; background:var(--border); border-radius:5px; overflow:hidden; }
+    .score-bar-fill { height:100%; border-radius:5px; transition:width 1s ease; }
+    .score-bar-fill.pass-color { background:var(--correct); }
+    .score-bar-fill.fail-color { background:var(--orange); }
+    .btn { display:inline-flex; align-items:center; gap:8px; padding:13px 28px; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:600; cursor:pointer; border:none; transition:all .2s; }
+    .btn-primary { background:var(--navy); color:white; }
+    .btn-primary:hover { background:var(--navy-dark); transform:translateY(-1px); box-shadow:0 4px 14px rgba(0,45,114,.3); }
+    .btn-primary:disabled { background:#a0aabb; cursor:not-allowed; transform:none; box-shadow:none; }
+    .btn-secondary { background:transparent; color:var(--navy); border:1.5px solid var(--navy); }
+    .btn-secondary:hover { background:#eef2ff; }
+    .btn-orange { background:var(--orange); color:white; }
+    .btn-orange:hover { background:var(--orange-light); transform:translateY(-1px); box-shadow:0 4px 14px rgba(216,96,24,.35); }
+    .btn-row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:24px; }
+    .btn-row.right { justify-content:flex-end; }
+    .btn-row.center { justify-content:center; }
+    .btn-row.space { justify-content:space-between; }
+    .divider { height:1px; background:var(--border); margin:24px 0; }
+    .tag { display:inline-block; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; letter-spacing:.4px; }
+    .tag-navy { background:#eef2ff; color:var(--navy); }
+    .tag-orange { background:#fff0e6; color:var(--orange); }
+    /* Certificate */
+    .cert-wrap { border:3px solid var(--navy); border-radius:16px; padding:40px; text-align:center; margin:24px 0; background:white; position:relative; overflow:hidden; }
+    .cert-wrap::before { content:''; position:absolute; top:0; left:0; right:0; height:8px; background:linear-gradient(90deg,var(--navy),var(--orange),var(--navy)); }
+    .cert-badge { width:60px; height:60px; background:var(--orange); border-radius:12px; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:28px; font-weight:700; color:white; margin:0 auto 16px; }
+    .cert-title { font-family:'Playfair Display',serif; font-size:13px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
+    .cert-heading { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+    .cert-sub { font-size:13px; color:var(--text-muted); margin-bottom:24px; }
+    .cert-name { font-family:'Playfair Display',serif; font-size:32px; font-weight:700; color:var(--orange); margin:8px 0; }
+    .cert-line { height:2px; background:linear-gradient(90deg,transparent,var(--border),transparent); margin:20px 0; }
+    .cert-scores { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin:20px 0; }
+    .cert-score-cell { background:var(--bg); border-radius:8px; padding:10px 6px; font-size:12px; }
+    .cert-score-cell .mod-label { color:var(--text-muted); font-size:10px; margin-bottom:4px; }
+    .cert-score-cell .mod-score { font-size:18px; font-weight:700; color:var(--navy); }
+    .cert-overall { font-size:22px; font-weight:700; color:var(--correct); margin:8px 0; }
+    .cert-date { font-size:13px; color:var(--text-muted); }
+    /* Summary score grid */
+    .module-summary { display:flex; flex-direction:column; gap:10px; margin:20px 0; }
+    .module-row { display:flex; align-items:center; gap:12px; padding:12px 16px; background:var(--bg); border-radius:10px; border:1px solid var(--border); }
+    .module-row-label { font-size:13px; font-weight:600; color:var(--navy); flex:1; }
+    .module-row-score { font-size:16px; font-weight:700; }
+    .module-row-score.pass { color:var(--correct); }
+    .module-row-score.fail { color:var(--wrong); }
     @media print {
-      .top-bar, .btn { display: none !important; }
-      .card { box-shadow: none; }
+      .top-bar,.btn,.btn-row { display:none !important; }
+      .card { box-shadow:none; }
+      .cert-wrap { border-color:#000; }
     }
   </style>
 </head>
 <body>
 <div id="root"></div>
-
 <script type="text/babel">
-const { useState, useEffect, useRef } = React;
+const { useState, useEffect } = React;
 
-// ─── Completion logging ───────────────────────────────────────────────────────
+// ─── Google Sheet logging ─────────────────────────────────────────────────────
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJNWJWxqRLFVXLvRuqhD5v1LcPvQav6ioInRLxZUntkyVAc1fYxkbmiFi7bZi-PpqeSQ/exec";
 
 function logCompletion(user, scores, attempts) {
-  const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+  const filled = scores.map(s => s ?? 0);
+  const avg = Math.round(filled.reduce((a,b)=>a+b,0)/filled.length);
   const passed = scores.every(s => s >= 80);
-  const payload = {
-    timestamp: new Date().toISOString(),
-    name: user.name,
-    email: user.email,
-    mod1_score: scores[0] ?? null,
-    mod2_score: scores[1] ?? null,
-    mod3_score: scores[2] ?? null,
-    mod4_score: scores[3] ?? null,
-    mod5_score: scores[4] ?? null,
-    avg_score: avg,
-    passed: passed,
-    attempts_mod1: attempts[0] ?? null,
-    attempts_mod2: attempts[1] ?? null,
-    attempts_mod3: attempts[2] ?? null,
-    attempts_mod4: attempts[3] ?? null,
-    attempts_mod5: attempts[4] ?? null,
-  };
   fetch(APPS_SCRIPT_URL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  }).catch(err => console.warn("Completion log failed:", err));
+    method:"POST", mode:"no-cors",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({
+      timestamp: new Date().toISOString(),
+      name: user.name, email: user.email,
+      mod1_score: scores[0]??null, mod2_score: scores[1]??null,
+      mod3_score: scores[2]??null, mod4_score: scores[3]??null,
+      mod5_score: scores[4]??null, avg_score: avg, passed,
+      attempts_mod1: attempts[0]??null, attempts_mod2: attempts[1]??null,
+      attempts_mod3: attempts[2]??null, attempts_mod4: attempts[3]??null,
+      attempts_mod5: attempts[4]??null,
+    })
+  }).catch(e => console.warn("Log failed:", e));
 }
 
-// ─── Content data ───────────────────────────────────────────────────────────
+// ─── Module data ──────────────────────────────────────────────────────────────
 
-const MODULE1_SLIDES = [
+const MODULES = [
+  // ── MODULE 1 ──────────────────────────────────────────────────────────────
   {
-    id: 1,
-    headline: "The Unintended Pregnancy Problem",
-    body: "Approximately 45% of all pregnancies globally are unintended — that's 121 million each year. Despite this staggering number, the responsibility for contraception has historically fallen almost entirely on women, who have access to more than 10 different methods. Men have two: condoms and vasectomy.",
-    callout: {
-      label: "Key Fact",
-      text: "121 million unintended pregnancies occur globally every year — and women carry nearly all the contraceptive burden."
-    },
-    visual: <svg viewBox="0 0 420 140" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
-      <rect x="10" y="20" width="100" height="28" rx="6" fill="#002D72"/>
-      <text x="60" y="39" textAnchor="middle" fill="white" fontSize="13" fontFamily="DM Sans,sans-serif" fontWeight="600">Women: 10+ methods</text>
-      <rect x="10" y="60" width="24" height="28" rx="6" fill="#D86018"/>
-      <text x="140" y="79" fill="#333" fontSize="13" fontFamily="DM Sans,sans-serif">Men: 2 methods</text>
-      <text x="10" y="118" fill="#888" fontSize="11" fontFamily="DM Sans,sans-serif">45% of pregnancies are unintended → 121 million/year</text>
-      <circle cx="360" cy="70" r="36" fill="none" stroke="#D86018" strokeWidth="3"/>
-      <text x="360" y="66" textAnchor="middle" fill="#D86018" fontSize="22" fontFamily="Playfair Display,serif" fontWeight="700">45%</text>
-      <text x="360" y="83" textAnchor="middle" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">unintended</text>
-    </svg>
+    num: 1,
+    title: "Why Male Contraception Matters",
+    time: "5–7 min",
+    passThreshold: 4,
+    slides: [
+      {
+        headline: "The Unintended Pregnancy Problem",
+        body: "Approximately 45% of all pregnancies globally are unintended — that's 121 million each year. Despite this staggering number, the responsibility for contraception has historically fallen almost entirely on women, who have access to more than 10 different methods. Men have two: condoms and vasectomy.",
+        callout: { label:"Key Fact", text:"121 million unintended pregnancies occur globally every year — and women carry nearly all the contraceptive burden." },
+        visual: (
+          <svg viewBox="0 0 420 145" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <text x="10" y="20" fill="#555" fontSize="12" fontFamily="DM Sans,sans-serif">Contraceptive options available:</text>
+            <rect x="10" y="28" width="260" height="22" rx="5" fill="#002D72"/>
+            <text x="140" y="43" textAnchor="middle" fill="white" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="600">Women: 10+ methods</text>
+            <rect x="10" y="58" width="50" height="22" rx="5" fill="#D86018"/>
+            <text x="70" y="73" fill="#333" fontSize="11" fontFamily="DM Sans,sans-serif">Men: 2 methods (condoms + vasectomy)</text>
+            <line x1="10" y1="96" x2="410" y2="96" stroke="#eee" strokeWidth="1"/>
+            <circle cx="100" cy="122" r="30" fill="none" stroke="#D86018" strokeWidth="3"/>
+            <text x="100" y="118" textAnchor="middle" fill="#D86018" fontSize="18" fontFamily="Playfair Display,serif" fontWeight="700">45%</text>
+            <text x="100" y="132" textAnchor="middle" fill="#888" fontSize="9" fontFamily="DM Sans,sans-serif">unintended</text>
+            <text x="155" y="116" fill="#555" fontSize="11" fontFamily="DM Sans,sans-serif">=</text>
+            <text x="170" y="116" fill="#002D72" fontSize="13" fontFamily="DM Sans,sans-serif" fontWeight="700">121 million</text>
+            <text x="170" y="131" fill="#888" fontSize="11" fontFamily="DM Sans,sans-serif">unintended pregnancies/year</text>
+          </svg>
+        )
+      },
+      {
+        headline: "What Men Actually Want",
+        body: "MCI consumer research tells a clear story: 8 in 10 men aged 18–44 in the U.S. are actively trying to prevent pregnancy. Of those, 8.1 million say they are very likely to use a new male method. Their preferences: 80% prefer non-hormonal options, and 89% want something reversible. This appears to be a global pattern — not a uniquely American one.",
+        callout: { label:"Key Fact", text:"The barrier to male contraceptive use isn't willingness — it's the absence of trusted, accessible options." },
+        visual: (
+          <svg viewBox="0 0 420 130" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            {[{label:"Actively trying to prevent pregnancy",pct:80,y:10,color:"#002D72"},{label:"Prefer non-hormonal method",pct:80,y:50,color:"#002D72"},{label:"Want reversible method",pct:89,y:90,color:"#D86018"}].map(({label,pct,y,color})=>(
+              <g key={y}>
+                <text x="10" y={y+12} fill="#333" fontSize="11" fontFamily="DM Sans,sans-serif">{label}</text>
+                <rect x="10" y={y+16} width="310" height="12" rx="6" fill="#eee"/>
+                <rect x="10" y={y+16} width={pct*3.1} height="12" rx="6" fill={color}/>
+                <text x="330" y={y+27} fill="#333" fontSize="13" fontFamily="DM Sans,sans-serif" fontWeight="700">{pct}%</text>
+              </g>
+            ))}
+            <text x="10" y="122" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Source: MCI U.S. Consumer Research</text>
+          </svg>
+        )
+      },
+      {
+        headline: "Why This Matters Beyond Pregnancy",
+        body: "Male contraception is a reproductive equity issue. Expanding options connects directly to the UN Sustainable Development Goals: reducing poverty, advancing gender equality, and improving health outcomes. When contraception is shared, couples gain agency together. This isn't about men 'stepping up' — it's about giving everyone more choices.",
+        callout: { label:"Key Framing", text:"\"Reproductive autonomy for all\" — not a transaction where one partner acts and the other benefits." },
+        visual: (
+          <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            {[{x:20,label:"SDG 1",sub:"No Poverty",c:"#D86018"},{x:110,label:"SDG 3",sub:"Good Health",c:"#002D72"},{x:200,label:"SDG 5",sub:"Gender Equality",c:"#D86018"},{x:290,label:"SDG 10",sub:"Reduced Inequalities",c:"#002D72"}].map(({x,label,sub,c})=>(
+              <g key={x}>
+                <rect x={x} y="10" width="80" height="80" rx="12" fill={c}/>
+                <text x={x+40} y="45" textAnchor="middle" fill="white" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
+                <text x={x+40} y="62" textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
+              </g>
+            ))}
+            <text x="210" y="104" textAnchor="middle" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">Male contraception advances multiple UN SDGs</text>
+          </svg>
+        )
+      },
+      {
+        headline: "MCI's Role in the Field",
+        body: "MCI — the Male Contraceptive Initiative — is a nonprofit funder. We don't have an in-house lab or develop drugs ourselves. We fund researchers at universities and biotech companies to develop the next generation of non-hormonal, reversible male contraceptives. As a presenter, you are part of MCI's field-building work: building public awareness and trust in a field that has been historically underfunded.",
+        callout: { label:"Remember", text:"MCI funds the research. You help build the public ecosystem that makes new methods possible." },
+        visual: (
+          <svg viewBox="0 0 420 100" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <defs><marker id="arr1" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#D86018"/></marker></defs>
+            <rect x="20" y="25" width="80" height="50" rx="10" fill="#002D72"/>
+            <text x="60" y="47" textAnchor="middle" fill="white" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">MCI</text>
+            <text x="60" y="63" textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="DM Sans,sans-serif">Nonprofit Funder</text>
+            <line x1="102" y1="50" x2="138" y2="50" stroke="#D86018" strokeWidth="2" markerEnd="url(#arr1)"/>
+            <rect x="140" y="16" width="85" height="28" rx="7" fill="#eef2ff"/>
+            <text x="182" y="34" textAnchor="middle" fill="#002D72" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">Universities</text>
+            <rect x="140" y="56" width="85" height="28" rx="7" fill="#fff0e6"/>
+            <text x="182" y="74" textAnchor="middle" fill="#D86018" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">Biotech Cos.</text>
+            <line x1="227" y1="30" x2="265" y2="48" stroke="#aaa" strokeWidth="1.5" markerEnd="url(#arr1)"/>
+            <line x1="227" y1="70" x2="265" y2="52" stroke="#aaa" strokeWidth="1.5" markerEnd="url(#arr1)"/>
+            <rect x="267" y="28" width="110" height="44" rx="8" fill="#002D72"/>
+            <text x="322" y="47" textAnchor="middle" fill="white" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="600">New Non-Hormonal</text>
+            <text x="322" y="62" textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="11" fontFamily="DM Sans,sans-serif">Male Contraceptives</text>
+          </svg>
+        )
+      }
+    ],
+    misconceptions: [
+      { q:'"We already have condoms — why do we need more?"', a:"Condoms are barrier methods with real-world failure rates. Women have 10+ methods; men have 2. More options means more couples can find what works for them." },
+      { q:'"Men won\'t use new methods."', a:"Consumer data says otherwise — 8 in 10 men are actively trying to prevent pregnancy. The question is whether trusted, accessible options exist." },
+      { q:'"This is a Western issue."', a:"Unintended pregnancy rates are highest in low- and middle-income countries. Demand for male methods exists globally." },
+    ],
+    quiz: [
+      { id:1, type:"mc", text:"Approximately what percentage of pregnancies globally are unintended?", options:["15%","30%","45%","60%"], correct:2, explanation:"Approximately 45% of all pregnancies globally are unintended, translating to roughly 121 million per year." },
+      { id:2, type:"mc", text:"According to MCI's consumer research, what percentage of men prefer a non-hormonal contraceptive method?", options:["38%","55%","65%","80%"], correct:3, explanation:"MCI's U.S. consumer research found 80% of surveyed men prefer non-hormonal, and 89% want something reversible." },
+      { id:3, type:"mc", text:"Which of the following is NOT a reason new male contraceptive methods are needed?", options:["Women bear a disproportionate burden","Men have expressed interest in new options","Male contraception would eliminate STIs","More options allow couples to share responsibility"], correct:2, explanation:"Male contraceptives prevent pregnancy but do NOT protect against STIs. Only condoms provide STI protection." },
+      { id:4, type:"mc", text:"MCI is best described as:", options:["A pharmaceutical company developing drugs in-house","A nonprofit that funds external researchers","A government agency","A clinical trial site"], correct:1, explanation:"MCI is a nonprofit funder — it does not run an in-house lab but funds researchers at universities and biotech companies." },
+      { id:5, type:"tf", text:"True or False: Consumer research suggests that interest in new male contraceptive methods is limited to men in the United States.", options:["True","False"], correct:1, explanation:"False. While MCI's primary consumer data is U.S.-based, the evidence points to a global pattern. Unintended pregnancy rates are highest in low- and middle-income countries." },
+    ]
   },
+
+  // ── MODULE 2 ──────────────────────────────────────────────────────────────
   {
-    id: 2,
-    headline: "What Men Actually Want",
-    body: "MCI consumer research tells a clear story: 8 in 10 men aged 18–44 in the U.S. are actively trying to prevent pregnancy. Of those, 8.1 million say they are very likely to use a new male method. Their preferences: 80% prefer non-hormonal options, and 89% want something reversible. This appears to be a global pattern — not a uniquely American one.",
-    callout: {
-      label: "Key Fact",
-      text: "The barrier to male contraceptive use isn't willingness — it's the absence of trusted, accessible options."
-    },
-    visual: <svg viewBox="0 0 420 130" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
-      {[
-        {label:"Actively preventing pregnancy",pct:80,y:18},
-        {label:"Prefer non-hormonal",pct:80,y:52},
-        {label:"Want reversible method",pct:89,y:86},
-      ].map(({label,pct,y})=>(
-        <g key={y}>
-          <text x="10" y={y+14} fill="#333" fontSize="12" fontFamily="DM Sans,sans-serif">{label}</text>
-          <rect x="10" y={y+18} width="300" height="14" rx="7" fill="#eee"/>
-          <rect x="10" y={y+18} width={pct*3} height="14" rx="7" fill={pct===89?"#D86018":"#002D72"}/>
-          <text x={320} y={y+30} fill="#333" fontSize="13" fontFamily="DM Sans,sans-serif" fontWeight="700">{pct}%</text>
-        </g>
-      ))}
-      <text x="10" y="122" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">Source: MCI U.S. Consumer Research</text>
-    </svg>
+    num: 2,
+    title: "Male Reproductive Biology",
+    time: "5–7 min",
+    passThreshold: 3,
+    slides: [
+      {
+        headline: "The Key Structures",
+        body: "Understanding five key structures is enough to speak confidently about male contraception: the testicles (where sperm are produced), the epididymis (where sperm mature and are stored), the vas deferens (the tube that transports sperm), the seminal vesicles and prostate (which add fluid), and the urethra (the exit path). Each structure is a potential target for contraception.",
+        callout: { label:"Key Point", text:"You don't need to memorize anatomy in detail — knowing where sperm are made, stored, and transported is sufficient." },
+        visual: (
+          <svg viewBox="0 0 420 150" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            {[
+              {label:"① Testicles",sub:"Sperm production",x:20,y:20,c:"#002D72"},
+              {label:"② Epididymis",sub:"Maturation & storage",x:120,y:20,c:"#002D72"},
+              {label:"③ Vas Deferens",sub:"Transport",x:220,y:20,c:"#D86018"},
+              {label:"④ Seminal Vesicles",sub:"Fluid contribution",x:320,y:20,c:"#5a6475"},
+              {label:"⑤ Urethra",sub:"Exit path",x:220,y:90,c:"#5a6475"},
+            ].map(({label,sub,x,y,c})=>(
+              <g key={label}>
+                <rect x={x} y={y} width="88" height="52" rx="8" fill={c}/>
+                <text x={x+44} y={y+22} textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">{label}</text>
+                <text x={x+44} y={y+37} textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
+              </g>
+            ))}
+            <line x1="110" y1="46" x2="118" y2="46" stroke="#aaa" strokeWidth="1.5"/>
+            <line x1="210" y1="46" x2="218" y2="46" stroke="#aaa" strokeWidth="1.5"/>
+            <line x1="310" y1="46" x2="318" y2="46" stroke="#aaa" strokeWidth="1.5"/>
+            <text x="210" y="142" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Each structure = a potential contraceptive target</text>
+          </svg>
+        )
+      },
+      {
+        headline: "Spermatogenesis: Continuous but Controllable",
+        body: "Sperm are continuously produced in the seminiferous tubules inside the testicles. The process — called spermatogenesis — takes approximately 74 days from stem cell to mature sperm. It's regulated by hormones from the brain: testosterone, FSH, and LH. This is why hormonal contraceptive methods work, and why they take weeks to have full effect after starting.",
+        callout: { label:"Key Fact", text:"74-day production cycle. Disrupt any step — through hormones or other mechanisms — and you can reduce sperm output." },
+        visual: (
+          <svg viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <defs><marker id="arr2" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#002D72"/></marker></defs>
+            {[{x:10,label:"Stem cell",day:"Day 0"},{x:105,label:"Early sperm cell",day:"~Day 20"},{x:210,label:"Developing",day:"~Day 50"},{x:310,label:"Mature sperm",day:"Day 74"}].map(({x,label,day})=>(
+              <g key={x}>
+                <circle cx={x+40} cy="55" r="28" fill="#eef2ff" stroke="#002D72" strokeWidth="1.5"/>
+                <text x={x+40} y="51" textAnchor="middle" fill="#002D72" fontSize="9" fontFamily="DM Sans,sans-serif" fontWeight="600">{label}</text>
+                <text x={x+40} y="65" textAnchor="middle" fill="#D86018" fontSize="9" fontFamily="DM Sans,sans-serif">{day}</text>
+              </g>
+            ))}
+            {[69,174,269].map(x=>(
+              <line key={x} x1={x} y1="55" x2={x+27} y2="55" stroke="#002D72" strokeWidth="1.5" markerEnd="url(#arr2)"/>
+            ))}
+            <text x="210" y="108" textAnchor="middle" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">~74 days from stem cell to mature sperm</text>
+            <text x="210" y="120" textAnchor="middle" fill="#aaa" fontSize="9" fontFamily="DM Sans,sans-serif">Regulated by testosterone, FSH, and LH from the brain</text>
+          </svg>
+        )
+      },
+      {
+        headline: "The Sperm's Journey",
+        body: "After maturing in the epididymis, sperm travel through the vas deferens, mix with fluid from the seminal vesicles and prostate, and are ejaculated through the urethra. From there, in the female reproductive tract, they must navigate to reach and fertilize an egg. Every step of this journey is a potential point of intervention for a contraceptive.",
+        callout: { label:"Key Point", text:"More steps in the journey = more targets for contraception. Researchers are working on blocking sperm at multiple points." },
+        visual: (
+          <svg viewBox="0 0 420 100" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <defs><marker id="arr3" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#D86018"/></marker></defs>
+            {[{x:10,label:"Epididymis",sub:"mature"},{x:95,label:"Vas deferens",sub:"transport"},{x:190,label:"Ejaculation",sub:"fluid added"},{x:285,label:"Female tract",sub:"navigate"},{x:370,label:"Egg",sub:"fertilize"}].map(({x,label,sub},i)=>(
+              <g key={x}>
+                <rect x={x} y="28" width="72" height="38" rx="7" fill={i===4?"#D86018":"#002D72"} opacity={i===4?1:.85}/>
+                <text x={x+36} y="44" textAnchor="middle" fill="white" fontSize="9" fontFamily="DM Sans,sans-serif" fontWeight="600">{label}</text>
+                <text x={x+36} y="57" textAnchor="middle" fill="rgba(255,255,255,.75)" fontSize="8" fontFamily="DM Sans,sans-serif">{sub}</text>
+              </g>
+            ))}
+            {[83,178,273,358].map(x=>(
+              <line key={x} x1={x} y1="47" x2={x+10} y2="47" stroke="#D86018" strokeWidth="2" markerEnd="url(#arr3)"/>
+            ))}
+            <text x="210" y="92" textAnchor="middle" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">Each stop = a potential contraceptive target</text>
+          </svg>
+        )
+      },
+      {
+        headline: "The Blood-Testis Barrier",
+        body: "Inside the testicles, a tight cellular structure called the blood-testis barrier separates developing sperm from the rest of the body. It's there to protect sperm from the immune system. But it also creates a drug development challenge: many compounds struggle to cross this barrier, which means a drug that looks promising in the bloodstream may not reach its target inside the testicles. Presenters don't need to explain the mechanism — just know it's a real, known challenge.",
+        callout: { label:"For Presenters", text:"If asked about drug development timelines, this is one reason why: getting molecules where they need to go is hard." },
+        visual: (
+          <svg viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <rect x="10" y="20" width="180" height="80" rx="10" fill="#eef2ff" stroke="#002D72" strokeWidth="1.5"/>
+            <text x="100" y="45" textAnchor="middle" fill="#002D72" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="700">Bloodstream</text>
+            <text x="100" y="62" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">Drug molecules circulate</text>
+            <text x="100" y="76" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">throughout body here</text>
+            <rect x="198" y="20" width="6" height="80" rx="3" fill="#D86018"/>
+            <text x="201" y="15" textAnchor="middle" fill="#D86018" fontSize="9" fontFamily="DM Sans,sans-serif" fontWeight="700">BARRIER</text>
+            <rect x="212" y="20" width="185" height="80" rx="10" fill="#fff0e6" stroke="#D86018" strokeWidth="1.5"/>
+            <text x="305" y="45" textAnchor="middle" fill="#D86018" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="700">Inside Testicles</text>
+            <text x="305" y="62" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">Developing sperm — many</text>
+            <text x="305" y="76" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">drugs can't reach here</text>
+            <text x="210" y="115" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">The blood-testis barrier limits which drug candidates can work</text>
+          </svg>
+        )
+      }
+    ],
+    misconceptions: [
+      { q:'"Sperm are constantly produced, so you can\'t stop them."', a:"Spermatogenesis is regulatable. Hormonal suppression trials have achieved near-zero sperm counts in most men. The process can be interrupted." },
+      { q:'"A man is either fertile or infertile — nothing in between."', a:"Sperm count, motility, and morphology all exist on spectrums. Multiple points of intervention exist along the production and transport pathway." },
+    ],
+    quiz: [
+      { id:1, type:"mc", text:"Where does spermatogenesis (sperm production) occur?", options:["Epididymis","Vas deferens","Seminiferous tubules","Prostate gland"], correct:2, explanation:"Spermatogenesis occurs in the seminiferous tubules inside the testicles. The epididymis is where sperm mature and are stored after production." },
+      { id:2, type:"mc", text:"Approximately how long does it take for a sperm cell to fully mature from a stem cell?", options:["7 days","30 days","74 days","6 months"], correct:2, explanation:"The spermatogenesis process takes approximately 74 days from stem cell to mature sperm — which is why hormonal methods take weeks to have full effect." },
+      { id:3, type:"mc", text:"What is the primary role of the vas deferens?", options:["Sperm production","Sperm maturation and storage","Sperm transport","Hormone regulation"], correct:2, explanation:"The vas deferens transports sperm from the epididymis toward the urethra during ejaculation. It is also the structure targeted in vasectomy." },
+      { id:4, type:"mc", text:"Why does the blood-testis barrier matter for male contraceptive drug development?", options:["It prevents sperm from leaving the body","It limits which drug molecules can access developing sperm","It causes most male contraceptives to fail in clinical trials","It regulates testosterone levels"], correct:1, explanation:"The blood-testis barrier is a protective cellular structure that limits drug access to developing sperm inside the testicles — a real challenge in designing effective, targeted compounds." },
+    ]
   },
+
+  // ── MODULE 3 ──────────────────────────────────────────────────────────────
   {
-    id: 3,
-    headline: "Why This Matters Beyond Pregnancy",
-    body: "Male contraception is a reproductive equity issue. Expanding options connects directly to the UN Sustainable Development Goals: reducing poverty, advancing gender equality, and improving health outcomes. When contraception is shared, couples gain agency together. This isn't about men 'stepping up' — it's about giving everyone more choices.",
-    callout: {
-      label: "Key Framing",
-      text: "\"Reproductive autonomy for all\" — not a transaction where one partner acts and the other benefits."
-    },
-    visual: <svg viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
-      {[
-        {x:30,label:"SDG 1",sub:"No Poverty",color:"#D86018"},
-        {x:120,label:"SDG 3",sub:"Good Health",color:"#002D72"},
-        {x:210,label:"SDG 5",sub:"Gender Equality",color:"#D86018"},
-        {x:300,label:"SDG 10",sub:"Reduced Inequalities",color:"#002D72"},
-      ].map(({x,label,sub,color})=>(
-        <g key={x}>
-          <rect x={x} y="15" width="72" height="72" rx="12" fill={color}/>
-          <text x={x+36} y="48" textAnchor="middle" fill="white" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
-          <text x={x+36} y="63" textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
-        </g>
-      ))}
-      <text x="210" y="108" textAnchor="middle" fill="#888" fontSize="11" fontFamily="DM Sans,sans-serif">Male contraception advances multiple SDGs</text>
-    </svg>
+    num: 3,
+    title: "Current Methods & What's Coming",
+    time: "6–8 min",
+    passThreshold: 4,
+    slides: [
+      {
+        headline: "What Exists for Men Today",
+        body: "Men currently have two contraceptive options: condoms and vasectomy. Condoms are barrier methods with real-world effectiveness of about 85–98% depending on consistent and correct use — and they also protect against STIs. Vasectomy is a surgical procedure that is highly effective and intended to be permanent, though reversal is possible with declining success over time. Both are valuable. Neither meets all needs.",
+        callout: { label:"Key Point", text:"Two options for men vs. 10+ for women. That gap is not biological necessity — it's a product of decades of underinvestment." },
+        visual: (
+          <svg viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <rect x="20" y="15" width="170" height="90" rx="12" fill="#002D72"/>
+            <text x="105" y="42" textAnchor="middle" fill="white" fontSize="14" fontFamily="DM Sans,sans-serif" fontWeight="700">Condoms</text>
+            <text x="105" y="59" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="10" fontFamily="DM Sans,sans-serif">85–98% effective</text>
+            <text x="105" y="73" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="10" fontFamily="DM Sans,sans-serif">✓ Also protects vs STIs</text>
+            <text x="105" y="87" textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="10" fontFamily="DM Sans,sans-serif">Barrier / non-hormonal</text>
+            <rect x="220" y="15" width="170" height="90" rx="12" fill="#D86018"/>
+            <text x="305" y="42" textAnchor="middle" fill="white" fontSize="14" fontFamily="DM Sans,sans-serif" fontWeight="700">Vasectomy</text>
+            <text x="305" y="59" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="10" fontFamily="DM Sans,sans-serif">&gt;99% effective</text>
+            <text x="305" y="73" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="10" fontFamily="DM Sans,sans-serif">⚠ Intended as permanent</text>
+            <text x="305" y="87" textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="10" fontFamily="DM Sans,sans-serif">Surgical / non-hormonal</text>
+          </svg>
+        )
+      },
+      {
+        headline: "The Hormonal Approach",
+        body: "Hormonal male contraceptives work by suppressing the brain's HPG axis — the same hormonal pathway that female methods use. Combinations of testosterone and a progestin reduce the brain's signals to the testicles, shutting down sperm production. Trials have achieved near-zero sperm counts in over 90% of men. The challenge has been systemic side effects — mood changes, acne, and libido effects — which are also known from female hormonal methods. Several candidates are in clinical trials, including DMAU and 11β-MNTDC.",
+        callout: { label:"Note for Presenters", text:"When asked about hormonal side effects, acknowledge them honestly — they're real, they're being studied, and non-hormonal alternatives are being developed specifically to avoid them." },
+        visual: (
+          <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <defs><marker id="arr4" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#002D72"/></marker></defs>
+            <rect x="155" y="10" width="110" height="36" rx="8" fill="#002D72"/>
+            <text x="210" y="32" textAnchor="middle" fill="white" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="600">Brain (HPG Axis)</text>
+            <line x1="210" y1="48" x2="210" y2="66" stroke="#D86018" strokeWidth="2" strokeDasharray="4,3"/>
+            <text x="220" y="62" fill="#D86018" fontSize="9" fontFamily="DM Sans,sans-serif">suppressed</text>
+            <rect x="155" y="68" width="110" height="36" rx="8" fill="#5a6475"/>
+            <text x="210" y="90" textAnchor="middle" fill="white" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="600">Testicles → ↓ Sperm</text>
+            <rect x="10" y="35" width="110" height="36" rx="8" fill="#eef2ff" stroke="#002D72" strokeWidth="1"/>
+            <text x="65" y="52" textAnchor="middle" fill="#002D72" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">Testosterone +</text>
+            <text x="65" y="64" textAnchor="middle" fill="#002D72" fontSize="10" fontFamily="DM Sans,sans-serif">Progestin (oral)</text>
+            <line x1="122" y1="53" x2="153" y2="30" stroke="#002D72" strokeWidth="1.5" markerEnd="url(#arr4)"/>
+            <text x="65" y="100" textAnchor="middle" fill="#888" fontSize="9" fontFamily="DM Sans,sans-serif">e.g. DMAU, 11β-MNTDC</text>
+          </svg>
+        )
+      },
+      {
+        headline: "The Non-Hormonal Approach: 4 Mechanisms",
+        body: "Non-hormonal methods target sperm directly without touching the hormonal system. Four main approaches are being developed: (1) Spermatogenesis inhibition — stopping sperm production at the cellular level (e.g., triptonide, YCT529). (2) Sperm transport blockade — physically blocking sperm in the vas deferens using reversible gels (e.g., ADAM by Contraline, Vasalgel). (3) Sperm motility inhibition — disabling sperm's ability to swim, targeting channels like CatSper. (4) Fertilization blockade — preventing sperm from binding to the egg.",
+        callout: { label:"Key Distinction", text:"Non-hormonal ≠ less effective. Vasectomy is non-hormonal and nearly 100% effective. Mechanism determines efficacy, not the hormonal/non-hormonal distinction." },
+        visual: (
+          <svg viewBox="0 0 420 160" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            {[
+              {x:10,y:10,label:"① Spermatogenesis Inhibition",sub:"Stop/reduce sperm production",eg:"triptonide, YCT529",c:"#002D72"},
+              {x:215,y:10,label:"② Transport Blockade",sub:"Block sperm in vas deferens",eg:"ADAM, Vasalgel",c:"#002D72"},
+              {x:10,y:92,label:"③ Motility Inhibition",sub:"Disable sperm's ability to swim",eg:"CatSper, sAC targets",c:"#D86018"},
+              {x:215,y:92,label:"④ Fertilization Blockade",sub:"Prevent egg binding",eg:"IZUMO1 targets",c:"#D86018"},
+            ].map(({x,y,label,sub,eg,c})=>(
+              <g key={label}>
+                <rect x={x} y={y} width="192" height="72" rx="10" fill={c}/>
+                <text x={x+96} y={y+20} textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
+                <text x={x+96} y={y+36} textAnchor="middle" fill="rgba(255,255,255,.9)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
+                <text x={x+96} y={y+52} textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="DM Sans,sans-serif">e.g. {eg}</text>
+              </g>
+            ))}
+            <text x="210" y="155" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Four distinct mechanisms — diversity in the pipeline is a strength</text>
+          </svg>
+        )
+      },
+      {
+        headline: "Where Things Stand Today",
+        body: "Drug development is long — 10 to 15 years and $1–2 billion for a typical drug. Male contraceptives face additional hurdles: they're being developed for healthy users (not to treat a disease), must be safe for years of chronic use, and have historically received far less funding than female methods. No new male method is yet FDA-approved, but the pipeline is real and active — with multiple candidates in Phase I and Phase II trials right now.",
+        callout: { label:"Key Message", text:"\"The science is there. The pipeline is real. The question is whether the field gets the funding and attention it deserves.\"" },
+        visual: (
+          <svg viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <defs><marker id="arr5" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#002D72"/></marker></defs>
+            <line x1="20" y1="60" x2="400" y2="60" stroke="#002D72" strokeWidth="2" markerEnd="url(#arr5)"/>
+            {[{x:40,label:"Discovery"},{x:110,label:"Preclinical"},{x:190,label:"Phase I"},{x:265,label:"Phase II"},{x:335,label:"Phase III"},{x:390,label:"Approval"}].map(({x,label})=>(
+              <g key={x}>
+                <circle cx={x} cy="60" r="7" fill="#002D72"/>
+                <text x={x} y="82" textAnchor="middle" fill="#333" fontSize="9" fontFamily="DM Sans,sans-serif">{label}</text>
+              </g>
+            ))}
+            <rect x="155" y="28" width="70" height="18" rx="4" fill="#D86018" opacity=".9"/>
+            <text x="190" y="41" textAnchor="middle" fill="white" fontSize="8" fontFamily="DM Sans,sans-serif">YCT529 / triptonide</text>
+            <rect x="228" y="28" width="70" height="18" rx="4" fill="#D86018" opacity=".9"/>
+            <text x="263" y="41" textAnchor="middle" fill="white" fontSize="8" fontFamily="DM Sans,sans-serif">DMAU / 11β-MNTDC</text>
+            <rect x="155" y="8" width="60" height="16" rx="4" fill="#5a6475" opacity=".8"/>
+            <text x="185" y="20" textAnchor="middle" fill="white" fontSize="8" fontFamily="DM Sans,sans-serif">ADAM / Vasalgel</text>
+            <text x="210" y="110" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Multiple candidates active across pipeline stages</text>
+          </svg>
+        )
+      },
+      {
+        headline: "The Key Message for Presenters",
+        body: "You may hear: \"They tried this and it didn't work.\" This refers to a 2016 WHO trial that was halted by a safety monitoring board — not because the method failed. The method worked. Sperm counts dropped significantly in most participants. And importantly: 75% of participants said they would continue using the method. The trial was stopped; the science was not disproved. The field continues.",
+        callout: { label:"What to Say", text:"\"We don't have a male pill yet — not because it's impossible, but because the field has been chronically underfunded. The science is there. The pipeline is real.\"" },
+        visual: (
+          <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <rect x="10" y="10" width="190" height="90" rx="12" fill="#fdf0ee" stroke="#c0392b" strokeWidth="1.5"/>
+            <text x="105" y="35" textAnchor="middle" fill="#c0392b" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">❌ Don't say:</text>
+            <text x="105" y="55" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"The 2016 trial proved</text>
+            <text x="105" y="69" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">male contraception</text>
+            <text x="105" y="83" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">doesn't work."</text>
+            <rect x="218" y="10" width="190" height="90" rx="12" fill="#e8f5ee" stroke="#1a7a4a" strokeWidth="1.5"/>
+            <text x="313" y="35" textAnchor="middle" fill="#1a7a4a" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">✓ Do say:</text>
+            <text x="313" y="53" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"The 2016 trial was stopped</text>
+            <text x="313" y="67" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">by a safety board. It worked.</text>
+            <text x="313" y="81" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">75% would have continued."</text>
+          </svg>
+        )
+      }
+    ],
+    misconceptions: [
+      { q:'"They tried this and it didn\'t work."', a:"The 2016 WHO trial was halted by a safety monitoring board — not because the method failed scientifically. 75% of participants said they'd continue using it. The science was not disproved." },
+      { q:'"Non-hormonal methods are less effective."', a:"Not necessarily. Vasectomy is non-hormonal and nearly 100% effective. Effectiveness depends on mechanism, not whether the method is hormonal." },
+      { q:'"Vas-occlusive devices are just like vasectomy."', a:"Key difference: vasectomy cuts the vas deferens. Vas-occlusive devices inject a reversible gel. Different procedure, different intent — reversibility is the core design goal." },
+      { q:'"If it worked in mice, why isn\'t it available?"', a:"Species translation is a known challenge. Some sperm proteins in mice differ from humans (e.g., mouse SLO3 ≠ human SLO3). Promising preclinical results always require human trials." },
+    ],
+    quiz: [
+      { id:1, type:"mc", text:"Vasectomy is best characterized as:", options:["A reversible, non-surgical method","A surgical method intended to be permanent","A hormonal method","A gel-based vas-occlusive device"], correct:1, explanation:"Vasectomy is a surgical procedure that is highly effective and intended to be permanent. Reversal is possible but success rates decline over time." },
+      { id:2, type:"mc", text:"Hormonal male contraceptives typically work by:", options:["Blocking the vas deferens","Suppressing sperm motility","Suppressing sperm production via HPG axis","Preventing fertilization"], correct:2, explanation:"Hormonal male contraceptives suppress the brain's HPG axis, which reduces signals to the testicles and shuts down sperm production — the same principle as many female hormonal methods." },
+      { id:3, type:"mc", text:"Which of the following is an example of a vas-occlusive approach to male contraception?", options:["YCT529","ADAM by Contraline","DMAU","Triptonide"], correct:1, explanation:"ADAM by Contraline (and Vasalgel) are vas-occlusive approaches — reversible gels injected into the vas deferens. YCT529 and triptonide inhibit spermatogenesis; DMAU is a hormonal candidate." },
+      { id:4, type:"mc", text:"CatSper is a target for which mechanism of male contraception?", options:["Spermatogenesis inhibition","Hormonal suppression","Sperm motility inhibition","Vas occlusion"], correct:2, explanation:"CatSper is an ion channel that controls sperm's ability to swim. Drugs targeting CatSper aim to disable sperm motility — potentially as a fast-acting method taken near the time of intercourse." },
+      { id:5, type:"tf", text:"True or False: The fact that no new male contraceptive is FDA-approved means the science has failed.", options:["True","False"], correct:1, explanation:"False. Lack of approval reflects historical underinvestment and the long drug development timeline, not scientific failure. Multiple candidates are in active clinical trials." },
+    ]
   },
+
+  // ── MODULE 4 ──────────────────────────────────────────────────────────────
   {
-    id: 4,
-    headline: "MCI's Role in the Field",
-    body: "MCI — the Male Contraceptive Initiative — is a nonprofit funder. We don't have an in-house lab or develop drugs ourselves. We fund researchers at universities and biotech companies to develop the next generation of non-hormonal, reversible male contraceptives. As a presenter, you are part of MCI's field-building work: building public awareness and trust in a scientific field that has been historically underfunded.",
-    callout: {
-      label: "Key Fact",
-      text: "MCI funds the research. You are part of building the ecosystem that makes new methods possible."
-    },
-    visual: <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
-      <rect x="30" y="30" width="80" height="50" rx="10" fill="#002D72"/>
-      <text x="70" y="52" textAnchor="middle" fill="white" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="700">MCI</text>
-      <text x="70" y="68" textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="DM Sans,sans-serif">Nonprofit</text>
-      <line x1="112" y1="55" x2="150" y2="55" stroke="#D86018" strokeWidth="2" markerEnd="url(#arr)"/>
-      <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#D86018"/></marker></defs>
-      <rect x="152" y="20" width="82" height="30" rx="8" fill="#eef2ff"/>
-      <text x="193" y="39" textAnchor="middle" fill="#002D72" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">Universities</text>
-      <rect x="152" y="60" width="82" height="30" rx="8" fill="#fff0e6"/>
-      <text x="193" y="79" textAnchor="middle" fill="#D86018" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">Biotech cos.</text>
-      <line x1="236" y1="35" x2="270" y2="55" stroke="#aaa" strokeWidth="1.5"/>
-      <line x1="236" y1="75" x2="270" y2="55" stroke="#aaa" strokeWidth="1.5"/>
-      <rect x="272" y="35" width="90" height="40" rx="8" fill="#002D72"/>
-      <text x="317" y="55" textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">New Male</text>
-      <text x="317" y="68" textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="10" fontFamily="DM Sans,sans-serif">Contraceptives</text>
-    </svg>
+    num: 4,
+    title: "The Drug Development Pipeline",
+    time: "4–6 min",
+    passThreshold: 3,
+    slides: [
+      {
+        headline: "The Pipeline at a Glance",
+        body: "Every new drug follows the same path: Discovery (identifying a target) → Preclinical (lab and animal testing) → Phase I (first human tests, small group, safety focus) → Phase II (larger group, safety + early efficacy) → Phase III (large-scale efficacy trial) → Regulatory review → Approval. Average timeline: 10 to 15 years. Average cost: $1–2 billion. Most candidates fail at some stage. The ones that don't are the medicines we rely on.",
+        callout: { label:"Key Fact", text:"10–15 years and $1–2 billion is typical for any new drug — not unique to male contraceptives. The pipeline is long by design, to protect safety." },
+        visual: (
+          <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <defs><marker id="arr6" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#002D72"/></marker></defs>
+            {[{x:10,label:"Discovery",sub:"Target ID",c:"#5a6475"},{x:80,label:"Preclinical",sub:"Lab/animal",c:"#5a6475"},{x:160,label:"Phase I",sub:"Safety",c:"#002D72"},{x:235,label:"Phase II",sub:"Efficacy",c:"#002D72"},{x:308,label:"Phase III",sub:"Large scale",c:"#002D72"},{x:375,label:"Approval",sub:"FDA",c:"#D86018"}].map(({x,label,sub,c},i)=>(
+              <g key={x}>
+                <rect x={x} y="20" width="62" height="50" rx="8" fill={c}/>
+                <text x={x+31} y="42" textAnchor="middle" fill="white" fontSize="9" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
+                <text x={x+31} y="57" textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="8" fontFamily="DM Sans,sans-serif">{sub}</text>
+                {i<5 && <line x1={x+63} y1="45" x2={x+70} y2="45" stroke="#002D72" strokeWidth="1.5" markerEnd="url(#arr6)"/>}
+              </g>
+            ))}
+            <text x="210" y="95" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Average: 10–15 years · $1–2 billion</text>
+          </svg>
+        )
+      },
+      {
+        headline: "Why Male Contraceptives Face Extra Challenges",
+        body: "Beyond the standard drug development hurdles, male contraceptives face five additional challenges specific to the field: (1) The healthy user problem — regulators hold contraceptives to a higher safety bar because users aren't sick. (2) Chronic use — the method must be safe to take for years. (3) Historical underinvestment — reproductive health for men has been deprioritized by funders and pharma for decades. (4) Species translation — promising results in mice don't always hold in humans. (5) Regulatory pathway — the approval process for male contraceptives is less established than for female methods.",
+        callout: { label:"For Presenters", text:"These challenges explain the timeline — they don't mean the science is failing. They mean the field needs sustained investment and attention." },
+        visual: (
+          <svg viewBox="0 0 420 140" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            {[
+              {i:1,label:"Healthy user problem",sub:"Higher safety standard for healthy volunteers",y:10},
+              {i:2,label:"Chronic use safety",sub:"Must be safe for years of daily use",y:36},
+              {i:3,label:"Historical underinvestment",sub:"Men's reproductive health deprioritized by funders",y:62},
+              {i:4,label:"Species translation",sub:"Mouse results don't always replicate in humans",y:88},
+              {i:5,label:"Regulatory pathway",sub:"Less established than for female methods",y:114},
+            ].map(({i,label,sub,y})=>(
+              <g key={y}>
+                <circle cx="20" cy={y+12} r="10" fill="#D86018"/>
+                <text x="20" y={y+16} textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">{i}</text>
+                <text x="40" y={y+10} fill="#002D72" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="600">{label}</text>
+                <text x="40" y={y+24} fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">{sub}</text>
+              </g>
+            ))}
+          </svg>
+        )
+      },
+      {
+        headline: "Where the Current Pipeline Stands",
+        body: "Multiple male contraceptive candidates are active right now. Hormonal agents DMAU and 11β-MNTDC are in Phase II trials. Non-hormonal oral candidates including YCT529 (a RAR-α inhibitor) and triptonide have shown strong preclinical results and are moving toward or into early clinical stages. Vas-occlusive devices ADAM and Vasalgel are in early clinical or feasibility testing. No single candidate is clearly 'winning' — diversity across mechanisms and stages is a feature of a healthy pipeline, not a sign of fragmentation.",
+        callout: { label:"Presenter Guidance", text:"Describe the pipeline as active and diverse. Avoid declaring a 'front-runner' — the field is too early for that, and it can mislead audiences." },
+        visual: (
+          <svg viewBox="0 0 420 130" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            {[
+              {label:"DMAU",stage:"Phase II",type:"Hormonal",x:220,y:15,c:"#5a6475"},
+              {label:"11β-MNTDC",stage:"Phase II",type:"Hormonal",x:310,y:15,c:"#5a6475"},
+              {label:"YCT529",stage:"Early Clinical",type:"Non-hormonal",x:145,y:55,c:"#002D72"},
+              {label:"Triptonide",stage:"Preclinical",type:"Non-hormonal",x:60,y:55,c:"#002D72"},
+              {label:"ADAM",stage:"Early Clinical",type:"Vas-occlusive",x:145,y:95,c:"#D86018"},
+              {label:"Vasalgel",stage:"Feasibility",type:"Vas-occlusive",x:50,y:95,c:"#D86018"},
+            ].map(({label,stage,type,x,y,c})=>(
+              <g key={label}>
+                <rect x={x} y={y} width="88" height="28" rx="6" fill={c} opacity=".9"/>
+                <text x={x+44} y={y+12} textAnchor="middle" fill="white" fontSize="9" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
+                <text x={x+44} y={y+23} textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="8" fontFamily="DM Sans,sans-serif">{stage}</text>
+              </g>
+            ))}
+            <text x="210" y="126" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Active candidates across multiple mechanisms and stages</text>
+          </svg>
+        )
+      },
+      {
+        headline: "What \"In Development\" Actually Means",
+        body: "One of the most common presenter errors is making a specific prediction: \"A male contraceptive will be available by [year].\" Avoid this. Drug development timelines are genuinely unpredictable — they depend on trial results, funding, regulatory decisions, and manufacturing. What you can say accurately: there are promising candidates in human trials right now. Whether a product reaches market in 5, 10, or 15 years depends on factors the science community is actively working on. Stay honest about the uncertainty — it doesn't undermine the message; it builds trust.",
+        callout: { label:"What to Say", text:"\"Promising candidates are in clinical trials right now. Timing depends on trial results, funding, and regulatory decisions — but this is no longer theoretical.\"" },
+        visual: (
+          <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <rect x="10" y="10" width="185" height="90" rx="12" fill="#fdf0ee" stroke="#c0392b" strokeWidth="1.5"/>
+            <text x="102" y="34" textAnchor="middle" fill="#c0392b" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="700">❌ Avoid</text>
+            <text x="102" y="52" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"There will be a male</text>
+            <text x="102" y="66" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">pill by 2028."</text>
+            <text x="102" y="82" textAnchor="middle" fill="#888" fontSize="9" fontFamily="DM Sans,sans-serif">(You don't know that)</text>
+            <rect x="215" y="10" width="185" height="90" rx="12" fill="#e8f5ee" stroke="#1a7a4a" strokeWidth="1.5"/>
+            <text x="307" y="34" textAnchor="middle" fill="#1a7a4a" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="700">✓ Say instead</text>
+            <text x="307" y="52" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"Candidates are in trials</text>
+            <text x="307" y="66" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">now. Timing depends on</text>
+            <text x="307" y="80" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">funding and results."</text>
+          </svg>
+        )
+      }
+    ],
+    misconceptions: [
+      { q:'"This has been \'10 years away\' forever — it\'s never happening."', a:"Drug development timelines are genuinely long for all drugs. The pipeline has advanced significantly — multiple candidates are in human trials now. That's meaningfully different from 20 years ago." },
+      { q:'"Why doesn\'t a big pharma company just make this?"', a:"Large pharma companies have historically deprioritized male reproductive health. That's the market failure MCI exists to help correct — funding early-stage research to de-risk it for eventual commercial development." },
+    ],
+    quiz: [
+      { id:1, type:"mc", text:"In which phase of clinical trials is a new drug first tested in humans, typically in a small group of healthy volunteers?", options:["Phase II","Phase III","Phase I","Preclinical"], correct:2, explanation:"Phase I is the first human trial stage — a small group receives the drug primarily to assess safety and dosing. Preclinical testing happens in the lab and in animals before any human testing." },
+      { id:2, type:"mc", text:"Which of the following is NOT a specific challenge for developing male contraceptives (beyond standard drug development challenges)?", options:["Healthy user problem","Regulatory pathway is newer and less established","Animal models always predict human results accurately","Historical underinvestment"], correct:2, explanation:"Animal models do NOT always predict human results — species translation is actually one of the listed challenges. The other three are all real, additional hurdles specific to male contraceptive development." },
+      { id:3, type:"mc", text:"Approximately how long does it typically take for a new drug to go from discovery to approval?", options:["2–3 years","5–7 years","10–15 years","25+ years"], correct:2, explanation:"The average drug development timeline is 10–15 years from discovery to regulatory approval, at a cost of roughly $1–2 billion. This timeline is typical across all therapeutic areas, not unique to contraception." },
+      { id:4, type:"mc", text:"What is the most accurate way for a presenter to describe when a new male contraceptive will be available?", options:["\"There will be a male pill by 2027\"","\"Promising candidates are in trials now; timing depends on funding and results\"","\"Male contraception research has stalled\"","\"The FDA has already approved several new methods\""], correct:1, explanation:"The accurate framing is that promising candidates are in trials now, with timing depending on multiple factors. Specific year predictions are misleading and damage credibility when timelines shift." },
+    ]
+  },
+
+  // ── MODULE 5 ──────────────────────────────────────────────────────────────
+  {
+    num: 5,
+    title: "Talking to Broad Audiences",
+    time: "5–7 min",
+    passThreshold: 4,
+    slides: [
+      {
+        headline: "Know Your Audience",
+        body: "Broad community audiences include people who have never heard of non-condom male methods, people with strong opinions about gender roles and contraception, and people who may be skeptical, curious, or enthusiastic. Your job is not to convince everyone — it's to give accurate, accessible information and respect their autonomy. Framing matters: lead with reproductive autonomy for all, not with a narrative that positions men as lagging behind or needing to step up.",
+        callout: { label:"Core Framing", text:"\"I'm not here to tell you what to think. I'm here to share what's real and what's coming — and to give you accurate information to make that judgment yourself.\"" },
+        visual: (
+          <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            {[{x:20,emoji:"🤔",label:"Skeptical",sub:"Has doubts about\nmale involvement"},{x:130,emoji:"❓",label:"Curious",sub:"Open but\nuninformed"},{x:240,emoji:"😊",label:"Enthusiastic",sub:"Already supportive,\nwants details"},{x:345,emoji:"🌍",label:"Cultural lens",sub:"Contraception seen\nas women's domain"}].map(({x,emoji,label,sub})=>(
+              <g key={x}>
+                <rect x={x} y="10" width="70" height="85" rx="10" fill="#eef2ff" stroke="#002D72" strokeWidth="1"/>
+                <text x={x+35} y="36" textAnchor="middle" fontSize="20">{emoji}</text>
+                <text x={x+35} y="56" textAnchor="middle" fill="#002D72" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">{label}</text>
+                {sub.split('\n').map((line,i)=>(
+                  <text key={i} x={x+35} y={70+i*13} textAnchor="middle" fill="#888" fontSize="8" fontFamily="DM Sans,sans-serif">{line}</text>
+                ))}
+              </g>
+            ))}
+          </svg>
+        )
+      },
+      {
+        headline: "The Most Common Questions",
+        body: "Based on field experience and focus group research — including with African audiences — these are the questions you're most likely to face: \"Will it affect his sex drive?\" (Answer: varies by method; non-hormonal methods targeting sperm specifically should not.) \"Is it reversible?\" (Answer: reversibility is a core design goal for all new methods.) \"Does it protect against STIs?\" (Answer: no — only condoms do; always state this clearly.) \"Why would a man take responsibility for this?\" (Answer: many men already want to; the barrier is the absence of options, not willingness.)",
+        callout: { label:"Always Say Clearly", text:"No male contraceptive (other than condoms) protects against STIs. State this proactively — don't wait to be asked." },
+        visual: (
+          <svg viewBox="0 0 420 140" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            {[
+              {q:"Will it affect sex drive?",a:"Depends on method. Non-hormonal methods should not.",y:10},
+              {q:"Is it reversible?",a:"Reversibility is a core design requirement for new methods.",y:45},
+              {q:"Does it protect against STIs?",a:"No. Only condoms provide STI protection.",y:80},
+              {q:"Why would a man do this?",a:"Consumer data: 8 in 10 men want to. Options are the barrier.",y:115},
+            ].map(({q,a,y})=>(
+              <g key={y}>
+                <text x="10" y={y+13} fill="#D86018" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">Q: {q}</text>
+                <text x="10" y={y+27} fill="#333" fontSize="10" fontFamily="DM Sans,sans-serif">→ {a}</text>
+              </g>
+            ))}
+          </svg>
+        )
+      },
+      {
+        headline: "Cultural Framing That Works",
+        body: "Contraception is a couple's issue. Framing male contraception as shared responsibility tends to resonate broadly — including in contexts where contraception has traditionally been seen as a woman's domain. Avoid framing that positions women as passive recipients of male behavior, or that implies men are obstacles to overcome. In many cultural contexts, involving partners in the conversation is key. Useful phrase: \"This gives couples more choices together.\" Focus on expanding options, not assigning blame for current gaps.",
+        callout: { label:"Phrase to Use", text:"\"More options for men means more choices for couples — and more reproductive autonomy for everyone.\"" },
+        visual: (
+          <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <rect x="10" y="15" width="185" height="80" rx="12" fill="#fdf0ee" stroke="#c0392b" strokeWidth="1.5"/>
+            <text x="102" y="38" textAnchor="middle" fill="#c0392b" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">❌ Avoid</text>
+            <text x="102" y="55" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"Men need to step up</text>
+            <text x="102" y="69" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">and take responsibility."</text>
+            <text x="102" y="84" textAnchor="middle" fill="#888" fontSize="9" fontFamily="DM Sans,sans-serif">(Assigns blame, alienates)</text>
+            <rect x="215" y="15" width="185" height="80" rx="12" fill="#e8f5ee" stroke="#1a7a4a" strokeWidth="1.5"/>
+            <text x="307" y="38" textAnchor="middle" fill="#1a7a4a" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">✓ Use instead</text>
+            <text x="307" y="55" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"This gives couples more</text>
+            <text x="307" y="69" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">choices together."</text>
+            <text x="307" y="84" textAnchor="middle" fill="#888" fontSize="9" fontFamily="DM Sans,sans-serif">(Inclusive, empowering)</text>
+          </svg>
+        )
+      },
+      {
+        headline: "What NOT to Say",
+        body: "Common presenter errors that undermine credibility: Don't say vasectomy is 'easily reversible' — reversal success rates decline significantly over time. Don't say a male method will be available by a specific year. Don't say the 2016 WHO trial 'failed' — the method worked; the trial was stopped by a safety board. Don't attribute statistics to NIH or USAID without verified sourcing — stick to MCI's own consumer research and published literature. Don't make contraception political. Stay on science, equity, and choice.",
+        callout: { label:"The Rule", text:"If you're not certain it's accurate, don't say it. \"I don't know exactly, but here's what I do know\" is always a credible answer." },
+        visual: (
+          <svg viewBox="0 0 420 140" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            {[
+              {text:"\"Vasectomy is easily reversible.\"",y:10},
+              {text:"\"A male pill will be available by [year].\"",y:40},
+              {text:"\"The 2016 WHO trial failed.\"",y:70},
+              {text:"\"According to NIH/USAID...\" (unverified)",y:100},
+            ].map(({text,y})=>(
+              <g key={y}>
+                <rect x="10" y={y} width="14" height="24" rx="3" fill="#c0392b"/>
+                <text x="17" y={y+17} textAnchor="middle" fill="white" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="700">✕</text>
+                <text x="34" y={y+16} fill="#333" fontSize="12" fontFamily="DM Sans,sans-serif">{text}</text>
+              </g>
+            ))}
+            <text x="210" y="133" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Accuracy builds trust. Uncertainty honestly stated is not a weakness.</text>
+          </svg>
+        )
+      },
+      {
+        headline: "Your North Star as a Presenter",
+        body: "You don't need everyone in the room to leave excited about male contraception. Your goal is for every person to leave knowing this is real science, the field is moving, and more options for everyone is good for everyone. Stay grounded in evidence. Stay curious. And when you get a hard question you can't answer, say so — and offer to follow up. That's what builds trust more than anything else.",
+        callout: { label:"Your Goal", text:"\"I'm here to expand what people think is possible, and to give them accurate information. More options for everyone is good for everyone.\"" },
+        visual: (
+          <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            {[{x:30,label:"Real science",sub:"Grounded in evidence",c:"#002D72"},{x:155,label:"Field is moving",sub:"Active pipeline",c:"#002D72"},{x:280,label:"More options = good",sub:"For everyone",c:"#D86018"}].map(({x,label,sub,c})=>(
+              <g key={x}>
+                <rect x={x} y="15" width="115" height="70" rx="12" fill={c}/>
+                <text x={x+57} y="46" textAnchor="middle" fill="white" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
+                <text x={x+57} y="64" textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="10" fontFamily="DM Sans,sans-serif">{sub}</text>
+              </g>
+            ))}
+            <text x="210" y="103" textAnchor="middle" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">Your three-part message as a presenter</text>
+          </svg>
+        )
+      }
+    ],
+    misconceptions: [
+      { q:'"Contraception is culturally a woman\'s responsibility."', a:"Male contraceptive interest is documented globally. The framing of shared responsibility resonates across many cultural contexts, especially when centered on couple agency rather than blame." },
+      { q:'"Hormonal methods would cause permanent infertility."', a:"Reversibility is a core design requirement for all new male methods. Hormonal trial participants have recovered normal sperm counts after discontinuation." },
+      { q:'"Could a partner administer this to a man without his knowledge?"', a:"Address the consent concern directly: any contraceptive method should be used with full knowledge and agreement of the person taking it. This is about expanding options, not bypassing consent." },
+      { q:'"Will new methods be affordable and accessible in lower-income countries?"', a:"Global access and equity are active priorities in male contraceptive development — including from MCI's perspective. Affordability and distribution are part of translational strategy discussions." },
+    ],
+    quiz: [
+      { id:1, type:"mc", text:"A community member asks: \"Does a male contraceptive protect against HIV?\" The correct response is:", options:["\"Yes, non-hormonal methods provide some protection\"","\"No, only condoms provide STI protection — male contraceptives prevent pregnancy only\"","\"It depends on the method\"","\"We don't know yet\""], correct:1, explanation:"No male contraceptive other than condoms provides STI protection. This should always be stated clearly and proactively — it's one of the most important distinctions to make with any audience." },
+      { id:2, type:"mc", text:"Which of the following is the most accurate statement about vasectomy reversibility?", options:["Vasectomy is easily and fully reversible at any time","Vasectomy is intended to be permanent; reversal is possible but success rates decline over time","All new male methods are based on vasectomy","Vasectomy reversal is covered by insurance in most countries"], correct:1, explanation:"Vasectomy is designed to be permanent. Reversal surgery is possible but success rates decline significantly the longer after the original procedure — never describe it as \"easily reversible.\"" },
+      { id:3, type:"mc", text:"A participant says: \"Men won't use new methods — they just don't care about contraception.\" The best evidence-based response is:", options:["\"That's probably true in some cultures\"","\"Consumer research shows most men actively want to prevent pregnancy and would use new options if available\"","\"Male contraceptives are really designed for couples, not men individually\"","\"We'll need more studies to know\""], correct:1, explanation:"MCI's consumer research shows 8 in 10 men aged 18–44 are actively trying to prevent pregnancy, and 8.1 million are very likely to use a new male method. The barrier is absence of options, not willingness." },
+      { id:4, type:"mc", text:"Which of the following is something a presenter should AVOID saying?", options:["\"New male methods are in clinical trials right now\"","\"Male contraception is a shared responsibility issue\"","\"The male contraceptive pill will be available by 2028\"","\"Reversibility is a core design requirement for new methods in development\""], correct:2, explanation:"Never give specific year predictions for availability — you cannot know that. It damages credibility when timelines shift, and misleads audiences about the nature of drug development." },
+      { id:5, type:"tf", text:"True or False: The 2016 WHO hormonal male contraceptive trial demonstrated that the method was scientifically ineffective.", options:["True","False"], correct:1, explanation:"False. The 2016 trial was halted by a safety monitoring board — not because the method didn't work. It significantly reduced sperm counts in most participants, and 75% said they would continue using it. The science was not disproved." },
+    ]
   }
 ];
 
-const MODULE1_MISCONCEPTIONS = [
-  { q: "\"We already have condoms — why do we need more?\"", a: "Condoms are barrier methods with real-world failure rates. Women have 10+ methods; men have 2. More options means more couples can find what works for them." },
-  { q: "\"Men won't use new methods.\"", a: "Consumer data says otherwise — 8 in 10 men are already trying to prevent pregnancy. The question is whether trusted, accessible options exist." },
-  { q: "\"This is a Western issue.\"", a: "Unintended pregnancy rates are highest in low- and middle-income countries. Demand for male methods exists globally." },
-];
+// ─── Utility components ───────────────────────────────────────────────────────
 
-const MODULE1_QUIZ = [
-  {
-    id: 1,
-    type: "mc",
-    text: "Approximately what percentage of pregnancies globally are unintended?",
-    options: ["15%", "30%", "45%", "60%"],
-    correct: 2,
-    explanation: "Approximately 45% of all pregnancies globally are unintended, translating to roughly 121 million per year."
-  },
-  {
-    id: 2,
-    type: "mc",
-    text: "According to MCI's consumer research, what percentage of men prefer a non-hormonal contraceptive method?",
-    options: ["38%", "55%", "65%", "80%"],
-    correct: 3,
-    explanation: "MCI's U.S. consumer research found that 80% of surveyed men prefer a non-hormonal method, and 89% want something reversible."
-  },
-  {
-    id: 3,
-    type: "mc",
-    text: "Which of the following is NOT a reason new male contraceptive methods are needed?",
-    options: [
-      "Women bear a disproportionate burden of contraception",
-      "Men have expressed interest in new options",
-      "Male contraception would eliminate STIs",
-      "More options allow couples to share responsibility"
-    ],
-    correct: 2,
-    explanation: "Male contraceptives prevent pregnancy but do NOT protect against STIs. Only condoms provide STI protection."
-  },
-  {
-    id: 4,
-    type: "mc",
-    text: "MCI is best described as:",
-    options: [
-      "A pharmaceutical company developing drugs in-house",
-      "A nonprofit that funds external researchers",
-      "A government agency",
-      "A clinical trial site"
-    ],
-    correct: 1,
-    explanation: "MCI is a nonprofit funder — it does not run an in-house lab but funds researchers at universities and biotech companies."
-  },
-  {
-    id: 5,
-    type: "tf",
-    text: "True or False: Consumer research suggests that interest in new male contraceptive methods is limited to men in the United States.",
-    options: ["True", "False"],
-    correct: 1,
-    explanation: "False. While MCI's primary consumer data is U.S.-based, the evidence points to a global pattern. Unintended pregnancy rates are highest in low- and middle-income countries."
-  }
-];
-
-// ─── Utility ─────────────────────────────────────────────────────────────────
-
-function ScoreBar({ pct, animated = true }) {
-  const [display, setDisplay] = useState(animated ? 0 : pct);
-  useEffect(() => {
-    if (!animated) return;
+function ScoreBar({ label, pct }) {
+  const [display, setDisplay] = React.useState(0);
+  React.useEffect(() => {
     const t = setTimeout(() => setDisplay(pct), 100);
     return () => clearTimeout(t);
   }, [pct]);
   const cls = pct >= 80 ? 'pass-color' : 'fail-color';
   return (
     <div className="score-bar-wrap">
-      <div className="score-bar-label">
-        <span>Score</span><strong>{pct}%</strong>
-      </div>
+      <div className="score-bar-label"><span>{label || 'Score'}</span><strong>{pct}%</strong></div>
       <div className="score-bar-track">
-        <div className="score-bar-fill" style={{width: display+'%', transition:'width 1s ease'}}
-          class={`score-bar-fill ${cls}`}/>
+        <div className={`score-bar-fill ${cls}`} style={{width: display + '%'}} />
       </div>
     </div>
   );
 }
 
-// ─── TopBar ──────────────────────────────────────────────────────────────────
+// ─── TopBar ───────────────────────────────────────────────────────────────────
 
-function TopBar({ phase }) {
-  const steps = ['Intro','Module 1','Results'];
-  const currentIdx = phase === 'registration' ? 0 : phase === 'stub' ? 2 : 1;
+function TopBar({ currentModule, phase }) {
+  // 7 steps: registration + 5 modules + completion
+  const totalSteps = 7;
+  let doneCount = 0;
+  let activeIdx = 0;
+  if (phase === 'registration') { doneCount = 0; activeIdx = 0; }
+  else if (phase === 'complete') { doneCount = 7; activeIdx = 6; }
+  else { doneCount = currentModule; activeIdx = currentModule; }
+
   return (
     <div className="top-bar">
       <div className="logo-area">
@@ -615,10 +791,14 @@ function TopBar({ phase }) {
         </div>
       </div>
       <div className="progress-track">
-        <div className="progress-label">Your progress</div>
+        <div className="progress-label">
+          {phase === 'registration' ? 'Get started' :
+           phase === 'complete' ? 'Complete!' :
+           `Module ${currentModule} of 5`}
+        </div>
         <div className="progress-steps">
-          {steps.map((s, i) => (
-            <div key={s} className={`progress-step ${i < currentIdx ? 'done' : i === currentIdx ? 'active' : ''}`} />
+          {Array.from({length: totalSteps}).map((_, i) => (
+            <div key={i} className={`progress-step ${i < doneCount ? 'done' : i === activeIdx ? 'active' : ''}`} />
           ))}
         </div>
       </div>
@@ -626,23 +806,18 @@ function TopBar({ phase }) {
   );
 }
 
-// ─── Registration screen ──────────────────────────────────────────────────────
+// ─── Registration ─────────────────────────────────────────────────────────────
 
 function RegistrationScreen({ onBegin }) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [errors, setErrors] = useState({});
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [errors, setErrors] = React.useState({});
 
-  function validate() {
+  function handleBegin() {
     const e = {};
     if (!name.trim()) e.name = 'Please enter your full name.';
     if (!email.trim()) e.email = 'Please enter your email address.';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = 'Please enter a valid email address.';
-    return e;
-  }
-
-  function handleBegin() {
-    const e = validate();
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = 'Please enter a valid email.';
     if (Object.keys(e).length) { setErrors(e); return; }
     onBegin({ name: name.trim(), email: email.trim() });
   }
@@ -658,8 +833,8 @@ function RegistrationScreen({ onBegin }) {
           <div className="reg-intro">
             <div className="reg-about">
               <h3>What is this?</h3>
-              <p>This self-paced module prepares you to speak accurately and confidently about male contraception to broad community audiences — including the science, the pipeline, and how to address common questions.</p>
-              <p>It's designed for MCI-affiliated presenters, not for the audiences themselves. Complete all 5 modules to earn your completion certificate.</p>
+              <p>This self-paced module prepares you to speak accurately and confidently about male contraception to broad community audiences — including the science, the pipeline, and how to handle common questions.</p>
+              <p>Complete all 5 modules to earn your MCI completion certificate. Designed for presenters, not audiences.</p>
               <div style={{marginTop:12,display:'flex',gap:8,flexWrap:'wrap'}}>
                 <span className="tag tag-navy">5 Modules</span>
                 <span className="tag tag-orange">20–40 min</span>
@@ -667,57 +842,29 @@ function RegistrationScreen({ onBegin }) {
               </div>
             </div>
             <div className="reg-meta">
-              <div className="meta-chip">
-                <span className="icon">⏱️</span>
-                <div><strong>Estimated time</strong>20–40 minutes total</div>
-              </div>
-              <div className="meta-chip">
-                <span className="icon">📋</span>
-                <div><strong>Format</strong>Content slides + knowledge check quiz per module</div>
-              </div>
-              <div className="meta-chip">
-                <span className="icon">✅</span>
-                <div><strong>Passing score</strong>≥80% on each module quiz</div>
-              </div>
-              <div className="meta-chip">
-                <span className="icon">🔄</span>
-                <div><strong>Retries</strong>Unlimited — review content and retake any quiz</div>
-              </div>
+              <div className="meta-chip"><span className="icon">⏱️</span><div><strong>Estimated time</strong>20–40 minutes total</div></div>
+              <div className="meta-chip"><span className="icon">📋</span><div><strong>Format</strong>Content slides + knowledge check per module</div></div>
+              <div className="meta-chip"><span className="icon">✅</span><div><strong>Passing score</strong>≥80% on each module quiz</div></div>
+              <div className="meta-chip"><span className="icon">🔄</span><div><strong>Retries</strong>Unlimited — review and retake any quiz</div></div>
             </div>
           </div>
-
           <div className="divider"/>
-
           <div style={{maxWidth:480}}>
             <div style={{marginBottom:20,fontSize:14,fontWeight:600,color:'var(--navy)'}}>Enter your details to get started</div>
             <div className="form-group">
-              <label className="form-label" htmlFor="reg-name">Full name</label>
-              <input
-                id="reg-name"
-                className="form-input"
-                type="text"
-                placeholder="e.g. Sabey Boswell"
-                value={name}
-                onChange={e => { setName(e.target.value); setErrors(ev=>({...ev,name:''})); }}
-              />
+              <label className="form-label">Full name</label>
+              <input className="form-input" type="text" placeholder="e.g. Sabey Boswell" value={name}
+                onChange={e=>{setName(e.target.value);setErrors(ev=>({...ev,name:''}));}}/>
               {errors.name && <div className="form-error">{errors.name}</div>}
             </div>
             <div className="form-group">
-              <label className="form-label" htmlFor="reg-email">Email address</label>
-              <input
-                id="reg-email"
-                className="form-input"
-                type="email"
-                placeholder="e.g. you@malecontraceptive.org"
-                value={email}
-                onChange={e => { setEmail(e.target.value); setErrors(ev=>({...ev,email:''})); }}
-              />
+              <label className="form-label">Email address</label>
+              <input className="form-input" type="email" placeholder="e.g. you@malecontraceptive.org" value={email}
+                onChange={e=>{setEmail(e.target.value);setErrors(ev=>({...ev,email:''}));}}/>
               {errors.email && <div className="form-error">{errors.email}</div>}
             </div>
             <div className="btn-row">
-              <button className="btn btn-primary" onClick={handleBegin}>
-                Begin Training →
-              </button>
+              <button className="btn btn-primary" onClick={handleBegin}>Begin Training →</button>
             </div>
           </div>
         </div>
@@ -728,42 +875,35 @@ function RegistrationScreen({ onBegin }) {
 
 // ─── Content slide ────────────────────────────────────────────────────────────
 
-function ContentScreen({ slide, total, onNext, onBack, slideIndex }) {
+function ContentScreen({ mod, slideIndex, onNext, onBack }) {
+  const slide = mod.slides[slideIndex];
+  const total = mod.slides.length;
   return (
-    <div className="slide-in" key={slideIndex}>
+    <div className="slide-in" key={`m${mod.num}-s${slideIndex}`}>
       <div className="card">
         <div className="card-header">
-          <div className="module-tag">Module 1 · Why Male Contraception Matters</div>
+          <div className="module-tag">Module {mod.num} · {mod.title}</div>
           <div className="card-title">{slide.headline}</div>
         </div>
         <div className="card-body">
           <div className="slide-counter">Slide {slideIndex + 1} of {total}</div>
-
-          <div className="visual-block">
-            {slide.visual}
-          </div>
-
+          <div className="visual-block">{slide.visual}</div>
           <p className="slide-body">{slide.body}</p>
-
           {slide.callout && (
             <div className="callout-box">
               <div className="callout-label">{slide.callout.label}</div>
               <div className="callout-text">{slide.callout.text}</div>
             </div>
           )}
-
           <div className="slide-dots">
-            {Array.from({length: total}).map((_, i) => (
-              <div key={i} className={`dot ${i === slideIndex ? 'active' : ''}`}/>
+            {Array.from({length:total}).map((_,i)=>(
+              <div key={i} className={`dot ${i===slideIndex?'active':''}`}/>
             ))}
           </div>
-
           <div className="btn-row space">
-            <button className="btn btn-secondary" onClick={onBack} disabled={slideIndex === 0}>
-              ← Back
-            </button>
+            <button className="btn btn-secondary" onClick={onBack} disabled={slideIndex===0}>← Back</button>
             <button className="btn btn-primary" onClick={onNext}>
-              {slideIndex === total - 1 ? 'Take Knowledge Check →' : 'Next →'}
+              {slideIndex===total-1 ? 'Review Key Points →' : 'Next →'}
             </button>
           </div>
         </div>
@@ -772,30 +912,28 @@ function ContentScreen({ slide, total, onNext, onBack, slideIndex }) {
   );
 }
 
-// ─── Misconceptions review ────────────────────────────────────────────────────
+// ─── Misconceptions screen ────────────────────────────────────────────────────
 
-function MisconceptionsScreen({ onContinue }) {
+function MisconceptionsScreen({ mod, onContinue }) {
   return (
     <div className="fade-in">
       <div className="card">
         <div className="card-header">
-          <div className="module-tag">Module 1 · Before the Quiz</div>
+          <div className="module-tag">Module {mod.num} · Before the Quiz</div>
           <div className="card-title">Common Misconceptions to Address</div>
         </div>
         <div className="card-body">
           <p style={{fontSize:14,color:'var(--text-muted)',marginBottom:20,lineHeight:1.7}}>
-            These are the questions and objections you're most likely to hear from audiences. Review them before taking the knowledge check.
+            These are the questions and objections you're most likely to hear from audiences on this topic. Review them before taking the knowledge check.
           </p>
-          {MODULE1_MISCONCEPTIONS.map((m, i) => (
+          {mod.misconceptions.map((m,i)=>(
             <div className="myth-box" key={i}>
               <div className="myth-q">{m.q}</div>
               <div className="myth-a">{m.a}</div>
             </div>
           ))}
           <div className="btn-row right">
-            <button className="btn btn-primary" onClick={onContinue}>
-              Start Knowledge Check →
-            </button>
+            <button className="btn btn-primary" onClick={onContinue}>Start Knowledge Check →</button>
           </div>
         </div>
       </div>
@@ -805,20 +943,13 @@ function MisconceptionsScreen({ onContinue }) {
 
 // ─── Quiz screen ──────────────────────────────────────────────────────────────
 
-function QuizScreen({ attempt, onSubmit }) {
-  const [answers, setAnswers] = useState({});
-
-  function choose(qid, idx) {
-    setAnswers(a => ({ ...a, [qid]: idx }));
-  }
-
-  const allAnswered = MODULE1_QUIZ.every(q => answers[q.id] !== undefined);
+function QuizScreen({ mod, attempt, onSubmit }) {
+  const [answers, setAnswers] = React.useState({});
+  const allAnswered = mod.quiz.every(q => answers[q.id] !== undefined);
 
   function handleSubmit() {
-    const results = MODULE1_QUIZ.map(q => ({
-      id: q.id,
-      chosen: answers[q.id],
-      correct: q.correct,
+    const results = mod.quiz.map(q => ({
+      id: q.id, chosen: answers[q.id], correct: q.correct,
       passed: answers[q.id] === q.correct
     }));
     onSubmit(results);
@@ -828,46 +959,36 @@ function QuizScreen({ attempt, onSubmit }) {
     <div className="fade-in">
       <div className="card">
         <div className="card-header">
-          <div className="module-tag">Module 1 · Knowledge Check {attempt > 1 ? `(Attempt ${attempt})` : ''}</div>
+          <div className="module-tag">Module {mod.num} · Knowledge Check{attempt>1?` (Attempt ${attempt})`:''}</div>
           <div className="card-title">Test Your Understanding</div>
         </div>
         <div className="card-body">
-          <div className="quiz-header">
-            <div className="quiz-subtitle">Answer all 5 questions. You need 4 out of 5 correct (80%) to pass.</div>
+          <div className="quiz-subtitle">
+            {mod.quiz.length} questions — need {mod.passThreshold} correct ({Math.round(mod.passThreshold/mod.quiz.length*100)}%) to pass.
           </div>
-
-          {MODULE1_QUIZ.map((q, qi) => (
+          {mod.quiz.map((q,qi)=>(
             <div className="question-block" key={q.id}>
               <div className="question-text">
-                <span className="question-number">Q{qi + 1}. </span>{q.text}
+                <span className="question-number">Q{qi+1}. </span>{q.text}
               </div>
-              <div className={q.type === 'tf' ? 'tf-options' : 'options-list'}>
-                {q.options.map((opt, oi) => (
-                  <button
-                    key={oi}
-                    className={`option-btn ${answers[q.id] === oi ? 'selected' : ''}`}
-                    onClick={() => choose(q.id, oi)}
-                  >
-                    {q.type !== 'tf' && (
-                      <span className="option-letter">{['A','B','C','D'][oi]}</span>
-                    )}
+              <div className={q.type==='tf'?'tf-options':'options-list'}>
+                {q.options.map((opt,oi)=>(
+                  <button key={oi}
+                    className={`option-btn ${answers[q.id]===oi?'selected':''}`}
+                    onClick={()=>setAnswers(a=>({...a,[q.id]:oi}))}>
+                    {q.type!=='tf' && <span className="option-letter">{['A','B','C','D'][oi]}</span>}
                     {opt}
                   </button>
                 ))}
               </div>
             </div>
           ))}
-
           <div className="btn-row right">
             <button className="btn btn-primary" onClick={handleSubmit} disabled={!allAnswered}>
               Submit Answers →
             </button>
           </div>
-          {!allAnswered && (
-            <p style={{fontSize:12,color:'var(--text-muted)',textAlign:'right',marginTop:8}}>
-              Answer all questions to submit.
-            </p>
-          )}
+          {!allAnswered && <p style={{fontSize:12,color:'var(--text-muted)',textAlign:'right',marginTop:8}}>Answer all questions to submit.</p>}
         </div>
       </div>
     </div>
@@ -876,79 +997,62 @@ function QuizScreen({ attempt, onSubmit }) {
 
 // ─── Quiz results screen ──────────────────────────────────────────────────────
 
-function QuizResultsScreen({ results, attempt, passed, onRetry, onContinue }) {
-  const score = Math.round((results.filter(r => r.passed).length / results.length) * 100);
-
+function QuizResultsScreen({ mod, results, attempt, passed, onRetry, onContinue, isLast }) {
+  const score = Math.round(results.filter(r=>r.passed).length / results.length * 100);
   return (
     <div className="fade-in">
       <div className="card">
         <div className="card-header">
-          <div className="module-tag">Module 1 · Knowledge Check Results</div>
-          <div className="card-title">{passed ? 'Well done — you passed!' : 'Not quite — let\'s review'}</div>
+          <div className="module-tag">Module {mod.num} · Results</div>
+          <div className="card-title">{passed ? 'Well done — you passed!' : "Not quite — let's review"}</div>
         </div>
         <div className="card-body">
-          <div className={`result-banner ${passed ? 'pass' : 'fail'}`}>
-            <div className="result-icon">{passed ? '🎉' : '📖'}</div>
+          <div className={`result-banner ${passed?'pass':'fail'}`}>
+            <div className="result-icon">{passed?'🎉':'📖'}</div>
             <div>
-              <div className="result-title">
-                {passed ? `${score}% — Module 1 Passed` : `${score}% — Need 80% to pass`}
-              </div>
+              <div className="result-title">{passed ? `${score}% — Module ${mod.num} Passed` : `${score}% — Need ${Math.round(mod.passThreshold/mod.quiz.length*100)}% to pass`}</div>
               <div className="result-sub">
                 {passed
-                  ? `You got ${results.filter(r=>r.passed).length} out of ${results.length} questions correct.`
-                  : `You got ${results.filter(r=>r.passed).length} out of ${results.length} correct. Review the missed questions below and try again.`}
+                  ? `${results.filter(r=>r.passed).length} of ${results.length} correct.${attempt>1?` Passed on attempt ${attempt}.`:''}`
+                  : `${results.filter(r=>r.passed).length} of ${results.length} correct. Review the content and try again.`}
               </div>
             </div>
           </div>
-
           <ScoreBar pct={score} />
-
           <div className="divider"/>
-
-          {MODULE1_QUIZ.map((q, qi) => {
-            const r = results.find(r => r.id === q.id);
+          {mod.quiz.map((q,qi)=>{
+            const r = results.find(r=>r.id===q.id);
             const missed = !r.passed;
             return (
               <div className="question-block" key={q.id}>
                 <div className="question-text">
-                  <span style={{marginRight:6}}>{missed ? '❌' : '✅'}</span>
-                  <span className="question-number">Q{qi + 1}. </span>{q.text}
+                  <span style={{marginRight:6}}>{missed?'❌':'✅'}</span>
+                  <span className="question-number">Q{qi+1}. </span>{q.text}
                 </div>
-                <div className={q.type === 'tf' ? 'tf-options' : 'options-list'}>
-                  {q.options.map((opt, oi) => {
-                    let cls = '';
-                    if (oi === r.chosen && !r.passed) cls = 'wrong';
-                    if (oi === q.correct && passed) cls = 'correct';
-                    if (oi === q.correct && !passed && missed) cls = 'reveal-correct';
+                <div className={q.type==='tf'?'tf-options':'options-list'}>
+                  {q.options.map((opt,oi)=>{
+                    let cls='';
+                    if(oi===r.chosen && !r.passed) cls='wrong';
+                    if(oi===q.correct && passed) cls='correct';
+                    if(oi===q.correct && !passed && missed) cls='reveal-correct';
                     return (
                       <button key={oi} className={`option-btn ${cls}`} disabled>
-                        {q.type !== 'tf' && (
-                          <span className="option-letter">{['A','B','C','D'][oi]}</span>
-                        )}
+                        {q.type!=='tf' && <span className="option-letter">{['A','B','C','D'][oi]}</span>}
                         {opt}
                       </button>
                     );
                   })}
                 </div>
-                {missed && !passed && (
-                  <div className="missed-indicator">You selected this incorrectly. Review the module content and try again.</div>
-                )}
-                {passed && (
-                  <div className="explanation-box">{q.explanation}</div>
-                )}
+                {missed && !passed && <div className="missed-indicator">Incorrect — review the module content and try again.</div>}
+                {passed && <div className="explanation-box">{q.explanation}</div>}
               </div>
             );
           })}
-
           <div className="btn-row space">
-            {!passed && (
-              <button className="btn btn-secondary" onClick={onRetry}>
-                ← Review Content & Retry
-              </button>
-            )}
+            {!passed && <button className="btn btn-secondary" onClick={onRetry}>← Review Content & Retry</button>}
             {passed && (
               <button className="btn btn-orange" onClick={onContinue}>
-                Continue to Module 2 →
+                {isLast ? 'View My Certificate →' : `Continue to Module ${mod.num + 1} →`}
               </button>
             )}
           </div>
@@ -958,35 +1062,62 @@ function QuizResultsScreen({ results, attempt, passed, onRetry, onContinue }) {
   );
 }
 
-// ─── Module 2 stub ────────────────────────────────────────────────────────────
+// ─── Completion / Certificate ─────────────────────────────────────────────────
 
-function Module2Stub({ user, module1Score }) {
+function CompletionScreen({ user, scores, attempts }) {
+  const avg = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+  const allPassed = scores.every(s=>s>=80);
+  const today = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+
   return (
     <div className="fade-in">
       <div className="card">
-        <div className="card-body stub-card">
-          <div className="stub-icon">🚧</div>
-          <div className="stub-title">Module 2 Coming Soon</div>
-          <p className="stub-text">
-            Great work completing Module 1, {user.name.split(' ')[0]}! You scored <strong>{module1Score}%</strong> on the knowledge check.
-            <br/><br/>
-            Modules 2–5 are being built. This prototype covers Module 1: <em>Why Male Contraception Matters</em>.
-            Logan and Sabey will review the format, tone, and visual direction before the remaining modules are developed.
-          </p>
-          <div style={{display:'flex',gap:10,justifyContent:'center',flexWrap:'wrap'}}>
-            {['Module 2: Biology','Module 3: Methods','Module 4: Pipeline','Module 5: Audiences'].map(m=>(
-              <span key={m} className="tag tag-navy" style={{padding:'6px 14px',fontSize:12}}>{m}</span>
+        <div className="card-header">
+          <div className="module-tag">MCI · Training Complete</div>
+          <div className="card-title">{allPassed ? 'Congratulations — All Modules Passed!' : 'Training Complete'}</div>
+        </div>
+        <div className="card-body">
+
+          {/* Score summary */}
+          <div className="module-summary">
+            {MODULES.map((mod,i)=>(
+              <div className="module-row" key={mod.num}>
+                <div className="module-row-label">Module {mod.num}: {mod.title}</div>
+                <div className={`module-row-score ${scores[i]>=80?'pass':'fail'}`}>{scores[i]}%</div>
+                <div style={{fontSize:12,color:'var(--text-muted)',marginLeft:4}}>
+                  {scores[i]>=80 ? (attempts[i]>1 ? `✓ Passed (attempt ${attempts[i]})` : '✓ Passed') : '✗'}
+                </div>
+              </div>
             ))}
           </div>
-          <div style={{marginTop:28,padding:'16px 20px',background:'var(--bg)',borderRadius:12,border:'1px solid var(--border)',maxWidth:480,margin:'28px auto 0',textAlign:'left'}}>
-            <div style={{fontSize:12,fontWeight:700,color:'var(--orange)',textTransform:'uppercase',letterSpacing:'1px',marginBottom:8}}>Your progress so far</div>
-            <div style={{fontSize:14,color:'var(--text-muted)',lineHeight:1.7}}>
-              ✅ Module 1 — {module1Score}% (Passed)<br/>
-              ⬜ Module 2 — Not yet available<br/>
-              ⬜ Module 3 — Not yet available<br/>
-              ⬜ Module 4 — Not yet available<br/>
-              ⬜ Module 5 — Not yet available
+
+          <div className="divider"/>
+
+          {/* Certificate */}
+          <div className="cert-wrap" id="certificate">
+            <div className="cert-badge">M</div>
+            <div className="cert-title">Certificate of Completion</div>
+            <div className="cert-heading">MCI Presenter Training</div>
+            <div className="cert-sub">Male Contraceptive Initiative</div>
+            <div style={{fontSize:14,color:'var(--text-muted)',marginBottom:4}}>This certifies that</div>
+            <div className="cert-name">{user.name}</div>
+            <div style={{fontSize:14,color:'var(--text-muted)',marginTop:4}}>has successfully completed all five modules of the</div>
+            <div style={{fontSize:15,fontWeight:600,color:'var(--navy)',margin:'6px 0'}}>MCI Presenter Training Module</div>
+            <div className="cert-line"/>
+            <div className="cert-scores">
+              {MODULES.map((mod,i)=>(
+                <div className="cert-score-cell" key={mod.num}>
+                  <div className="mod-label">Mod. {mod.num}</div>
+                  <div className="mod-score" style={{color:scores[i]>=80?'var(--correct)':'var(--wrong)'}}>{scores[i]}%</div>
+                </div>
+              ))}
             </div>
+            <div className="cert-overall">Overall: {avg}% — {allPassed ? 'PASS ✓' : 'See module scores above'}</div>
+            <div className="cert-date">Completed: {today}</div>
+          </div>
+
+          <div className="btn-row center">
+            <button className="btn btn-primary" onClick={()=>window.print()}>🖨 Print / Save Certificate</button>
           </div>
         </div>
       </div>
@@ -997,98 +1128,93 @@ function Module2Stub({ user, module1Score }) {
 // ─── App ──────────────────────────────────────────────────────────────────────
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [phase, setPhase] = useState('registration'); // registration | slides | misconceptions | quiz | results | stub
-  const [slideIndex, setSlideIndex] = useState(0);
-  const [quizAttempt, setQuizAttempt] = useState(1);
-  const [quizResults, setQuizResults] = useState(null);
-  const [module1Passed, setModule1Passed] = useState(false);
-  const [module1Score, setModule1Score] = useState(0);
+  const [user, setUser] = React.useState(null);
+  const [phase, setPhase] = React.useState('registration'); // registration | slides | misconceptions | quiz | results | complete
+  const [currentModIdx, setCurrentModIdx] = React.useState(0); // 0-indexed
+  const [slideIndex, setSlideIndex] = React.useState(0);
+  const [attempt, setAttempt] = React.useState(1);
+  const [quizResults, setQuizResults] = React.useState(null);
+  const [scores, setScores] = React.useState([null,null,null,null,null]);
+  const [attempts, setAttempts] = React.useState([1,1,1,1,1]);
+  const [modPassed, setModPassed] = React.useState([false,false,false,false,false]);
 
-  function handleBegin(userData) {
-    setUser(userData);
-    setPhase('slides');
+  const mod = MODULES[currentModIdx];
+  const isLastModule = currentModIdx === MODULES.length - 1;
+
+  function startModule(idx) {
+    setCurrentModIdx(idx);
     setSlideIndex(0);
+    setAttempt(attempts[idx]);
+    setPhase('slides');
   }
+
+  function handleBegin(userData) { setUser(userData); startModule(0); }
 
   function handleSlideNext() {
-    if (slideIndex < MODULE1_SLIDES.length - 1) {
-      setSlideIndex(i => i + 1);
-    } else {
-      setPhase('misconceptions');
-    }
+    if (slideIndex < mod.slides.length - 1) setSlideIndex(i=>i+1);
+    else setPhase('misconceptions');
   }
-
-  function handleSlideBack() {
-    if (slideIndex > 0) setSlideIndex(i => i - 1);
-  }
-
-  function handleStartQuiz() {
-    setPhase('quiz');
-  }
+  function handleSlideBack() { if(slideIndex>0) setSlideIndex(i=>i-1); }
+  function handleStartQuiz() { setPhase('quiz'); }
 
   function handleQuizSubmit(results) {
-    const correct = results.filter(r => r.passed).length;
-    const pct = Math.round((correct / results.length) * 100);
-    const passed = correct >= 4; // ≥80% = 4/5
-    setQuizResults(results);
-    setModule1Score(pct);
-    if (passed) setModule1Passed(true);
+    const correct = results.filter(r=>r.passed).length;
+    const pct = Math.round(correct/results.length*100);
+    const passed = correct >= mod.passThreshold;
+    const newScores = [...scores]; newScores[currentModIdx] = pct;
+    const newPassed = [...modPassed]; newPassed[currentModIdx] = passed;
+    setScores(newScores); setModPassed(newPassed); setQuizResults(results);
     setPhase('results');
   }
 
   function handleRetry() {
-    setQuizAttempt(a => a + 1);
-    setSlideIndex(0);
-    setPhase('slides');
+    const newAttempts = [...attempts]; newAttempts[currentModIdx] += 1;
+    setAttempts(newAttempts); setAttempt(a=>a+1);
+    setSlideIndex(0); setPhase('slides');
   }
 
   function handleContinue() {
-    logCompletion(user, [module1Score], [quizAttempt]);
-    setPhase('stub');
+    if (isLastModule) {
+      logCompletion(user, scores, attempts);
+      setPhase('complete');
+    } else {
+      const nextIdx = currentModIdx + 1;
+      setAttempt(attempts[nextIdx]);
+      startModule(nextIdx);
+    }
   }
 
   return (
     <div className="app-shell">
-      <TopBar phase={phase} />
+      <TopBar currentModule={phase==='registration'?0:currentModIdx+1} phase={phase}/>
       <div className="main-content">
-        {phase === 'registration' && (
-          <RegistrationScreen onBegin={handleBegin} />
+        {phase==='registration' && <RegistrationScreen onBegin={handleBegin}/>}
+        {phase==='slides' && (
+          <ContentScreen mod={mod} slideIndex={slideIndex} onNext={handleSlideNext} onBack={handleSlideBack}/>
         )}
-        {phase === 'slides' && (
-          <ContentScreen
-            key={`slide-${slideIndex}`}
-            slide={MODULE1_SLIDES[slideIndex]}
-            total={MODULE1_SLIDES.length}
-            slideIndex={slideIndex}
-            onNext={handleSlideNext}
-            onBack={handleSlideBack}
-          />
+        {phase==='misconceptions' && (
+          <MisconceptionsScreen mod={mod} onContinue={handleStartQuiz}/>
         )}
-        {phase === 'misconceptions' && (
-          <MisconceptionsScreen onContinue={handleStartQuiz} />
+        {phase==='quiz' && (
+          <QuizScreen mod={mod} attempt={attempt} onSubmit={handleQuizSubmit}/>
         )}
-        {phase === 'quiz' && (
-          <QuizScreen attempt={quizAttempt} onSubmit={handleQuizSubmit} />
-        )}
-        {phase === 'results' && (
+        {phase==='results' && (
           <QuizResultsScreen
-            results={quizResults}
-            attempt={quizAttempt}
-            passed={module1Passed}
-            onRetry={handleRetry}
-            onContinue={handleContinue}
+            mod={mod} results={quizResults} attempt={attempt}
+            passed={modPassed[currentModIdx]}
+            onRetry={handleRetry} onContinue={handleContinue}
+            isLast={isLastModule}
           />
         )}
-        {phase === 'stub' && (
-          <Module2Stub user={user} module1Score={module1Score} />
+        {phase==='complete' && (
+          <CompletionScreen user={user} scores={scores} attempts={attempts}/>
         )}
       </div>
     </div>
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 </body>
 </html>
