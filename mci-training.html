@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MCI Presenter Training</title>
+  <title>Male Contraception Advocate Training</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -147,6 +147,14 @@
     .module-row-score { font-size:16px; font-weight:700; }
     .module-row-score.pass { color:var(--correct); }
     .module-row-score.fail { color:var(--wrong); }
+    .qa-item { background:var(--bg); border-radius:10px; padding:12px 16px; margin:8px 0; border:1px solid var(--border); }
+    .qa-q { font-size:13px; font-weight:600; color:var(--navy); margin-bottom:5px; }
+    .qa-q::before { content:'Q: '; color:var(--orange); }
+    .qa-a { font-size:13px; line-height:1.6; color:var(--text-muted); }
+    .qa-a::before { content:'A: '; color:var(--correct); font-weight:600; }
+    .intro-points { display:flex; flex-direction:column; gap:10px; margin:20px 0 28px; }
+    .intro-point { display:flex; align-items:flex-start; gap:12px; padding:14px 18px; background:var(--bg); border-radius:10px; border:1px solid var(--border); font-size:14px; line-height:1.6; }
+    .intro-point-icon { font-size:22px; flex-shrink:0; margin-top:2px; }
     @media print {
       .top-bar,.btn,.btn-row { display:none !important; }
       .card { box-shadow:none; }
@@ -190,8 +198,8 @@ const MODULES = [
   {
     num: 1,
     title: "Why Male Contraception Matters",
-    time: "5–7 min",
-    passThreshold: 4,
+    time: "8–10 min",
+    passThreshold: 7,
     slides: [
       {
         headline: "The Unintended Pregnancy Problem",
@@ -284,6 +292,9 @@ const MODULES = [
       { id:3, type:"mc", text:"Which of the following is NOT a reason new male contraceptive methods are needed?", options:["Women bear a disproportionate burden","Men have expressed interest in new options","Male contraception would eliminate STIs","More options allow couples to share responsibility"], correct:2, explanation:"Male contraceptives prevent pregnancy but do NOT protect against STIs. Only condoms provide STI protection." },
       { id:4, type:"mc", text:"MCI is best described as:", options:["A pharmaceutical company developing drugs in-house","A nonprofit that funds external researchers","A government agency","A clinical trial site"], correct:1, explanation:"MCI is a nonprofit funder — it does not run an in-house lab but funds researchers at universities and biotech companies." },
       { id:5, type:"tf", text:"True or False: Consumer research suggests that interest in new male contraceptive methods is limited to men in the United States.", options:["True","False"], correct:1, explanation:"False. While MCI's primary consumer data is U.S.-based, the evidence points to a global pattern. Unintended pregnancy rates are highest in low- and middle-income countries." },
+      { id:6, type:"mc", text:"What does MCI stand for?", options:["Male Contraception Institute","Male Contraceptive Initiative","Men's Contraception International","Male Clinical Initiative"], correct:1, explanation:"MCI stands for Male Contraceptive Initiative — a U.S.-based nonprofit that funds non-hormonal, reversible male contraceptive research." },
+      { id:7, type:"mc", text:"According to MCI consumer research, approximately how many U.S. men aged 18–44 say they are very likely to use a new male contraceptive method?", options:["1.2 million","3.5 million","8.1 million","15 million"], correct:2, explanation:"MCI's research found 8.1 million U.S. men aged 18–44 say they are very likely to use a new male method — demonstrating substantial demand already exists." },
+      { id:8, type:"mc", text:"Reproductive autonomy means:", options:["Men taking sole responsibility for contraception","Women choosing which method both partners use","Every person having the ability to decide if, when, and how to prevent pregnancy","Couples always agreeing on contraceptive choices"], correct:2, explanation:"Reproductive autonomy means every person — regardless of gender — having the power to decide if, when, and how to prevent pregnancy. Expanding male options advances this for everyone." },
     ]
   },
 
@@ -291,54 +302,51 @@ const MODULES = [
   {
     num: 2,
     title: "Male Reproductive Biology",
-    time: "5–7 min",
-    passThreshold: 3,
+    time: "8–10 min",
+    passThreshold: 6,
     slides: [
       {
         headline: "The Key Structures",
         body: "Understanding five key structures is enough to speak confidently about male contraception: the testicles (where sperm are produced), the epididymis (where sperm mature and are stored), the vas deferens (the tube that transports sperm), the seminal vesicles and prostate (which add fluid), and the urethra (the exit path). Each structure is a potential target for contraception.",
         callout: { label:"Key Point", text:"You don't need to memorize anatomy in detail — knowing where sperm are made, stored, and transported is sufficient." },
         visual: (
-          <svg viewBox="0 0 420 150" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+          <svg viewBox="0 0 420 160" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
             {[
-              {label:"① Testicles",sub:"Sperm production",x:20,y:20,c:"#002D72"},
-              {label:"② Epididymis",sub:"Maturation & storage",x:120,y:20,c:"#002D72"},
-              {label:"③ Vas Deferens",sub:"Transport",x:220,y:20,c:"#D86018"},
-              {label:"④ Seminal Vesicles",sub:"Fluid contribution",x:320,y:20,c:"#5a6475"},
-              {label:"⑤ Urethra",sub:"Exit path",x:220,y:90,c:"#5a6475"},
+              {label:"① Testicles",sub:"Sperm production",x:10,y:15,c:"#002D72"},
+              {label:"② Epididymis",sub:"Maturation & storage",x:150,y:15,c:"#002D72"},
+              {label:"③ Vas Deferens",sub:"Transport",x:290,y:15,c:"#D86018"},
+              {label:"④ Seminal Vesicles",sub:"Fluid contribution",x:80,y:88,c:"#5a6475"},
+              {label:"⑤ Urethra",sub:"Exit path",x:222,y:88,c:"#5a6475"},
             ].map(({label,sub,x,y,c})=>(
               <g key={label}>
-                <rect x={x} y={y} width="88" height="52" rx="8" fill={c}/>
-                <text x={x+44} y={y+22} textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">{label}</text>
-                <text x={x+44} y={y+37} textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
+                <rect x={x} y={y} width="118" height="56" rx="8" fill={c}/>
+                <text x={x+59} y={y+24} textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">{label}</text>
+                <text x={x+59} y={y+40} textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
               </g>
             ))}
-            <line x1="110" y1="46" x2="118" y2="46" stroke="#aaa" strokeWidth="1.5"/>
-            <line x1="210" y1="46" x2="218" y2="46" stroke="#aaa" strokeWidth="1.5"/>
-            <line x1="310" y1="46" x2="318" y2="46" stroke="#aaa" strokeWidth="1.5"/>
-            <text x="210" y="142" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Each structure = a potential contraceptive target</text>
+            <text x="210" y="155" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Each structure is a potential contraceptive target</text>
           </svg>
         )
       },
       {
         headline: "Spermatogenesis: Continuous but Controllable",
-        body: "Sperm are continuously produced in the seminiferous tubules inside the testicles. The process — called spermatogenesis — takes approximately 74 days from stem cell to mature sperm. It's regulated by hormones from the brain: testosterone, FSH, and LH. This is why hormonal contraceptive methods work, and why they take weeks to have full effect after starting.",
+        body: "Sperm are continuously produced in the seminiferous tubules inside the testicles. The process — called spermatogenesis — takes approximately 74 days from stem cell to mature sperm. Hormonal and non-hormonal methods work because if you stop sperm production you can contracept.",
         callout: { label:"Key Fact", text:"74-day production cycle. Disrupt any step — through hormones or other mechanisms — and you can reduce sperm output." },
         visual: (
-          <svg viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+          <svg viewBox="0 0 440 115" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:440}}>
             <defs><marker id="arr2" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#002D72"/></marker></defs>
-            {[{x:10,label:"Stem cell",day:"Day 0"},{x:105,label:"Early sperm cell",day:"~Day 20"},{x:210,label:"Developing",day:"~Day 50"},{x:310,label:"Mature sperm",day:"Day 74"}].map(({x,label,day})=>(
+            {[{x:10,l1:"Stem",l2:"Cell",day:"Day 0"},{x:115,l1:"Early",l2:"Sperm Cell",day:"~Day 20"},{x:220,l1:"Developing",l2:"Sperm",day:"~Day 50"},{x:325,l1:"Mature",l2:"Sperm",day:"Day 74"}].map(({x,l1,l2,day})=>(
               <g key={x}>
-                <circle cx={x+40} cy="55" r="28" fill="#eef2ff" stroke="#002D72" strokeWidth="1.5"/>
-                <text x={x+40} y="51" textAnchor="middle" fill="#002D72" fontSize="9" fontFamily="DM Sans,sans-serif" fontWeight="600">{label}</text>
-                <text x={x+40} y="65" textAnchor="middle" fill="#D86018" fontSize="9" fontFamily="DM Sans,sans-serif">{day}</text>
+                <rect x={x} y="18" width="82" height="58" rx="8" fill="#eef2ff" stroke="#002D72" strokeWidth="1.5"/>
+                <text x={x+41} y="40" textAnchor="middle" fill="#002D72" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">{l1}</text>
+                <text x={x+41} y="53" textAnchor="middle" fill="#002D72" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">{l2}</text>
+                <text x={x+41} y="68" textAnchor="middle" fill="#D86018" fontSize="9" fontFamily="DM Sans,sans-serif">{day}</text>
               </g>
             ))}
-            {[69,174,269].map(x=>(
-              <line key={x} x1={x} y1="55" x2={x+27} y2="55" stroke="#002D72" strokeWidth="1.5" markerEnd="url(#arr2)"/>
+            {[93,198,303].map(x=>(
+              <line key={x} x1={x} y1="47" x2={x+20} y2="47" stroke="#002D72" strokeWidth="1.5" markerEnd="url(#arr2)"/>
             ))}
-            <text x="210" y="108" textAnchor="middle" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">~74 days from stem cell to mature sperm</text>
-            <text x="210" y="120" textAnchor="middle" fill="#aaa" fontSize="9" fontFamily="DM Sans,sans-serif">Regulated by testosterone, FSH, and LH from the brain</text>
+            <text x="216" y="104" textAnchor="middle" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">~74 days from stem cell to mature sperm</text>
           </svg>
         )
       },
@@ -347,19 +355,19 @@ const MODULES = [
         body: "After maturing in the epididymis, sperm travel through the vas deferens, mix with fluid from the seminal vesicles and prostate, and are ejaculated through the urethra. From there, in the female reproductive tract, they must navigate to reach and fertilize an egg. Every step of this journey is a potential point of intervention for a contraceptive.",
         callout: { label:"Key Point", text:"More steps in the journey = more targets for contraception. Researchers are working on blocking sperm at multiple points." },
         visual: (
-          <svg viewBox="0 0 420 100" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+          <svg viewBox="0 0 450 100" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:450}}>
             <defs><marker id="arr3" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#D86018"/></marker></defs>
-            {[{x:10,label:"Epididymis",sub:"mature"},{x:95,label:"Vas deferens",sub:"transport"},{x:190,label:"Ejaculation",sub:"fluid added"},{x:285,label:"Female tract",sub:"navigate"},{x:370,label:"Egg",sub:"fertilize"}].map(({x,label,sub},i)=>(
+            {[{x:10,label:"Epididymis",sub:"mature"},{x:100,label:"Vas Deferens",sub:"transport"},{x:190,label:"Ejaculation",sub:"fluid added"},{x:280,label:"Female Tract",sub:"navigate"},{x:370,label:"Egg",sub:"fertilize"}].map(({x,label,sub},i)=>(
               <g key={x}>
-                <rect x={x} y="28" width="72" height="38" rx="7" fill={i===4?"#D86018":"#002D72"} opacity={i===4?1:.85}/>
-                <text x={x+36} y="44" textAnchor="middle" fill="white" fontSize="9" fontFamily="DM Sans,sans-serif" fontWeight="600">{label}</text>
-                <text x={x+36} y="57" textAnchor="middle" fill="rgba(255,255,255,.75)" fontSize="8" fontFamily="DM Sans,sans-serif">{sub}</text>
+                <rect x={x} y="25" width="76" height="42" rx="7" fill={i===4?"#D86018":"#002D72"} opacity={i===4?1:.88}/>
+                <text x={x+38} y="42" textAnchor="middle" fill="white" fontSize="9" fontFamily="DM Sans,sans-serif" fontWeight="600">{label}</text>
+                <text x={x+38} y="57" textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="8" fontFamily="DM Sans,sans-serif">{sub}</text>
               </g>
             ))}
-            {[83,178,273,358].map(x=>(
-              <line key={x} x1={x} y1="47" x2={x+10} y2="47" stroke="#D86018" strokeWidth="2" markerEnd="url(#arr3)"/>
+            {[87,177,267,357].map(x=>(
+              <line key={x} x1={x} y1="46" x2={x+12} y2="46" stroke="#D86018" strokeWidth="2" markerEnd="url(#arr3)"/>
             ))}
-            <text x="210" y="92" textAnchor="middle" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">Each stop = a potential contraceptive target</text>
+            <text x="225" y="92" textAnchor="middle" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">Each stop = a potential contraceptive target</text>
           </svg>
         )
       },
@@ -393,6 +401,9 @@ const MODULES = [
       { id:2, type:"mc", text:"Approximately how long does it take for a sperm cell to fully mature from a stem cell?", options:["7 days","30 days","74 days","6 months"], correct:2, explanation:"The spermatogenesis process takes approximately 74 days from stem cell to mature sperm — which is why hormonal methods take weeks to have full effect." },
       { id:3, type:"mc", text:"What is the primary role of the vas deferens?", options:["Sperm production","Sperm maturation and storage","Sperm transport","Hormone regulation"], correct:2, explanation:"The vas deferens transports sperm from the epididymis toward the urethra during ejaculation. It is also the structure targeted in vasectomy." },
       { id:4, type:"mc", text:"Why does the blood-testis barrier matter for male contraceptive drug development?", options:["It prevents sperm from leaving the body","It limits which drug molecules can access developing sperm","It causes most male contraceptives to fail in clinical trials","It regulates testosterone levels"], correct:1, explanation:"The blood-testis barrier is a protective cellular structure that limits drug access to developing sperm inside the testicles — a real challenge in designing effective, targeted compounds." },
+      { id:5, type:"mc", text:"Which hormones regulate spermatogenesis?", options:["Estrogen, progesterone, and cortisol","Testosterone, FSH, and LH","Insulin, glucagon, and adrenaline","Dopamine, serotonin, and oxytocin"], correct:1, explanation:"Spermatogenesis is regulated by testosterone, follicle-stimulating hormone (FSH), and luteinizing hormone (LH) — all produced or triggered by the brain's HPG axis." },
+      { id:6, type:"mc", text:"Which structure is primarily responsible for sperm maturation and storage?", options:["Seminiferous tubules","Prostate gland","Epididymis","Vas deferens"], correct:2, explanation:"The epididymis is where sperm mature and are stored after being produced in the seminiferous tubules. Sperm are not capable of fertilization until they complete maturation here." },
+      { id:7, type:"tf", text:"True or False: Hormonal male contraceptive methods work immediately, providing protection from the first day of use.", options:["True","False"], correct:1, explanation:"False. Because spermatogenesis takes ~74 days, hormonal methods require weeks to fully suppress sperm production. They do not provide immediate protection on day one." },
     ]
   },
 
@@ -400,8 +411,8 @@ const MODULES = [
   {
     num: 3,
     title: "Current Methods & What's Coming",
-    time: "6–8 min",
-    passThreshold: 4,
+    time: "10–12 min",
+    passThreshold: 7,
     slides: [
       {
         headline: "What Exists for Men Today",
@@ -424,8 +435,8 @@ const MODULES = [
       },
       {
         headline: "The Hormonal Approach",
-        body: "Hormonal male contraceptives work by suppressing the brain's HPG axis — the same hormonal pathway that female methods use. Combinations of testosterone and a progestin reduce the brain's signals to the testicles, shutting down sperm production. Trials have achieved near-zero sperm counts in over 90% of men. The challenge has been systemic side effects — mood changes, acne, and libido effects — which are also known from female hormonal methods. Several candidates are in clinical trials, including DMAU and 11β-MNTDC.",
-        callout: { label:"Note for Presenters", text:"When asked about hormonal side effects, acknowledge them honestly — they're real, they're being studied, and non-hormonal alternatives are being developed specifically to avoid them." },
+        body: "Hormonal male contraceptives work by suppressing the brain's HPG axis — the same hormonal pathway that female methods use. Combinations of testosterone and a progestin reduce the brain's signals to the testicles, shutting down sperm production. Trials have achieved near-zero sperm counts in over 90% of men. The challenge has been systemic side effects — mood changes, acne, and libido effects — which are also known from female hormonal methods. MCI focuses its funding on non-hormonal approaches, while supporting the broader field including colleagues working on hormonal methods.",
+        callout: { label:"MCI Funding Focus", text:"MCI funds non-hormonal research specifically. When asked about hormonal side effects, acknowledge them honestly — they're real, they're being studied, and non-hormonal alternatives are being developed to avoid them." },
         visual: (
           <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
             <defs><marker id="arr4" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#002D72"/></marker></defs>
@@ -445,21 +456,21 @@ const MODULES = [
       },
       {
         headline: "The Non-Hormonal Approach: 4 Mechanisms",
-        body: "Non-hormonal methods target sperm directly without touching the hormonal system. Four main approaches are being developed: (1) Spermatogenesis inhibition — stopping sperm production at the cellular level (e.g., triptonide, YCT529). (2) Sperm transport blockade — physically blocking sperm in the vas deferens using reversible gels (e.g., ADAM by Contraline, Vasalgel). (3) Sperm motility inhibition — disabling sperm's ability to swim, targeting channels like CatSper. (4) Fertilization blockade — preventing sperm from binding to the egg.",
-        callout: { label:"Key Distinction", text:"Non-hormonal ≠ less effective. Vasectomy is non-hormonal and nearly 100% effective. Mechanism determines efficacy, not the hormonal/non-hormonal distinction." },
+        body: "Non-hormonal methods target sperm directly without touching the hormonal system. Four main approaches are being developed: (1) Sperm Transport — physically blocking sperm from moving through the vas deferens using reversible gels (e.g., ADAM, Plan A). (2) Fertilization — preventing sperm from binding to and fertilizing the egg. (3) Sperm Motility — disabling sperm's ability to swim, targeting channels like CatSper or the sAC enzyme. (4) Spermatogenesis — stopping or reducing sperm production at the cellular level (e.g., YCT-529).",
+        callout: { label:"Key Distinction", text:"Non-hormonal does not equal less effective. Vasectomy is non-hormonal and nearly 100% effective. Mechanism determines efficacy, not the hormonal/non-hormonal distinction." },
         visual: (
           <svg viewBox="0 0 420 160" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
             {[
-              {x:10,y:10,label:"① Spermatogenesis Inhibition",sub:"Stop/reduce sperm production",eg:"triptonide, YCT529",c:"#002D72"},
-              {x:215,y:10,label:"② Transport Blockade",sub:"Block sperm in vas deferens",eg:"ADAM, Vasalgel",c:"#002D72"},
-              {x:10,y:92,label:"③ Motility Inhibition",sub:"Disable sperm's ability to swim",eg:"CatSper, sAC targets",c:"#D86018"},
-              {x:215,y:92,label:"④ Fertilization Blockade",sub:"Prevent egg binding",eg:"IZUMO1 targets",c:"#D86018"},
+              {x:10,y:10,label:"① Sperm Transport",sub:"Block vas deferens reversibly",eg:"ADAM, Plan A",c:"#002D72"},
+              {x:215,y:10,label:"② Fertilization",sub:"Prevent egg binding",eg:"IZUMO1 targets",c:"#002D72"},
+              {x:10,y:92,label:"③ Sperm Motility",sub:"Disable sperm's ability to swim",eg:"CatSper, sAC inhibitors",c:"#D86018"},
+              {x:215,y:92,label:"④ Spermatogenesis",sub:"Stop/reduce sperm production",eg:"YCT-529, NES/T",c:"#D86018"},
             ].map(({x,y,label,sub,eg,c})=>(
               <g key={label}>
                 <rect x={x} y={y} width="192" height="72" rx="10" fill={c}/>
-                <text x={x+96} y={y+20} textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
-                <text x={x+96} y={y+36} textAnchor="middle" fill="rgba(255,255,255,.9)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
-                <text x={x+96} y={y+52} textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="DM Sans,sans-serif">e.g. {eg}</text>
+                <text x={x+96} y={y+22} textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
+                <text x={x+96} y={y+38} textAnchor="middle" fill="rgba(255,255,255,.9)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
+                <text x={x+96} y={y+54} textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="DM Sans,sans-serif">e.g. {eg}</text>
               </g>
             ))}
             <text x="210" y="155" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Four distinct mechanisms — diversity in the pipeline is a strength</text>
@@ -468,44 +479,47 @@ const MODULES = [
       },
       {
         headline: "Where Things Stand Today",
-        body: "Drug development is long — 10 to 15 years and $1–2 billion for a typical drug. Male contraceptives face additional hurdles: they're being developed for healthy users (not to treat a disease), must be safe for years of chronic use, and have historically received far less funding than female methods. No new male method is yet FDA-approved, but the pipeline is real and active — with multiple candidates in Phase I and Phase II trials right now.",
+        body: "The pipeline is real and advancing. The current front-runner is NES/T — a hormonal topical gel in Phase 2b trials. In Phase 2a: ADAM (vas occlusive gel), YCT-529 (non-hormonal pill), Plan A (vas occlusive), Consilum (repurposed silodosin pill), and NLS-133 (on-demand pill). In Phase 1: Geldom, 11β-MNTDC, and DMAU. In late preclinical: a sAC Inhibitor (on-demand/pericoital). No method is FDA-approved yet — but that reflects timeline and funding, not lack of scientific progress.",
         callout: { label:"Key Message", text:"\"The science is there. The pipeline is real. The question is whether the field gets the funding and attention it deserves.\"" },
         visual: (
-          <svg viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
-            <defs><marker id="arr5" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#002D72"/></marker></defs>
-            <line x1="20" y1="60" x2="400" y2="60" stroke="#002D72" strokeWidth="2" markerEnd="url(#arr5)"/>
-            {[{x:40,label:"Discovery"},{x:110,label:"Preclinical"},{x:190,label:"Phase I"},{x:265,label:"Phase II"},{x:335,label:"Phase III"},{x:390,label:"Approval"}].map(({x,label})=>(
-              <g key={x}>
-                <circle cx={x} cy="60" r="7" fill="#002D72"/>
-                <text x={x} y="82" textAnchor="middle" fill="#333" fontSize="9" fontFamily="DM Sans,sans-serif">{label}</text>
+          <svg viewBox="0 0 460 170" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:460}}>
+            {[
+              {label:"Late Preclinical",y:15,c:"#5a6475",items:["sAC Inhibitor (on-demand)"]},
+              {label:"Phase 1",y:55,c:"#5a6475",items:["Geldom","11β-MNTDC","DMAU"]},
+              {label:"Phase 2a",y:95,c:"#002D72",items:["ADAM","YCT-529","Plan A","Consilum","NLS-133"]},
+              {label:"Phase 2b ★ Front-runner",y:135,c:"#D86018",items:["NES/T (hormonal topical gel)"]},
+            ].map(({label,y,c,items})=>(
+              <g key={y}>
+                <rect x="10" y={y} width="100" height="30" rx="5" fill={c}/>
+                <text x="60" y={y+19} textAnchor="middle" fill="white" fontSize="8" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
+                {items.map((item,i)=>(
+                  <g key={item}>
+                    <rect x={120+i*72} y={y+4} width="68" height="22" rx="4" fill={c} opacity=".25" stroke={c} strokeWidth="1"/>
+                    <text x={120+i*72+34} y={y+18} textAnchor="middle" fill={c} fontSize="8" fontFamily="DM Sans,sans-serif" fontWeight="600">{item}</text>
+                  </g>
+                ))}
               </g>
             ))}
-            <rect x="155" y="28" width="70" height="18" rx="4" fill="#D86018" opacity=".9"/>
-            <text x="190" y="41" textAnchor="middle" fill="white" fontSize="8" fontFamily="DM Sans,sans-serif">YCT529 / triptonide</text>
-            <rect x="228" y="28" width="70" height="18" rx="4" fill="#D86018" opacity=".9"/>
-            <text x="263" y="41" textAnchor="middle" fill="white" fontSize="8" fontFamily="DM Sans,sans-serif">DMAU / 11β-MNTDC</text>
-            <rect x="155" y="8" width="60" height="16" rx="4" fill="#5a6475" opacity=".8"/>
-            <text x="185" y="20" textAnchor="middle" fill="white" fontSize="8" fontFamily="DM Sans,sans-serif">ADAM / Vasalgel</text>
-            <text x="210" y="110" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Multiple candidates active across pipeline stages</text>
+            <text x="230" y="163" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">2026 pipeline — multiple candidates across stages</text>
           </svg>
         )
       },
       {
-        headline: "The Key Message for Presenters",
-        body: "You may hear: \"They tried this and it didn't work.\" This refers to a 2016 WHO trial that was halted by a safety monitoring board — not because the method failed. The method worked. Sperm counts dropped significantly in most participants. And importantly: 75% of participants said they would continue using the method. The trial was stopped; the science was not disproved. The field continues.",
-        callout: { label:"What to Say", text:"\"We don't have a male pill yet — not because it's impossible, but because the field has been chronically underfunded. The science is there. The pipeline is real.\"" },
+        headline: "The Key Message for Advocates",
+        body: "You may hear: \"They tried this and it didn't work.\" Like any area of drug development, male contraception has experienced setbacks — but setbacks are not failures. They are part of the process of developing safe, effective medicine. The pipeline is real, active, and more advanced today than at any prior point. Multiple candidates are in human trials right now. The field continues to move forward.",
+        callout: { label:"What to Say", text:"\"We don't have a new male method approved yet — not because it's impossible, but because the field has been chronically underfunded. The science is there. The pipeline is real.\"" },
         visual: (
           <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
             <rect x="10" y="10" width="190" height="90" rx="12" fill="#fdf0ee" stroke="#c0392b" strokeWidth="1.5"/>
             <text x="105" y="35" textAnchor="middle" fill="#c0392b" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">❌ Don't say:</text>
-            <text x="105" y="55" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"The 2016 trial proved</text>
-            <text x="105" y="69" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">male contraception</text>
-            <text x="105" y="83" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">doesn't work."</text>
+            <text x="105" y="55" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"Male contraception science</text>
+            <text x="105" y="69" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">has failed — it's never</text>
+            <text x="105" y="83" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">going to happen."</text>
             <rect x="218" y="10" width="190" height="90" rx="12" fill="#e8f5ee" stroke="#1a7a4a" strokeWidth="1.5"/>
             <text x="313" y="35" textAnchor="middle" fill="#1a7a4a" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">✓ Do say:</text>
-            <text x="313" y="53" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"The 2016 trial was stopped</text>
-            <text x="313" y="67" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">by a safety board. It worked.</text>
-            <text x="313" y="81" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">75% would have continued."</text>
+            <text x="313" y="53" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"The field has had setbacks</text>
+            <text x="313" y="67" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">like any drug area. Multiple</text>
+            <text x="313" y="81" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">candidates are in trials now."</text>
           </svg>
         )
       }
@@ -522,6 +536,9 @@ const MODULES = [
       { id:3, type:"mc", text:"Which of the following is an example of a vas-occlusive approach to male contraception?", options:["YCT529","ADAM by Contraline","DMAU","Triptonide"], correct:1, explanation:"ADAM by Contraline (and Vasalgel) are vas-occlusive approaches — reversible gels injected into the vas deferens. YCT529 and triptonide inhibit spermatogenesis; DMAU is a hormonal candidate." },
       { id:4, type:"mc", text:"CatSper is a target for which mechanism of male contraception?", options:["Spermatogenesis inhibition","Hormonal suppression","Sperm motility inhibition","Vas occlusion"], correct:2, explanation:"CatSper is an ion channel that controls sperm's ability to swim. Drugs targeting CatSper aim to disable sperm motility — potentially as a fast-acting method taken near the time of intercourse." },
       { id:5, type:"tf", text:"True or False: The fact that no new male contraceptive is FDA-approved means the science has failed.", options:["True","False"], correct:1, explanation:"False. Lack of approval reflects historical underinvestment and the long drug development timeline, not scientific failure. Multiple candidates are in active clinical trials." },
+      { id:6, type:"mc", text:"Which candidate is currently considered the front-runner in the male contraceptive pipeline?", options:["YCT-529 (non-hormonal pill)","ADAM (vas occlusive gel)","NES/T (hormonal topical gel, Phase 2b)","sAC Inhibitor (on-demand)"], correct:2, explanation:"NES/T — a nestorone/testosterone topical gel developed by Population Council — is currently the most advanced candidate, in Phase 2b trials." },
+      { id:7, type:"mc", text:"What does 'on-demand' mean in the context of a male contraceptive method?", options:["The method requires a prescription on request","It is taken near the time of intercourse rather than daily","It can be turned on or off by a healthcare provider","It works immediately with no waiting period"], correct:1, explanation:"On-demand methods are taken shortly before (or after) intercourse rather than on a daily schedule — similar to emergency contraception for women. NLS-133 and the sAC Inhibitor are on-demand candidates." },
+      { id:8, type:"mc", text:"Which types of methods does MCI prioritize funding?", options:["Hormonal methods only","Any method regardless of mechanism","Non-hormonal methods, while supporting colleagues working on hormonal approaches","Surgical and device-based methods only"], correct:2, explanation:"MCI focuses its grant funding on non-hormonal, reversible male contraceptive development — while supporting the broader field including researchers working on hormonal approaches." },
     ]
   },
 
@@ -529,46 +546,45 @@ const MODULES = [
   {
     num: 4,
     title: "The Drug Development Pipeline",
-    time: "4–6 min",
-    passThreshold: 3,
+    time: "8–10 min",
+    passThreshold: 6,
     slides: [
       {
         headline: "The Pipeline at a Glance",
         body: "Every new drug follows the same path: Discovery (identifying a target) → Preclinical (lab and animal testing) → Phase I (first human tests, small group, safety focus) → Phase II (larger group, safety + early efficacy) → Phase III (large-scale efficacy trial) → Regulatory review → Approval. Average timeline: 10 to 15 years. Average cost: $1–2 billion. Most candidates fail at some stage. The ones that don't are the medicines we rely on.",
         callout: { label:"Key Fact", text:"10–15 years and $1–2 billion is typical for any new drug — not unique to male contraceptives. The pipeline is long by design, to protect safety." },
         visual: (
-          <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+          <svg viewBox="0 0 460 105" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:460}}>
             <defs><marker id="arr6" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#002D72"/></marker></defs>
-            {[{x:10,label:"Discovery",sub:"Target ID",c:"#5a6475"},{x:80,label:"Preclinical",sub:"Lab/animal",c:"#5a6475"},{x:160,label:"Phase I",sub:"Safety",c:"#002D72"},{x:235,label:"Phase II",sub:"Efficacy",c:"#002D72"},{x:308,label:"Phase III",sub:"Large scale",c:"#002D72"},{x:375,label:"Approval",sub:"FDA",c:"#D86018"}].map(({x,label,sub,c},i)=>(
+            {[{x:8,label:"Discovery",sub:"Target ID",c:"#5a6475"},{x:84,label:"Preclinical",sub:"Lab/animal",c:"#5a6475"},{x:160,label:"Phase I",sub:"Safety",c:"#002D72"},{x:236,label:"Phase II",sub:"Efficacy",c:"#002D72"},{x:312,label:"Phase III",sub:"Large scale",c:"#002D72"},{x:388,label:"Approval",sub:"FDA",c:"#D86018"}].map(({x,label,sub,c},i)=>(
               <g key={x}>
-                <rect x={x} y="20" width="62" height="50" rx="8" fill={c}/>
-                <text x={x+31} y="42" textAnchor="middle" fill="white" fontSize="9" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
-                <text x={x+31} y="57" textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="8" fontFamily="DM Sans,sans-serif">{sub}</text>
-                {i<5 && <line x1={x+63} y1="45" x2={x+70} y2="45" stroke="#002D72" strokeWidth="1.5" markerEnd="url(#arr6)"/>}
+                <rect x={x} y="18" width="66" height="50" rx="8" fill={c}/>
+                <text x={x+33} y="40" textAnchor="middle" fill="white" fontSize="9" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
+                <text x={x+33} y="55" textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="8" fontFamily="DM Sans,sans-serif">{sub}</text>
+                {i<5 && <line x1={x+67} y1="43" x2={x+74} y2="43" stroke="#002D72" strokeWidth="1.5" markerEnd="url(#arr6)"/>}
               </g>
             ))}
-            <text x="210" y="95" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Average: 10–15 years · $1–2 billion</text>
+            <text x="230" y="95" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Average: 10–15 years · $1–2 billion</text>
           </svg>
         )
       },
       {
         headline: "Why Male Contraceptives Face Extra Challenges",
-        body: "Beyond the standard drug development hurdles, male contraceptives face five additional challenges specific to the field: (1) The healthy user problem — regulators hold contraceptives to a higher safety bar because users aren't sick. (2) Chronic use — the method must be safe to take for years. (3) Historical underinvestment — reproductive health for men has been deprioritized by funders and pharma for decades. (4) Species translation — promising results in mice don't always hold in humans. (5) Regulatory pathway — the approval process for male contraceptives is less established than for female methods.",
-        callout: { label:"For Presenters", text:"These challenges explain the timeline — they don't mean the science is failing. They mean the field needs sustained investment and attention." },
+        body: "Beyond standard drug hurdles, male contraceptives face four additional challenges: (1) Healthy user problem — users aren't sick, so regulators require near-zero side effects; and the method must be safe for years of chronic use in people exercising their reproductive autonomy. (2) No regulatory guidelines — unlike female methods, no established FDA approval pathway exists for male contraceptives. (3) Historical underinvestment — men's reproductive health has been deprioritized by funders and pharma for decades. (4) Low public awareness — most people don't know new male methods are in development, limiting demand signals and political will for funding.",
+        callout: { label:"For Advocates", text:"These challenges explain the timeline — they don't mean the science is failing. They mean the field needs sustained investment and public attention." },
         visual: (
-          <svg viewBox="0 0 420 140" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+          <svg viewBox="0 0 420 122" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
             {[
-              {i:1,label:"Healthy user problem",sub:"Higher safety standard for healthy volunteers",y:10},
-              {i:2,label:"Chronic use safety",sub:"Must be safe for years of daily use",y:36},
-              {i:3,label:"Historical underinvestment",sub:"Men's reproductive health deprioritized by funders",y:62},
-              {i:4,label:"Species translation",sub:"Mouse results don't always replicate in humans",y:88},
-              {i:5,label:"Regulatory pathway",sub:"Less established than for female methods",y:114},
+              {i:1,label:"Healthy user problem",sub:"High safety bar + chronic use + reproductive autonomy context",y:8},
+              {i:2,label:"No regulatory guidelines",sub:"No established FDA approval pathway for male methods",y:38},
+              {i:3,label:"Historical underinvestment",sub:"Men's reproductive health deprioritized by funders and pharma",y:68},
+              {i:4,label:"Low public awareness",sub:"Most people don't know new methods are in development",y:98},
             ].map(({i,label,sub,y})=>(
               <g key={y}>
                 <circle cx="20" cy={y+12} r="10" fill="#D86018"/>
                 <text x="20" y={y+16} textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">{i}</text>
-                <text x="40" y={y+10} fill="#002D72" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="600">{label}</text>
-                <text x="40" y={y+24} fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">{sub}</text>
+                <text x="40" y={y+10} fill="#002D72" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="600">{label}</text>
+                <text x="40" y={y+24} fill="#888" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
               </g>
             ))}
           </svg>
@@ -576,25 +592,28 @@ const MODULES = [
       },
       {
         headline: "Where the Current Pipeline Stands",
-        body: "Multiple male contraceptive candidates are active right now. Hormonal agents DMAU and 11β-MNTDC are in Phase II trials. Non-hormonal oral candidates including YCT529 (a RAR-α inhibitor) and triptonide have shown strong preclinical results and are moving toward or into early clinical stages. Vas-occlusive devices ADAM and Vasalgel are in early clinical or feasibility testing. No single candidate is clearly 'winning' — diversity across mechanisms and stages is a feature of a healthy pipeline, not a sign of fragmentation.",
-        callout: { label:"Presenter Guidance", text:"Describe the pipeline as active and diverse. Avoid declaring a 'front-runner' — the field is too early for that, and it can mislead audiences." },
+        body: "The 2026 pipeline is the most advanced it has ever been. NES/T (hormonal topical gel) is the front-runner in Phase 2b. Phase 2a includes ADAM and Plan A (vas occlusive), YCT-529 (non-hormonal pill), Consilum (repurposed silodosin), and NLS-133 (on-demand pill). Phase 1 includes Geldom, 11β-MNTDC, and DMAU. Late preclinical: sAC Inhibitor (on-demand/pericoital). Diversity across mechanisms and stages is a sign of a healthy pipeline.",
+        callout: { label:"Advocate Guidance", text:"The front-runner right now is NES/T in Phase 2b. Describe the pipeline as active and diverse — multiple mechanisms, multiple stages, multiple organizations." },
         visual: (
-          <svg viewBox="0 0 420 130" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+          <svg viewBox="0 0 460 175" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:460}}>
             {[
-              {label:"DMAU",stage:"Phase II",type:"Hormonal",x:220,y:15,c:"#5a6475"},
-              {label:"11β-MNTDC",stage:"Phase II",type:"Hormonal",x:310,y:15,c:"#5a6475"},
-              {label:"YCT529",stage:"Early Clinical",type:"Non-hormonal",x:145,y:55,c:"#002D72"},
-              {label:"Triptonide",stage:"Preclinical",type:"Non-hormonal",x:60,y:55,c:"#002D72"},
-              {label:"ADAM",stage:"Early Clinical",type:"Vas-occlusive",x:145,y:95,c:"#D86018"},
-              {label:"Vasalgel",stage:"Feasibility",type:"Vas-occlusive",x:50,y:95,c:"#D86018"},
-            ].map(({label,stage,type,x,y,c})=>(
-              <g key={label}>
-                <rect x={x} y={y} width="88" height="28" rx="6" fill={c} opacity=".9"/>
-                <text x={x+44} y={y+12} textAnchor="middle" fill="white" fontSize="9" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
-                <text x={x+44} y={y+23} textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="8" fontFamily="DM Sans,sans-serif">{stage}</text>
+              {label:"Late Preclinical",y:15,c:"#5a6475",items:["sAC Inhibitor"]},
+              {label:"Phase 1",y:55,c:"#5a6475",items:["Geldom","11β-MNTDC","DMAU"]},
+              {label:"Phase 2a",y:95,c:"#002D72",items:["ADAM","YCT-529","Plan A","Consilum","NLS-133"]},
+              {label:"Phase 2b ★",y:135,c:"#D86018",items:["NES/T (front-runner)"]},
+            ].map(({label,y,c,items})=>(
+              <g key={y}>
+                <rect x="10" y={y} width="96" height="30" rx="5" fill={c}/>
+                <text x="58" y={y+19} textAnchor="middle" fill="white" fontSize="8" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
+                {items.map((item,i)=>(
+                  <g key={item}>
+                    <rect x={115+i*70} y={y+4} width="66" height="22" rx="4" fill={c} opacity=".22" stroke={c} strokeWidth="1"/>
+                    <text x={115+i*70+33} y={y+18} textAnchor="middle" fill={c} fontSize="8" fontFamily="DM Sans,sans-serif" fontWeight="600">{item}</text>
+                  </g>
+                ))}
               </g>
             ))}
-            <text x="210" y="126" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Active candidates across multiple mechanisms and stages</text>
+            <text x="230" y="168" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">2026 pipeline — multiple candidates across stages and mechanisms</text>
           </svg>
         )
       },
@@ -624,9 +643,12 @@ const MODULES = [
     ],
     quiz: [
       { id:1, type:"mc", text:"In which phase of clinical trials is a new drug first tested in humans, typically in a small group of healthy volunteers?", options:["Phase II","Phase III","Phase I","Preclinical"], correct:2, explanation:"Phase I is the first human trial stage — a small group receives the drug primarily to assess safety and dosing. Preclinical testing happens in the lab and in animals before any human testing." },
-      { id:2, type:"mc", text:"Which of the following is NOT a specific challenge for developing male contraceptives (beyond standard drug development challenges)?", options:["Healthy user problem","Regulatory pathway is newer and less established","Animal models always predict human results accurately","Historical underinvestment"], correct:2, explanation:"Animal models do NOT always predict human results — species translation is actually one of the listed challenges. The other three are all real, additional hurdles specific to male contraceptive development." },
+      { id:2, type:"mc", text:"Which of the following is NOT one of the key challenges currently facing male contraceptive development?", options:["No established regulatory guidelines for male methods","Historical underinvestment by pharma and public funders","Scientists have no known biological targets to pursue","Low public awareness that new methods are in development"], correct:2, explanation:"Multiple well-understood biological targets exist — sperm transport, motility, spermatogenesis, and fertilization. The real challenges are absent regulatory guidelines, historical underinvestment, and low public awareness." },
       { id:3, type:"mc", text:"Approximately how long does it typically take for a new drug to go from discovery to approval?", options:["2–3 years","5–7 years","10–15 years","25+ years"], correct:2, explanation:"The average drug development timeline is 10–15 years from discovery to regulatory approval, at a cost of roughly $1–2 billion. This timeline is typical across all therapeutic areas, not unique to contraception." },
-      { id:4, type:"mc", text:"What is the most accurate way for a presenter to describe when a new male contraceptive will be available?", options:["\"There will be a male pill by 2027\"","\"Promising candidates are in trials now; timing depends on funding and results\"","\"Male contraception research has stalled\"","\"The FDA has already approved several new methods\""], correct:1, explanation:"The accurate framing is that promising candidates are in trials now, with timing depending on multiple factors. Specific year predictions are misleading and damage credibility when timelines shift." },
+      { id:4, type:"mc", text:"What is the most accurate way for an advocate to describe when a new male contraceptive will be available?", options:["\"There will be a male pill by 2027\"","\"Promising candidates are in trials now; timing depends on funding and results\"","\"Male contraception research has stalled\"","\"The FDA has already approved several new methods\""], correct:1, explanation:"The accurate framing is that promising candidates are in trials now, with timing depending on multiple factors. Specific year predictions are misleading and damage credibility when timelines shift." },
+      { id:5, type:"tf", text:"True or False: The FDA has established clear regulatory guidelines specifically for approving male contraceptive methods.", options:["True","False"], correct:1, explanation:"False. Unlike female contraceptives, no established FDA regulatory pathway exists for male methods — this is one of the specific challenges the field faces and a reason timelines are uncertain." },
+      { id:6, type:"mc", text:"What does 'repurposed drug' mean in the context of male contraceptive development?", options:["A drug recalled and reformulated for safety","A drug originally developed for another condition that shows contraceptive potential","A generic version of an existing contraceptive","A drug approved in another country but not the U.S."], correct:1, explanation:"Consilum (silodosin) is an example — originally developed for benign prostatic hyperplasia (BPH), it showed potential as a male contraceptive and is now in Phase 2a trials." },
+      { id:7, type:"mc", text:"Which of the following is NOT a challenge for male contraceptive development?", options:["Healthy users face higher safety thresholds than patients","Low consumer demand for new male methods","No established FDA regulatory pathway for male contraceptives","Historical underinvestment by large pharmaceutical companies"], correct:1, explanation:"Consumer demand is not a barrier — MCI research shows 8 in 10 men actively want to prevent pregnancy and 8.1 million would very likely use a new male method. The real barriers are safety standards, regulatory gaps, and underinvestment." },
     ]
   },
 
@@ -634,23 +656,22 @@ const MODULES = [
   {
     num: 5,
     title: "Talking to Broad Audiences",
-    time: "5–7 min",
-    passThreshold: 4,
+    time: "8–10 min",
+    passThreshold: 7,
     slides: [
       {
         headline: "Know Your Audience",
-        body: "Broad community audiences include people who have never heard of non-condom male methods, people with strong opinions about gender roles and contraception, and people who may be skeptical, curious, or enthusiastic. Your job is not to convince everyone — it's to give accurate, accessible information and respect their autonomy. Framing matters: lead with reproductive autonomy for all, not with a narrative that positions men as lagging behind or needing to step up.",
+        body: "Whether in a presentation, a conversation, or online, your audiences will vary. Some people have never heard of non-condom male methods. Others have strong opinions about gender and contraception. Your job is not to convince everyone — it's to give accurate, accessible information and respect their autonomy. Framing matters: lead with reproductive autonomy for all, not with a narrative that positions men as lagging behind or needing to step up.",
         callout: { label:"Core Framing", text:"\"I'm not here to tell you what to think. I'm here to share what's real and what's coming — and to give you accurate information to make that judgment yourself.\"" },
         visual: (
-          <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
-            {[{x:20,emoji:"🤔",label:"Skeptical",sub:"Has doubts about\nmale involvement"},{x:130,emoji:"❓",label:"Curious",sub:"Open but\nuninformed"},{x:240,emoji:"😊",label:"Enthusiastic",sub:"Already supportive,\nwants details"},{x:345,emoji:"🌍",label:"Cultural lens",sub:"Contraception seen\nas women's domain"}].map(({x,emoji,label,sub})=>(
+          <svg viewBox="0 0 420 108" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            {[{x:15,emoji:"🤔",label:"Skeptical",sub1:"Has doubts about",sub2:"male involvement"},{x:115,emoji:"❓",label:"Curious",sub1:"Open but",sub2:"uninformed"},{x:215,emoji:"😊",label:"Enthusiastic",sub1:"Already supportive,",sub2:"wants details"},{x:315,emoji:"🏥",label:"Professional",sub1:"Wants clinical",sub2:"accuracy"}].map(({x,emoji,label,sub1,sub2})=>(
               <g key={x}>
-                <rect x={x} y="10" width="70" height="85" rx="10" fill="#eef2ff" stroke="#002D72" strokeWidth="1"/>
-                <text x={x+35} y="36" textAnchor="middle" fontSize="20">{emoji}</text>
-                <text x={x+35} y="56" textAnchor="middle" fill="#002D72" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">{label}</text>
-                {sub.split('\n').map((line,i)=>(
-                  <text key={i} x={x+35} y={70+i*13} textAnchor="middle" fill="#888" fontSize="8" fontFamily="DM Sans,sans-serif">{line}</text>
-                ))}
+                <rect x={x} y="8" width="88" height="88" rx="10" fill="#eef2ff" stroke="#002D72" strokeWidth="1"/>
+                <text x={x+44} y="36" textAnchor="middle" fontSize="22">{emoji}</text>
+                <text x={x+44} y="56" textAnchor="middle" fill="#002D72" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">{label}</text>
+                <text x={x+44} y="70" textAnchor="middle" fill="#888" fontSize="8" fontFamily="DM Sans,sans-serif">{sub1}</text>
+                <text x={x+44} y="82" textAnchor="middle" fill="#888" fontSize="8" fontFamily="DM Sans,sans-serif">{sub2}</text>
               </g>
             ))}
           </svg>
@@ -658,21 +679,31 @@ const MODULES = [
       },
       {
         headline: "The Most Common Questions",
-        body: "Based on field experience and focus group research — including with African audiences — these are the questions you're most likely to face: \"Will it affect his sex drive?\" (Answer: varies by method; non-hormonal methods targeting sperm specifically should not.) \"Is it reversible?\" (Answer: reversibility is a core design goal for all new methods.) \"Does it protect against STIs?\" (Answer: no — only condoms do; always state this clearly.) \"Why would a man take responsibility for this?\" (Answer: many men already want to; the barrier is the absence of options, not willingness.)",
-        callout: { label:"Always Say Clearly", text:"No male contraceptive (other than condoms) protects against STIs. State this proactively — don't wait to be asked." },
+        body: (
+          <div>
+            <p style={{fontSize:14,color:'var(--text-muted)',marginBottom:12}}>Based on field experience and focus group research — including with international audiences — here are the questions you are most likely to face:</p>
+            <div className="qa-item"><div className="qa-q">Will it affect his sex drive?</div><div className="qa-a">Varies by method. Non-hormonal methods that target sperm specifically should not affect sex drive or libido.</div></div>
+            <div className="qa-item"><div className="qa-q">Is it reversible?</div><div className="qa-a">Reversibility is a core design goal for all new methods in development.</div></div>
+            <div className="qa-item"><div className="qa-q">Does it protect against STIs or HIV?</div><div className="qa-a">Currently no — only condoms provide STI protection. However, Multipurpose Prevention Technologies (MPTs) are being developed to protect against both STIs and pregnancy in a single product. Always state the current limitation clearly.</div></div>
+            <div className="qa-item"><div className="qa-q">What is an MPT?</div><div className="qa-a">MPTs are innovative health products designed to simultaneously protect against multiple sexual and reproductive health risks — specifically HIV, other STIs, and unintended pregnancy — in a single product.</div></div>
+            <div className="qa-item"><div className="qa-q">Why would a man take responsibility for this?</div><div className="qa-a">Consumer data shows 8 in 10 men already want to prevent pregnancy. The barrier is the absence of options, not willingness.</div></div>
+            <div className="qa-item"><div className="qa-q">Would this be affordable in other countries?</div><div className="qa-a">Global access and equity are active priorities. MCI specifically considers affordability and distribution as part of translational strategy.</div></div>
+            <div className="qa-item"><div className="qa-q">What if I don't know the answer?</div><div className="qa-a">Acknowledge honestly, offer to follow up, and reach out to MCI staff. "I don't know exactly, but here's what I do know" is always a credible answer.</div></div>
+            <div className="qa-item"><div className="qa-q">When should I contact MCI staff?</div><div className="qa-a">Any time you are unsure about a fact or the current state of the science — reach out to MCI before repeating it publicly. MCI staff are there to support advocates.</div></div>
+          </div>
+        ),
+        callout: { label:"Always Say Clearly", text:"No male contraceptive (other than condoms) currently protects against STIs. State this proactively — and mention MPTs as an emerging area for those who ask about future potential." },
         visual: (
-          <svg viewBox="0 0 420 140" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
-            {[
-              {q:"Will it affect sex drive?",a:"Depends on method. Non-hormonal methods should not.",y:10},
-              {q:"Is it reversible?",a:"Reversibility is a core design requirement for new methods.",y:45},
-              {q:"Does it protect against STIs?",a:"No. Only condoms provide STI protection.",y:80},
-              {q:"Why would a man do this?",a:"Consumer data: 8 in 10 men want to. Options are the barrier.",y:115},
-            ].map(({q,a,y})=>(
-              <g key={y}>
-                <text x="10" y={y+13} fill="#D86018" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">Q: {q}</text>
-                <text x="10" y={y+27} fill="#333" fontSize="10" fontFamily="DM Sans,sans-serif">→ {a}</text>
+          <svg viewBox="0 0 420 90" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            {[{x:15,label:"Methods &\nSide Effects",c:"#002D72"},{x:115,label:"Safety &\nSTIs",c:"#002D72"},{x:215,label:"Global\nAccess",c:"#D86018"},{x:315,label:"Your Role\nas Advocate",c:"#D86018"}].map(({x,label,c})=>(
+              <g key={x}>
+                <rect x={x} y="10" width="88" height="65" rx="10" fill={c}/>
+                {label.split('\n').map((line,i)=>(
+                  <text key={i} x={x+44} y={38+i*16} textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="600">{line}</text>
+                ))}
               </g>
             ))}
+            <text x="210" y="86" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Common question categories you will encounter</text>
           </svg>
         )
       },
@@ -697,8 +728,8 @@ const MODULES = [
       },
       {
         headline: "What NOT to Say",
-        body: "Common presenter errors that undermine credibility: Don't say vasectomy is 'easily reversible' — reversal success rates decline significantly over time. Don't say a male method will be available by a specific year. Don't say the 2016 WHO trial 'failed' — the method worked; the trial was stopped by a safety board. Don't attribute statistics to NIH or USAID without verified sourcing — stick to MCI's own consumer research and published literature. Don't make contraception political. Stay on science, equity, and choice.",
-        callout: { label:"The Rule", text:"If you're not certain it's accurate, don't say it. \"I don't know exactly, but here's what I do know\" is always a credible answer." },
+        body: "Common advocate errors that undermine credibility: Don't say vasectomy is 'easily reversible' — reversal success rates decline significantly over time. Don't say a male method will be available by a specific year. Don't say prior trials 'failed' — setbacks are part of drug development, not proof the science doesn't work. Don't attribute statistics to NIH or USAID without verified sourcing — stick to MCI's own consumer research and published literature. Don't make contraception political. Stay on science, equity, and choice. And when in doubt about any fact or claim — reach out to MCI staff before repeating it publicly.",
+        callout: { label:"The Rule", text:"If you're not certain it's accurate, don't say it. Reach out to MCI staff any time you are unsure — that's what we're here for. \"I don't know exactly, but I can find out\" is always a credible answer." },
         visual: (
           <svg viewBox="0 0 420 140" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
             {[
@@ -722,15 +753,15 @@ const MODULES = [
         body: "You don't need everyone in the room to leave excited about male contraception. Your goal is for every person to leave knowing this is real science, the field is moving, and more options for everyone is good for everyone. Stay grounded in evidence. Stay curious. And when you get a hard question you can't answer, say so — and offer to follow up. That's what builds trust more than anything else.",
         callout: { label:"Your Goal", text:"\"I'm here to expand what people think is possible, and to give them accurate information. More options for everyone is good for everyone.\"" },
         visual: (
-          <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
-            {[{x:30,label:"Real science",sub:"Grounded in evidence",c:"#002D72"},{x:155,label:"Field is moving",sub:"Active pipeline",c:"#002D72"},{x:280,label:"More options = good",sub:"For everyone",c:"#D86018"}].map(({x,label,sub,c})=>(
+          <svg viewBox="0 0 420 108" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            {[{x:10,label:"Real Science",sub:"Grounded in evidence",c:"#002D72"},{x:148,label:"Field Is Moving",sub:"Active pipeline",c:"#002D72"},{x:286,label:"More Options",sub:"Good for everyone",c:"#D86018"}].map(({x,label,sub,c})=>(
               <g key={x}>
-                <rect x={x} y="15" width="115" height="70" rx="12" fill={c}/>
-                <text x={x+57} y="46" textAnchor="middle" fill="white" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
-                <text x={x+57} y="64" textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="10" fontFamily="DM Sans,sans-serif">{sub}</text>
+                <rect x={x} y="12" width="124" height="72" rx="12" fill={c}/>
+                <text x={x+62} y="44" textAnchor="middle" fill="white" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
+                <text x={x+62} y="62" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="10" fontFamily="DM Sans,sans-serif">{sub}</text>
               </g>
             ))}
-            <text x="210" y="103" textAnchor="middle" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">Your three-part message as a presenter</text>
+            <text x="210" y="100" textAnchor="middle" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">Your three-part message as an advocate</text>
           </svg>
         )
       }
@@ -742,11 +773,14 @@ const MODULES = [
       { q:'"Will new methods be affordable and accessible in lower-income countries?"', a:"Global access and equity are active priorities in male contraceptive development — including from MCI's perspective. Affordability and distribution are part of translational strategy discussions." },
     ],
     quiz: [
-      { id:1, type:"mc", text:"A community member asks: \"Does a male contraceptive protect against HIV?\" The correct response is:", options:["\"Yes, non-hormonal methods provide some protection\"","\"No, only condoms provide STI protection — male contraceptives prevent pregnancy only\"","\"It depends on the method\"","\"We don't know yet\""], correct:1, explanation:"No male contraceptive other than condoms provides STI protection. This should always be stated clearly and proactively — it's one of the most important distinctions to make with any audience." },
+      { id:1, type:"mc", text:"A community member asks: \"Does a male contraceptive protect against HIV or STIs?\" The most accurate and complete response is:", options:["\"Yes, most new male methods include some STI protection\"","\"Currently no — only condoms protect against STIs, though Multipurpose Prevention Technologies (MPTs) are in development to address this\"","\"It depends on whether the method is hormonal or non-hormonal\"","\"We don't have data on that yet\""], correct:1, explanation:"No current male contraceptive other than condoms protects against STIs. MPTs are an emerging category designed to address both STIs and pregnancy in one product — worth mentioning when asked about future potential." },
       { id:2, type:"mc", text:"Which of the following is the most accurate statement about vasectomy reversibility?", options:["Vasectomy is easily and fully reversible at any time","Vasectomy is intended to be permanent; reversal is possible but success rates decline over time","All new male methods are based on vasectomy","Vasectomy reversal is covered by insurance in most countries"], correct:1, explanation:"Vasectomy is designed to be permanent. Reversal surgery is possible but success rates decline significantly the longer after the original procedure — never describe it as \"easily reversible.\"" },
       { id:3, type:"mc", text:"A participant says: \"Men won't use new methods — they just don't care about contraception.\" The best evidence-based response is:", options:["\"That's probably true in some cultures\"","\"Consumer research shows most men actively want to prevent pregnancy and would use new options if available\"","\"Male contraceptives are really designed for couples, not men individually\"","\"We'll need more studies to know\""], correct:1, explanation:"MCI's consumer research shows 8 in 10 men aged 18–44 are actively trying to prevent pregnancy, and 8.1 million are very likely to use a new male method. The barrier is absence of options, not willingness." },
       { id:4, type:"mc", text:"Which of the following is something a presenter should AVOID saying?", options:["\"New male methods are in clinical trials right now\"","\"Male contraception is a shared responsibility issue\"","\"The male contraceptive pill will be available by 2028\"","\"Reversibility is a core design requirement for new methods in development\""], correct:2, explanation:"Never give specific year predictions for availability — you cannot know that. It damages credibility when timelines shift, and misleads audiences about the nature of drug development." },
-      { id:5, type:"tf", text:"True or False: The 2016 WHO hormonal male contraceptive trial demonstrated that the method was scientifically ineffective.", options:["True","False"], correct:1, explanation:"False. The 2016 trial was halted by a safety monitoring board — not because the method didn't work. It significantly reduced sperm counts in most participants, and 75% said they would continue using it. The science was not disproved." },
+      { id:5, type:"tf", text:"True or False: Setbacks in male contraceptive clinical trials prove that the science is fundamentally flawed.", options:["True","False"], correct:1, explanation:"False. Setbacks — including halted trials — are part of every area of drug development. They reveal safety signals or design issues to address, not proof that the science doesn't work. The pipeline continues to advance." },
+      { id:6, type:"mc", text:"What is a Multipurpose Prevention Technology (MPT)?", options:["A combination hormonal and non-hormonal male method","A product designed to protect against STIs and unintended pregnancy simultaneously","A condom with added spermicide","A regulatory approval category for dual-action drugs"], correct:1, explanation:"MPTs are innovative health products designed to simultaneously protect against multiple sexual and reproductive health risks — specifically HIV, other STIs, and unintended pregnancy — in a single product." },
+      { id:7, type:"mc", text:"When you are asked a question during advocacy that you cannot answer confidently, the best approach is:", options:["Give your best estimate to keep the conversation moving","Acknowledge you don't know, offer to follow up, and reach out to MCI staff","Redirect to a different topic","Say the information is not publicly available"], correct:1, explanation:"Honesty builds trust. Saying 'I don't know, but I can find out' and following up through MCI is always the right approach. MCI staff are there to support advocates with accurate information." },
+      { id:8, type:"tf", text:"True or False: The framing 'Men need to step up and take responsibility for contraception' is an effective advocacy approach recommended by MCI.", options:["True","False"], correct:1, explanation:"False. This framing assigns blame and can alienate audiences. MCI-recommended framing focuses on expanding options and reproductive autonomy for all — not positioning men as obstacles or laggards." },
     ]
   }
 ];
@@ -772,29 +806,31 @@ function ScoreBar({ label, pct }) {
 
 // ─── TopBar ───────────────────────────────────────────────────────────────────
 
-function TopBar({ currentModule, phase }) {
-  // 7 steps: registration + 5 modules + completion
-  const totalSteps = 7;
+function TopBar({ currentModIdx, phase }) {
+  // 8 steps: registration + intro + 5 modules + completion
+  const totalSteps = 8;
   let doneCount = 0;
   let activeIdx = 0;
   if (phase === 'registration') { doneCount = 0; activeIdx = 0; }
-  else if (phase === 'complete') { doneCount = 7; activeIdx = 6; }
-  else { doneCount = currentModule; activeIdx = currentModule; }
+  else if (phase === 'intro') { doneCount = 1; activeIdx = 1; }
+  else if (phase === 'complete') { doneCount = 8; activeIdx = 7; }
+  else { doneCount = currentModIdx + 2; activeIdx = currentModIdx + 2; }
 
   return (
     <div className="top-bar">
       <div className="logo-area">
         <div className="logo-badge">M</div>
         <div>
-          <div className="logo-text">MCI Presenter Training</div>
+          <div className="logo-text">Advocate Training</div>
           <div className="logo-sub">Male Contraceptive Initiative</div>
         </div>
       </div>
       <div className="progress-track">
         <div className="progress-label">
           {phase === 'registration' ? 'Get started' :
+           phase === 'intro' ? 'Introduction' :
            phase === 'complete' ? 'Complete!' :
-           `Module ${currentModule} of 5`}
+           `Module ${currentModIdx + 1} of 5`}
         </div>
         <div className="progress-steps">
           {Array.from({length: totalSteps}).map((_, i) => (
@@ -826,23 +862,23 @@ function RegistrationScreen({ onBegin }) {
     <div className="fade-in">
       <div className="card">
         <div className="card-header">
-          <div className="module-tag">MCI · Presenter Training</div>
-          <div className="card-title">Welcome to the MCI<br/>Presenter Training Module</div>
+          <div className="module-tag">MCI · Advocate Training</div>
+          <div className="card-title">Male Contraception<br/>Advocate Training</div>
         </div>
         <div className="card-body">
           <div className="reg-intro">
             <div className="reg-about">
               <h3>What is this?</h3>
-              <p>This self-paced module prepares you to speak accurately and confidently about male contraception to broad community audiences — including the science, the pipeline, and how to handle common questions.</p>
-              <p>Complete all 5 modules to earn your MCI completion certificate. Designed for presenters, not audiences.</p>
+              <p>This self-paced training prepares you to speak accurately and confidently about male contraception — whether in presentations, one-on-one conversations, community events, or online.</p>
+              <p>Complete all 5 modules to earn your MCI completion certificate.</p>
               <div style={{marginTop:12,display:'flex',gap:8,flexWrap:'wrap'}}>
                 <span className="tag tag-navy">5 Modules</span>
-                <span className="tag tag-orange">20–40 min</span>
+                <span className="tag tag-orange">45–60 min</span>
                 <span className="tag tag-navy">≥80% to pass each</span>
               </div>
             </div>
             <div className="reg-meta">
-              <div className="meta-chip"><span className="icon">⏱️</span><div><strong>Estimated time</strong>20–40 minutes total</div></div>
+              <div className="meta-chip"><span className="icon">⏱️</span><div><strong>Estimated time</strong>45–60 minutes total</div></div>
               <div className="meta-chip"><span className="icon">📋</span><div><strong>Format</strong>Content slides + knowledge check per module</div></div>
               <div className="meta-chip"><span className="icon">✅</span><div><strong>Passing score</strong>≥80% on each module quiz</div></div>
               <div className="meta-chip"><span className="icon">🔄</span><div><strong>Retries</strong>Unlimited — review and retake any quiz</div></div>
@@ -873,6 +909,39 @@ function RegistrationScreen({ onBegin }) {
   );
 }
 
+// ─── Intro screen ─────────────────────────────────────────────────────────────
+
+function IntroScreen({ onBegin }) {
+  return (
+    <div className="fade-in">
+      <div className="card">
+        <div className="card-header">
+          <div className="module-tag">MCI · Welcome</div>
+          <div className="card-title">Who This Training Is For</div>
+        </div>
+        <div className="card-body">
+          <p style={{fontSize:15,lineHeight:1.75,color:'#333',marginBottom:8}}>
+            This training is for anyone who advocates for male contraception — you don't need to be a formal presenter. Advocacy looks like many things:
+          </p>
+          <div className="intro-points">
+            <div className="intro-point"><span className="intro-point-icon">🎤</span><div><strong>Giving a talk or presentation</strong> — at a university, community event, conference, or panel.</div></div>
+            <div className="intro-point"><span className="intro-point-icon">💬</span><div><strong>Having conversations</strong> — with friends, family, colleagues, or anyone curious about the topic.</div></div>
+            <div className="intro-point"><span className="intro-point-icon">🌐</span><div><strong>Online advocacy</strong> — posting, sharing, or responding to content about male contraception on social media or in online communities.</div></div>
+            <div className="intro-point"><span className="intro-point-icon">🏥</span><div><strong>Professional contexts</strong> — healthcare providers, researchers, policy staff, or funders who field questions from stakeholders.</div></div>
+            <div className="intro-point"><span className="intro-point-icon">📣</span><div><strong>Community outreach</strong> — tabling, workshops, or one-on-one education in any setting.</div></div>
+          </div>
+          <p style={{fontSize:14,color:'var(--text-muted)',lineHeight:1.7,marginBottom:24}}>
+            After completing all five modules, you'll be equipped to speak accurately about the science, the pipeline, and how to handle common questions and misconceptions — in any setting.
+          </p>
+          <div className="btn-row center">
+            <button className="btn btn-orange" onClick={onBegin}>Begin Module 1 →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Content slide ────────────────────────────────────────────────────────────
 
 function ContentScreen({ mod, slideIndex, onNext, onBack }) {
@@ -888,7 +957,7 @@ function ContentScreen({ mod, slideIndex, onNext, onBack }) {
         <div className="card-body">
           <div className="slide-counter">Slide {slideIndex + 1} of {total}</div>
           <div className="visual-block">{slide.visual}</div>
-          <p className="slide-body">{slide.body}</p>
+          <div className="slide-body">{slide.body}</div>
           {slide.callout && (
             <div className="callout-box">
               <div className="callout-label">{slide.callout.label}</div>
@@ -1097,12 +1166,12 @@ function CompletionScreen({ user, scores, attempts }) {
           <div className="cert-wrap" id="certificate">
             <div className="cert-badge">M</div>
             <div className="cert-title">Certificate of Completion</div>
-            <div className="cert-heading">MCI Presenter Training</div>
+            <div className="cert-heading">Male Contraception Advocate Training</div>
             <div className="cert-sub">Male Contraceptive Initiative</div>
             <div style={{fontSize:14,color:'var(--text-muted)',marginBottom:4}}>This certifies that</div>
             <div className="cert-name">{user.name}</div>
             <div style={{fontSize:14,color:'var(--text-muted)',marginTop:4}}>has successfully completed all five modules of the</div>
-            <div style={{fontSize:15,fontWeight:600,color:'var(--navy)',margin:'6px 0'}}>MCI Presenter Training Module</div>
+            <div style={{fontSize:15,fontWeight:600,color:'var(--navy)',margin:'6px 0'}}>MCI Male Contraception Advocate Training</div>
             <div className="cert-line"/>
             <div className="cert-scores">
               {MODULES.map((mod,i)=>(
@@ -1129,7 +1198,7 @@ function CompletionScreen({ user, scores, attempts }) {
 
 function App() {
   const [user, setUser] = React.useState(null);
-  const [phase, setPhase] = React.useState('registration'); // registration | slides | misconceptions | quiz | results | complete
+  const [phase, setPhase] = React.useState('registration'); // registration | intro | slides | misconceptions | quiz | results | complete
   const [currentModIdx, setCurrentModIdx] = React.useState(0); // 0-indexed
   const [slideIndex, setSlideIndex] = React.useState(0);
   const [attempt, setAttempt] = React.useState(1);
@@ -1148,7 +1217,7 @@ function App() {
     setPhase('slides');
   }
 
-  function handleBegin(userData) { setUser(userData); startModule(0); }
+  function handleBegin(userData) { setUser(userData); setPhase('intro'); }
 
   function handleSlideNext() {
     if (slideIndex < mod.slides.length - 1) setSlideIndex(i=>i+1);
@@ -1186,9 +1255,10 @@ function App() {
 
   return (
     <div className="app-shell">
-      <TopBar currentModule={phase==='registration'?0:currentModIdx+1} phase={phase}/>
+      <TopBar currentModIdx={currentModIdx} phase={phase}/>
       <div className="main-content">
         {phase==='registration' && <RegistrationScreen onBegin={handleBegin}/>}
+        {phase==='intro' && <IntroScreen onBegin={()=>startModule(0)}/>}
         {phase==='slides' && (
           <ContentScreen mod={mod} slideIndex={slideIndex} onNext={handleSlideNext} onBack={handleSlideBack}/>
         )}
