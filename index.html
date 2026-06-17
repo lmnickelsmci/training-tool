@@ -320,7 +320,20 @@ const MODULES = [
     slides: [
       {
         headline: "The Path from Discovery to Approval",
-        body: "Before any new medicine reaches patients, it goes through a defined set of steps. Discovery: researchers identify a target. Preclinical: the approach is tested in the lab and in animals. Phase I: first tested in a small group of humans — primarily for safety. Phase II: tested in a larger group to look at safety and early effectiveness. Phase III: large-scale trial to confirm effectiveness. Then regulators — like the FDA in the U.S., or equivalent bodies in other countries — review the data before approval. The average timeline from discovery to approval is between 10 and 15 years and can cost $1–2 billion. This is not unique to male contraceptives — it is the standard timeline for any new drug.",
+        body: (
+          <div>
+            <p style={{fontSize:14,color:'var(--text-muted)',marginBottom:10,lineHeight:1.7}}>Before any new medicine reaches patients, it goes through a defined set of steps:</p>
+            <ul style={{fontSize:14,color:'#333',lineHeight:1.75,paddingLeft:20,marginBottom:10}}>
+              <li style={{marginBottom:6}}><strong>Discovery</strong> — researchers identify a biological target</li>
+              <li style={{marginBottom:6}}><strong>Preclinical</strong> — the approach is tested in the lab and in animals</li>
+              <li style={{marginBottom:6}}><strong>Phase I</strong> — first tested in a small group of humans, primarily for safety</li>
+              <li style={{marginBottom:6}}><strong>Phase II</strong> — tested in a larger group for safety and early effectiveness</li>
+              <li style={{marginBottom:6}}><strong>Phase III</strong> — large-scale trial to confirm effectiveness</li>
+              <li style={{marginBottom:6}}><strong>Approval</strong> — regulators (e.g., FDA in the U.S.) review the data before a drug can be sold</li>
+            </ul>
+            <p style={{fontSize:14,color:'var(--text-muted)',lineHeight:1.7}}>The average timeline from discovery to approval is 10–15 years and can cost $1–2 billion. This is not unique to male contraceptives — it is the standard timeline for any new drug.</p>
+          </div>
+        ),
         callout: { label:"Key Fact", text:"10–15 years and $1–2 billion is typical for any new drug. The pipeline is long by design, to protect safety." },
         visual: (
           <svg viewBox="0 0 460 105" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:460}}>
@@ -340,15 +353,26 @@ const MODULES = [
       },
       {
         headline: "Why Male Contraceptives Face Extra Challenges",
-        body: "All drugs face the standard hurdles described above. But male contraceptives face four additional challenges:\n\n• Healthy user problem: The people using contraceptives aren't sick — they aren't trying to treat a condition. Regulators therefore require near-zero side effects, a much higher bar than for treating a disease. The method also needs to be safe for long-term, ongoing use over many years.\n\n• No regulatory pathway: Unlike female contraceptives, there are currently no established FDA regulatory guidelines — and no clear approval pathway — for male methods. This is a specific barrier the field faces that female contraception does not.\n\n• Historical underinvestment: Male reproductive health has been deprioritized by funders and pharmaceutical companies for decades, leaving the field chronically under-resourced.\n\n• Low public awareness: Most people don't know new male methods are being developed — limiting demand signals and political will.\n\nSome candidates are also repurposed drugs — originally developed to treat other conditions before showing contraceptive potential. Repurposing can speed up development because some early safety data already exists.",
+        body: (
+          <div>
+            <p style={{fontSize:14,color:'var(--text-muted)',marginBottom:10,lineHeight:1.7}}>All drugs face the standard hurdles described above. But male contraceptives face four additional challenges:</p>
+            <ul style={{fontSize:14,color:'#333',lineHeight:1.75,paddingLeft:20,marginBottom:12}}>
+              <li style={{marginBottom:8}}><strong>Healthy user problem</strong> — The people using contraceptives aren't sick. Regulators require near-zero side effects — a much higher bar than for treating a disease — and the method must be safe for long-term, ongoing use.</li>
+              <li style={{marginBottom:8}}><strong>No regulatory pathway</strong> — Unlike female contraceptives, there are no established FDA regulatory guidelines and no clear approval pathway for male methods.</li>
+              <li style={{marginBottom:8}}><strong>Historical underinvestment</strong> — Male reproductive health has been deprioritized by funders and pharmaceutical companies for decades, leaving the field chronically under-resourced.</li>
+              <li style={{marginBottom:8}}><strong>Low public awareness</strong> — Most people don't know new male methods are being developed — limiting demand signals and political will.</li>
+            </ul>
+            <p style={{fontSize:14,color:'var(--text-muted)',lineHeight:1.7}}>Some candidates are also <strong>repurposed drugs</strong> — originally developed to treat other conditions before showing contraceptive potential. Repurposing can speed up development because some early safety data already exists.</p>
+          </div>
+        ),
         callout: { label:"Key Point", text:"These challenges explain the timeline — not the science failing. The field needs sustained investment and public attention." },
         visual: (
-          <svg viewBox="0 0 420 130" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+          <svg viewBox="0 0 420 142" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
             {[
               {i:1,label:"Healthy user problem",sub:"High safety bar — not treating disease; long-term ongoing use",y:8},
-              {i:2,label:"No regulatory pathway",sub:"No FDA approval pathway exists for male contraceptives yet",y:40},
-              {i:3,label:"Historical underinvestment",sub:"Men's reproductive health deprioritized by funders and pharma",y:72},
-              {i:4,label:"Low public awareness",sub:"Most people don't know new methods are being developed",y:104},
+              {i:2,label:"No regulatory pathway",sub:"No FDA approval pathway exists for male contraceptives yet",y:42},
+              {i:3,label:"Historical underinvestment",sub:"Men's reproductive health deprioritized by funders and pharma",y:76},
+              {i:4,label:"Low public awareness",sub:"Most people don't know new methods are being developed",y:110},
             ].map(({i,label,sub,y})=>(
               <g key={y}>
                 <circle cx="20" cy={y+13} r="11" fill="#D86018"/>
@@ -407,43 +431,42 @@ const MODULES = [
         body: "Five structures are enough to speak confidently about male contraception: the testicles (where sperm are produced), the epididymis (where sperm mature and are stored), the vas deferens (the tube that transports sperm), the seminal vesicles and prostate (which add fluid to form semen), and the urethra (the exit path). Each structure is a potential target for a contraceptive approach.",
         callout: { label:"Key Point", text:"You don't need to memorize anatomy in detail — knowing where sperm are made, stored, and transported is enough to speak confidently about the science." },
         visual: (
-          <svg viewBox="0 0 420 175" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+          <svg viewBox="0 0 420 190" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
             <defs>
               <marker id="arrA" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#D86018"/></marker>
               <marker id="arrB" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#5a6475"/></marker>
             </defs>
-            {/* Top row: brain/hormones signal down */}
-            <rect x="148" y="8" width="124" height="30" rx="8" fill="#eef2ff" stroke="#002D72" strokeWidth="1.5"/>
-            <text x="210" y="28" textAnchor="middle" fill="#002D72" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">Brain (Testosterone, FSH, LH)</text>
-            <line x1="210" y1="39" x2="210" y2="53" stroke="#002D72" strokeWidth="1.5" strokeDasharray="3,2" markerEnd="url(#arrA)"/>
+            {/* Top row: brain signal down */}
+            <rect x="140" y="8" width="140" height="38" rx="8" fill="#eef2ff" stroke="#002D72" strokeWidth="1.5"/>
+            <text x="210" y="25" textAnchor="middle" fill="#002D72" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="700">Brain / Pituitary</text>
+            <text x="210" y="39" textAnchor="middle" fill="#002D72" fontSize="9" fontFamily="DM Sans,sans-serif">Testosterone · FSH · LH</text>
+            <line x1="210" y1="47" x2="210" y2="61" stroke="#002D72" strokeWidth="1.5" strokeDasharray="3,2" markerEnd="url(#arrA)"/>
             {/* Row 1: Testicles, Epididymis, Vas Deferens */}
-            <rect x="8" y="55" width="96" height="50" rx="9" fill="#002D72"/>
-            <text x="56" y="76" textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">① Testicles</text>
-            <text x="56" y="90" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="8.5" fontFamily="DM Sans,sans-serif">Sperm production</text>
-            <rect x="162" y="55" width="96" height="50" rx="9" fill="#002D72"/>
-            <text x="210" y="76" textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">② Epididymis</text>
-            <text x="210" y="90" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="8.5" fontFamily="DM Sans,sans-serif">Maturation &amp; storage</text>
-            <rect x="316" y="55" width="96" height="50" rx="9" fill="#D86018"/>
-            <text x="364" y="76" textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">③ Vas Deferens</text>
-            <text x="364" y="90" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="8.5" fontFamily="DM Sans,sans-serif">Transport tube</text>
+            <rect x="8" y="63" width="96" height="50" rx="9" fill="#002D72"/>
+            <text x="56" y="84" textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">① Testicles</text>
+            <text x="56" y="98" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="8.5" fontFamily="DM Sans,sans-serif">Sperm production</text>
+            <rect x="162" y="63" width="96" height="50" rx="9" fill="#002D72"/>
+            <text x="210" y="84" textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">② Epididymis</text>
+            <text x="210" y="98" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="8.5" fontFamily="DM Sans,sans-serif">Maturation &amp; storage</text>
+            <rect x="316" y="63" width="96" height="50" rx="9" fill="#D86018"/>
+            <text x="364" y="84" textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">③ Vas Deferens</text>
+            <text x="364" y="98" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="8.5" fontFamily="DM Sans,sans-serif">Transport tube</text>
             {/* Arrows row 1 */}
-            <line x1="105" y1="80" x2="160" y2="80" stroke="#D86018" strokeWidth="2" markerEnd="url(#arrA)"/>
-            <line x1="259" y1="80" x2="314" y2="80" stroke="#D86018" strokeWidth="2" markerEnd="url(#arrA)"/>
+            <line x1="105" y1="88" x2="160" y2="88" stroke="#D86018" strokeWidth="2" markerEnd="url(#arrA)"/>
+            <line x1="259" y1="88" x2="314" y2="88" stroke="#D86018" strokeWidth="2" markerEnd="url(#arrA)"/>
             {/* Down arrow from vas deferens */}
-            <line x1="364" y1="106" x2="364" y2="120" stroke="#5a6475" strokeWidth="2" markerEnd="url(#arrB)"/>
+            <line x1="364" y1="114" x2="364" y2="128" stroke="#5a6475" strokeWidth="2" markerEnd="url(#arrB)"/>
             {/* Row 2: Seminal Vesicles/Prostate, Urethra */}
-            <rect x="316" y="122" width="96" height="50" rx="9" fill="#5a6475"/>
-            <text x="364" y="142" textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">④ Sem. Vesicles</text>
-            <text x="364" y="156" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="8.5" fontFamily="DM Sans,sans-serif">+ Prostate · add fluid</text>
+            <rect x="316" y="130" width="96" height="50" rx="9" fill="#5a6475"/>
+            <text x="364" y="150" textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">④ Sem. Vesicles</text>
+            <text x="364" y="164" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="8.5" fontFamily="DM Sans,sans-serif">+ Prostate · add fluid</text>
             {/* Arrow left row 2 */}
-            <line x1="314" y1="147" x2="260" y2="147" stroke="#5a6475" strokeWidth="2" markerEnd="url(#arrB)"/>
-            <rect x="162" y="122" width="96" height="50" rx="9" fill="#5a6475"/>
-            <text x="210" y="142" textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">⑤ Urethra</text>
-            <text x="210" y="156" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="8.5" fontFamily="DM Sans,sans-serif">Exit pathway</text>
-            {/* Final arrow */}
-            <line x1="161" y1="147" x2="110" y2="147" stroke="#aaa" strokeWidth="1.5" strokeDasharray="4,3" markerEnd="url(#arrB)"/>
-            <text x="100" y="151" textAnchor="end" fill="#aaa" fontSize="9" fontFamily="DM Sans,sans-serif">→ ejaculation</text>
-            <text x="210" y="170" textAnchor="middle" fill="#aaa" fontSize="9" fontFamily="DM Sans,sans-serif">Arrows show the sperm's path — each stop is a potential contraceptive target</text>
+            <line x1="314" y1="155" x2="260" y2="155" stroke="#5a6475" strokeWidth="2" markerEnd="url(#arrB)"/>
+            <rect x="162" y="130" width="96" height="50" rx="9" fill="#5a6475"/>
+            <text x="210" y="150" textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">⑤ Urethra</text>
+            <text x="210" y="164" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="8.5" fontFamily="DM Sans,sans-serif">Exit pathway</text>
+            {/* Caption */}
+            <text x="210" y="185" textAnchor="middle" fill="#aaa" fontSize="9" fontFamily="DM Sans,sans-serif">Arrows show the sperm's path — each stop is a potential contraceptive target</text>
           </svg>
         )
       },
@@ -520,7 +543,7 @@ const MODULES = [
       { id:2, type:"mc", text:"Approximately how long does it take for a sperm cell to fully mature from a stem cell?", options:["7 days","30 days","74 days","6 months"], correct:2, explanation:"The spermatogenesis process takes approximately 74 days — which is why hormonal methods take weeks to have full effect, and why sperm already in the system need time to clear out." },
       { id:3, type:"mc", text:"What is the primary role of the vas deferens?", options:["Sperm production","Sperm maturation and storage","Sperm transport","Hormone regulation"], correct:2, explanation:"The vas deferens transports sperm from the epididymis toward the urethra. It is also the structure targeted by vasectomy and vas-occlusive devices." },
       { id:4, type:"mc", text:"Why does the blood-testis barrier matter for male contraceptive drug development?", options:["It prevents sperm from leaving the body","It limits which drug molecules can access developing sperm","It causes most male contraceptives to fail in clinical trials","It regulates testosterone levels"], correct:1, explanation:"The blood-testis barrier limits drug access to developing sperm inside the testicles — a real challenge in designing effective, targeted compounds." },
-      { id:5, type:"mc", text:"Which hormones regulate spermatogenesis?", options:["Estrogen, progesterone, and cortisol","Testosterone, FSH, and LH","Insulin, glucagon, and adrenaline","Dopamine, serotonin, and oxytocin"], correct:1, explanation:"Spermatogenesis is regulated by testosterone, follicle-stimulating hormone (FSH), and luteinizing hormone (LH) — all produced or triggered by the brain-pituitary axis." },
+      { id:5, type:"mc", text:"Why does a hormonal male contraceptive not protect against pregnancy on day one of use?", options:["Hormones take time to be absorbed into the bloodstream","Sperm production takes ~74 days, so existing sperm need time to clear out","The blood-testis barrier blocks the hormones initially","Men's bodies require a longer adjustment period for any new medication"], correct:1, explanation:"Spermatogenesis takes approximately 74 days. Hormonal methods suppress future sperm production, but sperm already in the system need time to clear — which is why men in trials are not immediately protected on day one." },
       { id:6, type:"mc", text:"Which structure is primarily responsible for sperm maturation and storage?", options:["Seminiferous tubules","Prostate gland","Epididymis","Vas deferens"], correct:2, explanation:"The epididymis is where sperm mature and are stored after being produced. Sperm aren't capable of fertilization until they complete maturation here." },
       { id:7, type:"tf", text:"True or False: Hormonal male contraceptive methods work immediately, providing protection from the first day of use.", options:["True","False"], correct:1, explanation:"False. Because spermatogenesis takes ~74 days, hormonal methods require weeks to fully suppress sperm production, and sperm already in the system need time to clear. They do not protect on day one." },
     ]
@@ -574,30 +597,68 @@ const MODULES = [
       },
       {
         headline: "The Non-Hormonal Approach: 4 Mechanisms",
-        body: "Non-hormonal methods target sperm directly without affecting the hormonal system. Four main approaches are in development:\n\n  • Sperm Transport — blocking the vas deferens with a reversible gel to prevent sperm from traveling (e.g., ADAM, Plan A)\n\n  • Fertilization — preventing sperm from binding to and fertilizing the egg\n\n  • Sperm Motility — disabling sperm's ability to swim\n\n  • Spermatogenesis — stopping or reducing sperm production at the cellular level (e.g., YCT-529)",
+        body: (
+          <div>
+            <p style={{fontSize:14,color:'var(--text-muted)',marginBottom:10,lineHeight:1.7}}>Non-hormonal methods target sperm directly without affecting the hormonal system. Four main approaches are in development:</p>
+            <ul style={{fontSize:14,color:'#333',lineHeight:1.75,paddingLeft:20,marginBottom:0}}>
+              <li style={{marginBottom:8}}><strong>Sperm Transport</strong> — blocking the vas deferens with a reversible gel to prevent sperm from traveling (e.g., ADAM, Plan A)</li>
+              <li style={{marginBottom:8}}><strong>Fertilization</strong> — preventing sperm from binding to and fertilizing the egg</li>
+              <li style={{marginBottom:8}}><strong>Sperm Motility</strong> — disabling sperm's ability to swim</li>
+              <li><strong>Spermatogenesis</strong> — stopping or reducing sperm production at the cellular level (e.g., YCT-529)</li>
+            </ul>
+          </div>
+        ),
         callout: { label:"Key Distinction", text:"Non-hormonal does not mean less effective. Vasectomy is non-hormonal and nearly 100% effective. Effectiveness depends on the mechanism, not whether the method uses hormones." },
         visual: (
-          <svg viewBox="0 0 420 168" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
-            {[
-              {x:10,y:10,label:"① Sperm Transport",sub:"Block vas deferens reversibly",eg:"ADAM, Plan A",c:"#002D72"},
-              {x:215,y:10,label:"② Fertilization",sub:"Prevent sperm-egg binding",eg:"Various targets",c:"#002D72"},
-              {x:10,y:92,label:"③ Sperm Motility",sub:"Disable ability to swim",eg:"Various targets",c:"#D86018"},
-              {x:215,y:92,label:"④ Spermatogenesis",sub:"Reduce sperm production",eg:"YCT-529, NES/T",c:"#D86018"},
-            ].map(({x,y,label,sub,eg,c})=>(
-              <g key={label}>
-                <rect x={x} y={y} width="192" height="72" rx="10" fill={c}/>
-                <text x={x+96} y={y+23} textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
-                <text x={x+96} y={y+39} textAnchor="middle" fill="rgba(255,255,255,.9)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
-                <text x={x+96} y={y+55} textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="DM Sans,sans-serif">e.g.: {eg}</text>
-              </g>
-            ))}
-            <text x="210" y="163" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Four distinct mechanisms — diversity in the pipeline is a strength</text>
-          </svg>
+          <div>
+            <svg viewBox="0 0 420 182" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+              {[
+                {x:10,y:10,label:"① Sperm Transport",sub:"Block vas deferens reversibly",eg:"ADAM, Plan A",c:"#002D72"},
+                {x:215,y:10,label:"② Fertilization",sub:"Prevent sperm-egg binding",eg:"Various targets",c:"#002D72"},
+                {x:10,y:92,label:"③ Sperm Motility",sub:"Disable ability to swim",eg:"Various targets",c:"#D86018"},
+                {x:215,y:92,label:"④ Spermatogenesis",sub:"Reduce sperm production",eg:"YCT-529, NES/T",c:"#D86018"},
+              ].map(({x,y,label,sub,eg,c})=>(
+                <g key={label}>
+                  <rect x={x} y={y} width="192" height="72" rx="10" fill={c}/>
+                  <text x={x+96} y={y+23} textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
+                  <text x={x+96} y={y+39} textAnchor="middle" fill="rgba(255,255,255,.9)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
+                  <text x={x+96} y={y+55} textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="DM Sans,sans-serif">e.g.: {eg}</text>
+                </g>
+              ))}
+              <text x="210" y="178" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Four distinct mechanisms — diversity in the pipeline is a strength</text>
+            </svg>
+            <div style={{marginTop:12}}>
+              <div style={{fontSize:12,color:'var(--text-muted)',marginBottom:8,textAlign:'center',fontStyle:'italic'}}>Mechanism illustrations (malecontraceptive.org):</div>
+              <div style={{display:'flex',gap:8,justifyContent:'center',flexWrap:'wrap'}}>
+                {[
+                  {src:'https://www.malecontraceptive.org/uploads/1/3/1/9/131958006/lnasset-1.png',label:'Sperm Transport'},
+                  {src:'https://www.malecontraceptive.org/uploads/1/3/1/9/131958006/lnasset-5.png',label:'Fertilization'},
+                  {src:'https://www.malecontraceptive.org/uploads/1/3/1/9/131958006/lnasset-6.png',label:'Sperm Motility'},
+                  {src:'https://www.malecontraceptive.org/uploads/1/3/1/9/131958006/lnasset-7.png',label:'Spermatogenesis'},
+                ].map(({src,label})=>(
+                  <div key={label} style={{textAlign:'center'}}>
+                    <img src={src} alt={label} style={{width:90,height:90,objectFit:'contain',borderRadius:8,background:'#f4f6fa',display:'block'}}/>
+                    <div style={{fontSize:10,color:'var(--text-muted)',marginTop:4}}>{label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         )
       },
       {
         headline: "Where the Pipeline Stands Today",
-        body: "Now that we've covered what the pipeline stages mean (Module 2), here's where male contraceptive candidates currently stand. The front-runner is NES/T — a hormonal topical gel in Phase 2b trials. In Phase 2a: ADAM and Plan A (reversible vas-occlusive gels), YCT-529 (a non-hormonal pill), Consilum (a repurposed drug originally developed for prostate conditions), and NLS-133 (an on-demand pill — meaning it's taken near the time of intercourse rather than daily). In Phase 1 (early human safety trials): Geldom, 11β-MNTDC, and DMAU. In late preclinical: a sAC Inhibitor on-demand candidate.",
+        body: (
+          <div>
+            <p style={{fontSize:14,color:'var(--text-muted)',marginBottom:10,lineHeight:1.7}}>Now that we've covered what the pipeline stages mean (Module 2), here's where male contraceptive candidates currently stand:</p>
+            <ul style={{fontSize:14,color:'#333',lineHeight:1.75,paddingLeft:20,marginBottom:0}}>
+              <li style={{marginBottom:8}}><strong>Phase 2b (front-runner):</strong> NES/T — a hormonal topical gel</li>
+              <li style={{marginBottom:8}}><strong>Phase 2a:</strong> ADAM and Plan A (reversible vas-occlusive gels); YCT-529 (a non-hormonal pill); Consilum (repurposed from prostate treatment); NLS-133 (an on-demand pill — taken near the time of intercourse rather than daily; made from two repurposed drugs)</li>
+              <li style={{marginBottom:8}}><strong>Phase 1</strong> (early human safety trials): Geldom, 11β-MNTDC, and DMAU</li>
+              <li><strong>Late preclinical:</strong> sAC Inhibitor (on-demand pill)</li>
+            </ul>
+          </div>
+        ),
         callout: { label:"Key Message", text:"\"The science is there. The pipeline is real and more advanced than at any prior point. The question is whether this field gets the investment and public attention it deserves.\"" },
         visual: (
           <svg viewBox="0 0 500 188" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:500}}>
@@ -644,7 +705,7 @@ const MODULES = [
     misconceptions: [
       { q:'"They tried this and it didn\'t work."', a:"Every area of drug development has setbacks. They reveal safety signals or design issues to address — not proof the science doesn't work. The pipeline continues to advance." },
       { q:'"Non-hormonal methods are less effective."', a:"Not necessarily. Vasectomy is non-hormonal and nearly 100% effective. Effectiveness depends on mechanism, not whether the method is hormonal." },
-      { q:'"Vas-occlusive devices are just like vasectomy."', a:"Key difference: vasectomy cuts and seals the vas deferens. Vas-occlusive devices inject a reversible gel. Different procedure, different intent — reversibility is the core design goal." },
+      { q:'"Vas-occlusive devices are just like vasectomy."', a:"There are real similarities — both target the vas deferens, both are non-hormonal, and both are highly effective. The key distinction is reversibility: vasectomy is designed to be permanent (reversal is possible but success rates decline over time). Vas-occlusive devices are explicitly designed to be reversed — the gel can be cleared or removed. That matters for people who want effective, long-term contraception without permanent sterilization." },
     ],
     quiz: [
       { id:1, type:"mc", text:"Vasectomy is best characterized as:", options:["A reversible, non-surgical method","A surgical method intended to be permanent","A hormonal method","A gel-based vas-occlusive device"], correct:1, explanation:"Vasectomy is a surgical procedure that is highly effective and intended to be permanent. Reversal is possible but success rates decline over time." },
@@ -652,9 +713,9 @@ const MODULES = [
       { id:3, type:"mc", text:"Which of the following is an example of a vas-occlusive approach?", options:["YCT-529","ADAM by Contraline","NES/T topical gel","sAC Inhibitor"], correct:1, explanation:"ADAM by Contraline (and Plan A) are vas-occlusive approaches — reversible gels injected into the vas deferens. YCT-529 inhibits spermatogenesis; NES/T is a hormonal topical gel." },
       { id:4, type:"mc", text:"What does 'on-demand' mean in the context of a male contraceptive?", options:["The method requires a prescription on request","It is taken near the time of intercourse rather than daily","It can be turned on or off by a healthcare provider","It works immediately with no waiting period"], correct:1, explanation:"On-demand methods like NLS-133 are taken near the time of intercourse rather than on a daily schedule — similar in concept to emergency contraception for women." },
       { id:5, type:"tf", text:"True or False: No new male contraceptive is FDA-approved because the science has fundamentally failed.", options:["True","False"], correct:1, explanation:"False. Lack of approval reflects historical underinvestment and the long drug development timeline, not scientific failure. Multiple candidates are in active clinical trials." },
-      { id:6, type:"mc", text:"Which candidate is currently the front-runner in the male contraceptive pipeline?", options:["YCT-529 (non-hormonal pill)","ADAM (vas-occlusive gel)","NES/T (hormonal topical gel, Phase 2b)","sAC Inhibitor (on-demand)"], correct:2, explanation:"NES/T — a nestorone/testosterone topical gel — is currently the most advanced candidate, in Phase 2b trials." },
+      { id:6, type:"mc", text:"Which candidate is currently the front-runner in the male contraceptive pipeline?", options:["YCT-529 (non-hormonal pill)","ADAM (vas-occlusive gel)","NES/T (hormonal topical gel)","sAC Inhibitor (on-demand pill)"], correct:2, explanation:"NES/T — a nestorone/testosterone topical gel — is currently the most advanced candidate in the male contraceptive pipeline." },
       { id:7, type:"mc", text:"Which types of methods does MCI prioritize funding?", options:["Hormonal methods only","Any method regardless of mechanism","Non-hormonal, reversible male contraceptives","Surgical and device-based methods only"], correct:2, explanation:"MCI focuses its grant funding on non-hormonal, reversible male contraceptive development, while supporting the broader field." },
-      { id:8, type:"mc", text:"Which of the following is NOT a reason cited for why no new male contraceptive is yet FDA-approved?", options:["Historical underinvestment in male reproductive health","Scientists haven't identified any biological targets to pursue","No established FDA regulatory approval pathway","Long drug development timelines"], correct:1, explanation:"Multiple biological targets are well understood. The real barriers are underinvestment, absent regulatory guidelines, and the inherent length of drug development." },
+      { id:8, type:"mc", text:"NLS-133 is notable among current candidates because it:", options:["Is the only hormonal method in Phase 2a","Is an on-demand pill made from two repurposed drugs","Targets the blood-testis barrier directly","Is the most advanced candidate in Phase 2b"], correct:1, explanation:"NLS-133 is an on-demand pill — meaning it's taken near the time of intercourse rather than daily — and it is made from two drugs that were originally developed to treat other conditions, meaning some prior safety data already exists." },
     ]
   },
 
@@ -907,7 +968,7 @@ function RegistrationScreen({ onBegin }) {
             <div style={{marginBottom:20,fontSize:14,fontWeight:600,color:'var(--navy)'}}>Enter your details to get started</div>
             <div className="form-group">
               <label className="form-label">Full name</label>
-              <input className="form-input" type="text" placeholder="e.g. Sabey Boswell" value={name}
+              <input className="form-input" type="text" placeholder="e.g. Alex Johnson" value={name}
                 onChange={e=>{setName(e.target.value);setErrors(ev=>({...ev,name:''}));}}/>
               {errors.name && <div className="form-error">{errors.name}</div>}
             </div>
@@ -947,6 +1008,19 @@ function IntroScreen({ onBegin }) {
             <div className="intro-point"><span className="intro-point-icon">🌐</span><div><strong>Online advocacy</strong> — posting, sharing, or responding to content about male contraception on social media or in online communities.</div></div>
             <div className="intro-point"><span className="intro-point-icon">🏥</span><div><strong>Professional contexts</strong> — healthcare providers, researchers, policy staff, or funders who field questions from stakeholders.</div></div>
             <div className="intro-point"><span className="intro-point-icon">📣</span><div><strong>Community outreach</strong> — tabling, workshops, or one-on-one education in any setting.</div></div>
+          </div>
+          <div className="divider"/>
+          <div style={{marginBottom:20}}>
+            <div style={{fontSize:14,fontWeight:700,color:'var(--navy)',marginBottom:12}}>By the end of this training, you'll be able to:</div>
+            <ul style={{fontSize:14,color:'#333',lineHeight:1.8,paddingLeft:20,margin:0}}>
+              <li style={{marginBottom:6}}>Explain why new male contraceptive methods are needed and what gap currently exists</li>
+              <li style={{marginBottom:6}}>Describe the stages of drug development and why timelines are long</li>
+              <li style={{marginBottom:6}}>Name the key structures involved in male reproductive biology</li>
+              <li style={{marginBottom:6}}>Identify at least four methods in the current male contraceptive pipeline</li>
+              <li style={{marginBottom:6}}>Distinguish between hormonal and non-hormonal contraceptive approaches</li>
+              <li style={{marginBottom:6}}>Address common misconceptions and questions you'll encounter as an advocate</li>
+              <li>Tailor your message for different audiences and cultural contexts</li>
+            </ul>
           </div>
           <p style={{fontSize:14,color:'var(--text-muted)',lineHeight:1.7,marginBottom:24}}>
             After completing all five modules, you'll be equipped to speak accurately about the science, the pipeline, and how to handle common questions and misconceptions — in any setting.
@@ -1295,8 +1369,14 @@ function App() {
   function handleBegin(userData) { setUser(userData); setPhase('intro'); }
 
   function handleSlideNext() {
-    if (slideIndex < mod.slides.length - 1) setSlideIndex(i=>i+1);
-    else setPhase('misconceptions');
+    if (slideIndex < mod.slides.length - 1) {
+      setSlideIndex(i => i + 1);
+    } else if (modPassed[currentModIdx]) {
+      if (isLastModule) { logCompletion(user, scores, attempts); setPhase('complete'); }
+      else startModule(currentModIdx + 1);
+    } else {
+      setPhase('misconceptions');
+    }
   }
   function handleSlideBack() {
     if (slideIndex > 0) {
