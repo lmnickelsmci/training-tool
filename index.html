@@ -1075,7 +1075,7 @@ function ContentScreen({ mod, slideIndex, onNext, onBack, canGoBack }) {
 
 // ─── Misconceptions screen ────────────────────────────────────────────────────
 
-function MisconceptionsScreen({ mod, onContinue }) {
+function MisconceptionsScreen({ mod, onContinue, onBack }) {
   return (
     <div className="fade-in">
       <div className="card">
@@ -1093,7 +1093,8 @@ function MisconceptionsScreen({ mod, onContinue }) {
               <div className="myth-a">{m.a}</div>
             </div>
           ))}
-          <div className="btn-row right">
+          <div className="btn-row space">
+            <button className="btn btn-secondary" onClick={onBack}>← Back</button>
             <button className="btn btn-primary" onClick={onContinue}>Start Knowledge Check →</button>
           </div>
         </div>
@@ -1463,7 +1464,8 @@ function App() {
           <ContentScreen mod={mod} slideIndex={slideIndex} onNext={handleSlideNext} onBack={handleSlideBack} canGoBack={slideIndex>0 || currentModIdx>0}/>
         )}
         {phase==='misconceptions' && (
-          <MisconceptionsScreen mod={mod} onContinue={handleStartQuiz}/>
+          <MisconceptionsScreen mod={mod} onContinue={handleStartQuiz}
+            onBack={()=>{ setSlideIndex(mod.slides.length-1); setPhase('slides'); }}/>
         )}
         {phase==='quiz' && (
           <QuizScreen mod={mod} attempt={attempt} onSubmit={handleQuizSubmit}/>
