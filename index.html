@@ -235,19 +235,27 @@ const MODULES = [
       },
       {
         headline: "What People Actually Want",
-        body: "MCI consumer research tells a clear story: 8 in 10 men aged 18–44 in the U.S. are actively trying to prevent pregnancy. Of those, 8 in 10 prefer non-hormonal options, and nearly 9 in 10 want something reversible. Data indicates this is a global pattern, not uniquely American — demand for male methods has been documented across multiple regions and cultures. Many women also express dissatisfaction with available contraceptive options — side effects, difficulty of access, and the desire for a partner to share the responsibility. Expanding male options is about giving everyone more choices.",
-        callout: { label:"Key Fact", text:"The barrier to male contraceptive use isn't willingness — 8 in 10 men are already actively trying to prevent pregnancy. The barrier is the absence of trusted, accessible options." },
+        body: "MCI consumer research tells a clear story: 8 in 10 men aged 18–44 in the U.S. are actively trying to prevent pregnancy. Of those, 8 in 10 prefer non-hormonal options, and nearly 9 in 10 want something reversible. And this is emphatically not a U.S.-only pattern. A 2024 peer-reviewed study of 12,435 men across Bangladesh, Vietnam, Kenya, Nigeria, DR Congo, and Côte d'Ivoire found that on average 61% would try a new male contraceptive in its first year of availability — reaching 76% in Nigeria and Bangladesh. Female partners across all six countries expressed strong trust in male contraceptive use. Expanding male options is about giving everyone more choices — globally.",
+        callout: { label:"Key Fact", text:"The barrier to male contraceptive use isn't willingness — it's the absence of options. 8 in 10 U.S. men are actively trying to prevent pregnancy, and 61% of men across 6 low- and middle-income countries say they'd try a new male method in year one." },
         visual: (
-          <svg viewBox="0 0 420 138" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
-            {[{label:"Actively trying to prevent pregnancy",pct:80,y:10,color:"#002D72"},{label:"Prefer non-hormonal method",pct:80,y:50,color:"#002D72"},{label:"Want reversible method",pct:89,y:90,color:"#D86018"}].map(({label,pct,y,color})=>(
+          <svg viewBox="0 0 420 185" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <text x="10" y="12" fill="#002D72" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">U.S. Consumer Research (MCI)</text>
+            {[{label:"Actively trying to prevent pregnancy",pct:80,y:16,color:"#002D72"},{label:"Prefer non-hormonal method",pct:80,y:50,color:"#002D72"},{label:"Want reversible method",pct:89,y:84,color:"#002D72"}].map(({label,pct,y,color})=>(
               <g key={y}>
-                <text x="10" y={y+12} fill="#333" fontSize="11" fontFamily="DM Sans,sans-serif">{label}</text>
-                <rect x="10" y={y+16} width="310" height="12" rx="6" fill="#eee"/>
-                <rect x="10" y={y+16} width={pct*3.1} height="12" rx="6" fill={color}/>
-                <text x="330" y={y+27} fill="#333" fontSize="13" fontFamily="DM Sans,sans-serif" fontWeight="700">{pct}%</text>
+                <text x="10" y={y+12} fill="#333" fontSize="10" fontFamily="DM Sans,sans-serif">{label}</text>
+                <rect x="10" y={y+15} width="310" height="11" rx="5" fill="#eee"/>
+                <rect x="10" y={y+15} width={pct*3.1} height="11" rx="5" fill={color}/>
+                <text x="330" y={y+25} fill="#333" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">{pct}%</text>
               </g>
             ))}
-            <text x="10" y="128" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Source: MCI U.S. Consumer Research</text>
+            <line x1="10" y1="118" x2="410" y2="118" stroke="#e8e8e8" strokeWidth="1"/>
+            <text x="10" y="132" fill="#D86018" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">International Market Research (2024, 6 LMICs, n=12,435)</text>
+            <text x="10" y="148" fill="#333" fontSize="10" fontFamily="DM Sans,sans-serif">Would try new male contraceptive in year one</text>
+            <rect x="10" y="151" width="310" height="11" rx="5" fill="#eee"/>
+            <rect x="10" y="151" width={61*3.1} height="11" rx="5" fill="#D86018" opacity="0.5"/>
+            <rect x="10" y="151" width={61*3.1} height="11" rx="5" fill="none" stroke="#D86018" strokeWidth="1"/>
+            <text x="330" y="161" fill="#D86018" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">61%</text>
+            <text x="10" y="176" fill="#888" fontSize="9" fontFamily="DM Sans,sans-serif">(avg across 6 countries; 76% in Nigeria &amp; Bangladesh) · Source: Hamlin et al. 2024</text>
           </svg>
         )
       },
