@@ -660,11 +660,27 @@ const MODULES = [
         body: (
           <div>
             <p style={{fontSize:14,color:'var(--text-muted)',marginBottom:10,lineHeight:1.7}}>Now that we've covered what the pipeline stages mean (Module 2), here's where male contraceptive candidates currently stand:</p>
-            <ul style={{fontSize:14,color:'#333',lineHeight:1.75,paddingLeft:20,marginBottom:0}}>
-              <li style={{marginBottom:10}}><strong>Phase 2b (front-runner):</strong> <em>NES/T</em> — a hormonal gel applied daily to the shoulders. Achieved near-zero sperm counts in &gt;90% of men in trials. Side effects are similar to female hormonal methods: mood changes, acne, libido shifts.</li>
-              <li style={{marginBottom:10}}><strong>Phase 2a:</strong> <em>ADAM &amp; Plan A</em> (one-time provider-injected gel into the vas deferens — highly effective, non-hormonal, designed to be reversed by flushing); <em>YCT-529</em> (a daily non-hormonal pill targeting a retinoic acid receptor — well tolerated in early trials); <em>Consilum</em> (a repurposed daily pill); <em>NLS-133</em> (on-demand — taken a couple of hours before sex; two repurposed drugs combined)</li>
-              <li style={{marginBottom:10}}><strong>Phase 1</strong> (early human safety trials): <em>Geldom</em>, <em>11β-MNTDC</em>, and <em>DMAU</em> (hormonal capsules/gels; ongoing safety assessment)</li>
-              <li><strong>Late preclinical:</strong> <em>sAC Inhibitor</em> (on-demand non-hormonal pill); <em>Thermal methods</em> (e.g., Coso — a device that uses controlled ultrasonic heating to temporarily reduce sperm count; non-hormonal, non-invasive, no systemic effects)</li>
+            <p style={{fontSize:12,fontWeight:700,color:'#D86018',margin:'4px 0 4px 0'}}>Phase 2b (front-runner)</p>
+            <ul style={{fontSize:13,color:'#333',lineHeight:1.7,paddingLeft:20,marginBottom:8}}>
+              <li><strong>NES/T</strong> — hormonal gel applied daily to the shoulders. Achieved near-zero sperm counts in &gt;90% of men in trials. Side effects similar to female hormonal methods: mood changes, acne, libido shifts.</li>
+            </ul>
+            <p style={{fontSize:12,fontWeight:700,color:'#002D72',margin:'4px 0 4px 0'}}>Phase 2a</p>
+            <ul style={{fontSize:13,color:'#333',lineHeight:1.7,paddingLeft:20,marginBottom:8}}>
+              <li style={{marginBottom:4}}><strong>ADAM &amp; Plan A</strong> — reversible hydrogels injected into the vas deferens by a provider. Non-hormonal, non-systemic. Designed to be cleared and reversed.</li>
+              <li style={{marginBottom:4}}><strong>YCT-529</strong> — daily non-hormonal pill targeting a retinoic acid receptor. Well tolerated in early trials.</li>
+              <li style={{marginBottom:4}}><strong>Consilum</strong> — daily pill repurposed from a prostate treatment.</li>
+              <li><strong>NLS-133</strong> — on-demand pill taken ~1–2 hours before sex; two repurposed drugs combined.</li>
+            </ul>
+            <p style={{fontSize:12,fontWeight:700,color:'#5a6475',margin:'4px 0 4px 0'}}>Phase 1 (early human safety trials)</p>
+            <ul style={{fontSize:13,color:'#333',lineHeight:1.7,paddingLeft:20,marginBottom:8}}>
+              <li style={{marginBottom:4}}><strong>Geldom</strong> — a hydrogel condom designed for improved efficacy and sensation.</li>
+              <li style={{marginBottom:4}}><strong>11β-MNTDC</strong> — a hormonal daily pill with both androgenic and progestational activity.</li>
+              <li><strong>DMAU</strong> — a hormonal daily pill (dimethandrolone undecanoate) with both androgenic and progestational effects.</li>
+            </ul>
+            <p style={{fontSize:12,fontWeight:700,color:'#5a6475',margin:'4px 0 4px 0'}}>Late Preclinical</p>
+            <ul style={{fontSize:13,color:'#333',lineHeight:1.7,paddingLeft:20,marginBottom:0}}>
+              <li style={{marginBottom:4}}><strong>sAC Inhibitor</strong> — on-demand non-hormonal pill targeting an enzyme sperm need to swim.</li>
+              <li><strong>Thermal methods</strong> — controlled heating to temporarily reduce sperm count; non-hormonal, non-invasive, no systemic effects.</li>
             </ul>
           </div>
         ),
@@ -672,7 +688,7 @@ const MODULES = [
         visual: (
           <svg viewBox="0 0 500 188" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:500}}>
             {[
-              {label:"Late Preclinical",y:15,c:"#5a6475",items:["sAC Inhibitor","Thermal (Coso)"]},
+              {label:"Late Preclinical",y:15,c:"#5a6475",items:["sAC Inhibitor","Thermal"]},
               {label:"Phase 1",y:55,c:"#5a6475",items:["Geldom","11β-MNTDC","DMAU"]},
               {label:"Phase 2a",y:95,c:"#002D72",items:["ADAM","YCT-529","Plan A","Consilum","NLS-133"]},
               {label:"Phase 2b  ★",y:135,c:"#D86018",items:["NES/T (topical gel)"]},
