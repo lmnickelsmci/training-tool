@@ -253,7 +253,7 @@ const MODULES = [
       },
       {
         headline: "Why This Matters Beyond Pregnancy",
-        body: "Male contraception is a reproductive equity issue. Expanding options connects to multiple UN Sustainable Development Goals: reducing poverty, advancing gender equality, and improving health outcomes. Contraception access affects education, economic opportunity, and family stability — especially in low- and middle-income countries where unintended pregnancy rates are highest. When contraception is shared, couples gain agency together. Reproductive autonomy isn't a transaction where one partner acts — it's a shared space where everyone has real options.",
+        body: "Male contraception is a reproductive equity issue, but expanding options also connects to multiple UN Sustainable Development Goals: reducing poverty, advancing gender equality, and improving health outcomes. Contraception access affects education, economic opportunity, and family stability. When people have multiple contraceptive options, men, women, and even queer people have more reproductive autonomy. Reproductive autonomy means everyone has options that work for their body, reproductive goals, and life stage.",
         callout: { label:"Key Framing", text:"\"Reproductive autonomy for all\" — not a transaction where one partner acts and the other benefits, but a shared space where everyone has real options." },
         visual: (
           <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
@@ -298,6 +298,7 @@ const MODULES = [
       { q:'"We already have condoms — why do we need more?"', a:"Condoms are barrier methods with real-world failure rates. Women have 10+ methods; men have 2. Many people — including women — want more options. More methods mean more couples can find what works for them." },
       { q:'"Men won\'t use new methods."', a:"Consumer data says otherwise — 8 in 10 men are actively trying to prevent pregnancy. The question is whether trusted, accessible options exist." },
       { q:'"This is a Western issue."', a:"Unintended pregnancy rates are highest in low- and middle-income countries. Data indicates demand for male methods exists globally, not just in the U.S." },
+      { q:'"Women won\'t trust men to take contraception."', a:"Consumer research shows high and growing levels of trust in male methods among women. In MCI's research, a majority of women said they would trust a male partner to use a new male contraceptive. Trust is built through reliable, well-documented methods — which is exactly what the field is working to produce." },
     ],
     quiz: [
       { id:1, type:"mc", text:"Approximately what percentage of pregnancies globally are unintended?", options:["15%","30%","45%","60%"], correct:2, explanation:"Approximately 45% of all pregnancies globally are unintended, translating to roughly 121 million per year." },
@@ -577,7 +578,7 @@ const MODULES = [
       },
       {
         headline: "The Hormonal Approach",
-        body: "Hormonal male contraceptives work by using hormones to reduce brain signals that drive sperm production — the same general principle underlying many female hormonal methods. In clinical trials, scientists have gotten sperm counts down to near zero in over 90% of men. It's worth noting that hormonal contraceptives have worked well for many people for decades — the goal isn't to suggest hormonal methods are bad, but to develop more options for everyone. Men in these trials have experienced some of the same side effects women can have with hormonal methods — mood changes, acne, or changes in libido. MCI focuses its funding on non-hormonal approaches to find methods that avoid these systemic effects, while supporting colleagues working on hormonal approaches.",
+        body: "Hormonal male contraceptives work by using hormones to reduce brain signals that drive sperm production — the same general principle underlying many female hormonal methods. In clinical trials, scientists have gotten sperm counts down to near zero in over 90% of men. It's worth noting that MCI only funds non-hormonal methods, but we also support the development of hormonal ones! Hormonal contraceptives have worked well for many people for decades — the goal isn't to suggest hormonal methods are bad, but to develop more options for everyone. Men in hormonal trials have experienced some of the same side effects women can have with hormonal methods — mood changes, acne, or changes in libido.",
         callout: { label:"MCI Funding Focus", text:"MCI funds non-hormonal research. When asked about hormonal side effects, acknowledge them honestly — they are real, they are being studied, and more options are being developed." },
         visual: (
           <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
@@ -599,9 +600,9 @@ const MODULES = [
         headline: "The Non-Hormonal Approach: 4 Mechanisms",
         body: (
           <div>
-            <p style={{fontSize:14,color:'var(--text-muted)',marginBottom:10,lineHeight:1.7}}>Non-hormonal methods target sperm directly without affecting the hormonal system. Four main approaches are in development:</p>
+            <p style={{fontSize:14,color:'var(--text-muted)',marginBottom:10,lineHeight:1.7}}>Non-hormonal methods target sperm directly without affecting the hormonal system. Several approaches are in development:</p>
             <ul style={{fontSize:14,color:'#333',lineHeight:1.75,paddingLeft:20,marginBottom:0}}>
-              <li style={{marginBottom:8}}><strong>Sperm Transport</strong> — blocking the vas deferens with a reversible gel to prevent sperm from traveling (e.g., ADAM, Plan A)</li>
+              <li style={{marginBottom:8}}><strong>Sperm Transport</strong> — blocking the vas deferens with a reversible gel (e.g., ADAM, Plan A); or using <em>ejaculation inhibitors</em> — an emerging class of compounds that temporarily prevent sperm from being transported during ejaculation</li>
               <li style={{marginBottom:8}}><strong>Fertilization</strong> — preventing sperm from binding to and fertilizing the egg</li>
               <li style={{marginBottom:8}}><strong>Sperm Motility</strong> — disabling sperm's ability to swim</li>
               <li><strong>Spermatogenesis</strong> — stopping or reducing sperm production at the cellular level (e.g., YCT-529)</li>
@@ -613,7 +614,7 @@ const MODULES = [
           <div>
             <svg viewBox="0 0 420 182" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
               {[
-                {x:10,y:10,label:"① Sperm Transport",sub:"Block vas deferens reversibly",eg:"ADAM, Plan A",c:"#002D72"},
+                {x:10,y:10,label:"① Sperm Transport",sub:"Block vas / inhibit ejaculation",eg:"ADAM, Plan A + inhibitors",c:"#002D72"},
                 {x:215,y:10,label:"② Fertilization",sub:"Prevent sperm-egg binding",eg:"Various targets",c:"#002D72"},
                 {x:10,y:92,label:"③ Sperm Motility",sub:"Disable ability to swim",eg:"Various targets",c:"#D86018"},
                 {x:215,y:92,label:"④ Spermatogenesis",sub:"Reduce sperm production",eg:"YCT-529, NES/T",c:"#D86018"},
@@ -652,10 +653,10 @@ const MODULES = [
           <div>
             <p style={{fontSize:14,color:'var(--text-muted)',marginBottom:10,lineHeight:1.7}}>Now that we've covered what the pipeline stages mean (Module 2), here's where male contraceptive candidates currently stand:</p>
             <ul style={{fontSize:14,color:'#333',lineHeight:1.75,paddingLeft:20,marginBottom:0}}>
-              <li style={{marginBottom:8}}><strong>Phase 2b (front-runner):</strong> NES/T — a hormonal topical gel</li>
-              <li style={{marginBottom:8}}><strong>Phase 2a:</strong> ADAM and Plan A (reversible vas-occlusive gels); YCT-529 (a non-hormonal pill); Consilum (repurposed from prostate treatment); NLS-133 (an on-demand pill — taken near the time of intercourse rather than daily; made from two repurposed drugs)</li>
-              <li style={{marginBottom:8}}><strong>Phase 1</strong> (early human safety trials): Geldom, 11β-MNTDC, and DMAU</li>
-              <li><strong>Late preclinical:</strong> sAC Inhibitor (on-demand pill)</li>
+              <li style={{marginBottom:10}}><strong>Phase 2b (front-runner):</strong> <em>NES/T</em> — a hormonal gel applied daily to the shoulders. Achieved near-zero sperm counts in &gt;90% of men in trials. Side effects are similar to female hormonal methods: mood changes, acne, libido shifts.</li>
+              <li style={{marginBottom:10}}><strong>Phase 2a:</strong> <em>ADAM &amp; Plan A</em> (one-time provider-injected gel into the vas deferens — highly effective, non-hormonal, designed to be reversed by flushing); <em>YCT-529</em> (a daily non-hormonal pill targeting a retinoic acid receptor — well tolerated in early trials); <em>Consilum</em> (a repurposed daily pill); <em>NLS-133</em> (on-demand — taken a couple of hours before sex; two repurposed drugs combined)</li>
+              <li style={{marginBottom:10}}><strong>Phase 1</strong> (early human safety trials): <em>Geldom</em>, <em>11β-MNTDC</em>, and <em>DMAU</em> (hormonal capsules/gels; ongoing safety assessment)</li>
+              <li><strong>Late preclinical:</strong> <em>sAC Inhibitor</em> (on-demand non-hormonal pill); <em>Thermal methods</em> (e.g., Coso — a device that uses controlled ultrasonic heating to temporarily reduce sperm count; non-hormonal, non-invasive, no systemic effects)</li>
             </ul>
           </div>
         ),
@@ -663,7 +664,7 @@ const MODULES = [
         visual: (
           <svg viewBox="0 0 500 188" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:500}}>
             {[
-              {label:"Late Preclinical",y:15,c:"#5a6475",items:["sAC Inhibitor"]},
+              {label:"Late Preclinical",y:15,c:"#5a6475",items:["sAC Inhibitor","Thermal (Coso)"]},
               {label:"Phase 1",y:55,c:"#5a6475",items:["Geldom","11β-MNTDC","DMAU"]},
               {label:"Phase 2a",y:95,c:"#002D72",items:["ADAM","YCT-529","Plan A","Consilum","NLS-133"]},
               {label:"Phase 2b  ★",y:135,c:"#D86018",items:["NES/T (topical gel)"]},
@@ -685,14 +686,14 @@ const MODULES = [
       },
       {
         headline: "The Key Message",
-        body: "When people say 'they tried this and it didn't work,' remember: every area of drug development has setbacks. Setbacks reveal safety signals or design issues to address — they're not proof the science doesn't work. The pipeline is real, active, and more advanced today than at any prior point. Multiple candidates are in human trials right now. The field continues to move forward.",
+        body: "Setbacks happen in all drug development. Multiple candidates are in trials now. When people say 'they tried this and it didn't work,' or 'male contraception is taking too long' — remember: every area of drug development has setbacks. Setbacks reveal safety signals or design issues to address — they're not proof the science doesn't work. The pipeline is real, active, and more advanced today than at any prior point. Multiple candidates are in human trials right now. The field continues to move forward.",
         callout: { label:"What to Say", text:"\"We don't have a new male method approved yet — not because it's impossible, but because the field has been underfunded. The science is there. The pipeline is real.\"" },
         visual: (
           <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
             <rect x="10" y="10" width="190" height="90" rx="12" fill="#fdf0ee" stroke="#c0392b" strokeWidth="1.5"/>
             <text x="105" y="35" textAnchor="middle" fill="#c0392b" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">Don't say:</text>
-            <text x="105" y="55" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"Male contraception</text>
-            <text x="105" y="69" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">science has failed."</text>
+            <text x="105" y="53" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"Male contraception</text>
+            <text x="105" y="67" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">science is taking forever."</text>
             <rect x="218" y="10" width="190" height="90" rx="12" fill="#e8f5ee" stroke="#1a7a4a" strokeWidth="1.5"/>
             <text x="313" y="35" textAnchor="middle" fill="#1a7a4a" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">Do say:</text>
             <text x="313" y="53" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"Setbacks happen in all</text>
@@ -749,10 +750,16 @@ const MODULES = [
         body: (
           <div>
             <p style={{fontSize:14,color:'var(--text-muted)',marginBottom:12}}>Based on field experience and focus group research — including with international audiences — here are the questions you are most likely to face:</p>
-            <div className="qa-item"><div className="qa-q">Will it affect his sex drive?</div><div className="qa-a">Varies by method. Non-hormonal methods that target sperm specifically should not affect sex drive or libido.</div></div>
-            <div className="qa-item"><div className="qa-q">Is it reversible?</div><div className="qa-a">Reversibility is a core design goal for all new methods in development.</div></div>
-            <div className="qa-item"><div className="qa-q">Does it protect against STIs or HIV?</div><div className="qa-a">Currently no — only condoms provide STI protection. However, Multipurpose Prevention Technologies (MPTs) are being developed to protect against both STIs and pregnancy in a single product. Always state the current limitation clearly.</div></div>
-            <div className="qa-item"><div className="qa-q">What is an MPT?</div><div className="qa-a">MPTs are innovative health products designed to simultaneously protect against multiple sexual and reproductive health risks — specifically HIV, other STIs, and unintended pregnancy — in a single product.</div></div>
+            <div className="qa-item"><div className="qa-q">Will it affect his sex drive?</div><div className="qa-a">Varies by method. Non-hormonal methods that target sperm specifically should not affect sex drive or libido. Hormonal methods may cause side effects similar to female hormonal contraceptives — libido shifts, mood changes, or acne — which is why MCI prioritizes non-hormonal development.</div></div>
+            <div className="qa-item"><div className="qa-q">Is it reversible?</div><div className="qa-a">Reversibility is a core design requirement for all new methods in development. Hormonal trial participants have recovered normal sperm counts after discontinuation.</div></div>
+            <div className="qa-item"><div className="qa-q">Do male contraceptives protect against STIs?</div><div className="qa-a">Currently no — only condoms provide STI protection. However, researchers are actively thinking about this. It's called an MPT (Multipurpose Prevention Technology) — an innovative health product designed to simultaneously protect against HIV, other STIs, and unintended pregnancy in a single product. None are currently in late-stage development, but it is an active area of research.</div></div>
+            <div className="qa-item"><div className="qa-q">Will women trust men to use these methods?</div><div className="qa-a">Consumer research shows high levels of trust — a majority of women in MCI's research said they would trust a male partner to use a new method. Trust increases with relationship closeness and open communication. New methods will also have documented efficacy data, just like female methods — that transparency helps build confidence.</div></div>
+            <div className="qa-item"><div className="qa-q">How will men get the methods?</div><div className="qa-a">It depends on the method. Pills and gels would likely be available through pharmacies with a prescription, similar to how women access hormonal contraceptives. Device-based methods (like vas-occlusive gels) would be administered in a clinical setting. Global access and affordability are active priorities in development strategy.</div></div>
+            <div className="qa-item"><div className="qa-q">What about for queer and trans people?</div><div className="qa-a">Male contraceptive research focuses on people with testes, regardless of gender identity or sexual orientation. The field is increasingly working to use inclusive language and design studies that reflect diverse populations. Whether a method is right for someone depends on their individual body and goals — not their gender identity.</div></div>
+            <div className="qa-item"><div className="qa-q">What if a woman wants to continue to take her own methods?</div><div className="qa-a">That's entirely her choice — and male contraception is about adding options, not replacing anyone's. Couples can use both methods simultaneously for extra peace of mind, the same way some currently use condoms alongside another method. More options means more flexibility for everyone.</div></div>
+            <div className="qa-item"><div className="qa-q">Will it be covered by insurance?</div><div className="qa-a">Coverage decisions happen after approval. In the U.S., the ACA requires coverage of FDA-approved contraceptives — so approved male methods would be expected to qualify. MCI advocates for equitable coverage as part of its policy work. Coverage in other countries will depend on their healthcare systems.</div></div>
+            <div className="qa-item"><div className="qa-q">How safe are they?</div><div className="qa-a">Safety is the highest bar in contraceptive development — these are healthy people, not patients treating disease, so regulators require exceptionally high safety standards. All candidates in human trials have passed rigorous preclinical testing. Trial data is actively monitored and published.</div></div>
+            <div className="qa-item"><div className="qa-q">What are the side effects?</div><div className="qa-a">It depends on the method. Hormonal methods may cause mood changes, acne, or libido shifts — similar to female hormonal contraceptives. Non-hormonal methods targeting sperm directly are designed to have minimal systemic effects. For vas-occlusive devices, side effects are expected to be local and minimal. Ongoing trial data is being published as it becomes available.</div></div>
             <div className="qa-item"><div className="qa-q">Why would a man take responsibility for this?</div><div className="qa-a">Consumer data shows 8 in 10 men already want to prevent pregnancy. The barrier is the absence of options, not willingness.</div></div>
             <div className="qa-item"><div className="qa-q">Would this be affordable in other countries?</div><div className="qa-a">Global access and equity are active priorities. MCI specifically considers affordability and distribution as part of its strategy for bringing methods to market.</div></div>
             <div className="qa-item"><div className="qa-q">What if I don't know the answer?</div><div className="qa-a">Acknowledge honestly, offer to follow up, and reach out to MCI staff. "I don't know exactly, but here's what I do know" is always a credible answer.</div></div>
@@ -776,20 +783,28 @@ const MODULES = [
       },
       {
         headline: "Cultural Framing That Works",
-        body: "Contraception is a couple's issue. Framing male contraception as shared responsibility tends to resonate broadly — including in contexts where contraception has traditionally been seen as a woman's domain. Avoid framing that positions women as passive recipients of male behavior, or that implies men are obstacles to overcome. In many cultural contexts, involving partners in the conversation is key. Useful phrase: \"This gives couples more choices together.\" Focus on expanding options, not assigning blame for current gaps.",
+        body: (
+          <div>
+            <p style={{fontSize:14,color:'#333',lineHeight:1.7,marginBottom:10}}>Contraception is a couple's issue. Framing male contraception as shared responsibility tends to resonate broadly — including in contexts where contraception has traditionally been seen as a woman's domain. Avoid framing that positions women as passive recipients of male behavior, or that implies men are obstacles to overcome. Useful phrase: <strong>"This gives couples more choices together."</strong> Focus on expanding options, not assigning blame for current gaps.</p>
+            <p style={{fontSize:14,color:'#333',lineHeight:1.7,marginBottom:10}}>One framing to actively avoid: positioning male contraception as a way to "slow population growth." This framing exerts control and limits autonomy. As you know, almost half of all pregnancies are unintended — contraception is a shared responsibility, but men don't currently have enough options to contribute, and women often carry the full burden of preventing pregnancy. Male contraception will help people choose when to have a baby, with more options that work for more bodies.</p>
+            <p style={{fontSize:14,color:'#333',lineHeight:1.7}}>Also avoid: <em>"Men need to step up and take responsibility."</em> (Assigns blame, alienates) Use instead: <em>"This gives couples more choices together."</em> (Inclusive, empowering)</p>
+          </div>
+        ),
         callout: { label:"Phrase to Use", text:"\"More options for men means more choices for couples — and more reproductive autonomy for everyone.\"" },
         visual: (
-          <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
-            <rect x="10" y="15" width="185" height="80" rx="12" fill="#fdf0ee" stroke="#c0392b" strokeWidth="1.5"/>
-            <text x="102" y="38" textAnchor="middle" fill="#c0392b" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">Avoid</text>
-            <text x="102" y="55" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"Men need to step up</text>
-            <text x="102" y="69" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">and take responsibility."</text>
-            <text x="102" y="84" textAnchor="middle" fill="#888" fontSize="9" fontFamily="DM Sans,sans-serif">(Assigns blame, alienates)</text>
-            <rect x="215" y="15" width="185" height="80" rx="12" fill="#e8f5ee" stroke="#1a7a4a" strokeWidth="1.5"/>
-            <text x="307" y="38" textAnchor="middle" fill="#1a7a4a" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">Use instead</text>
-            <text x="307" y="55" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"This gives couples more</text>
-            <text x="307" y="69" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">choices together."</text>
-            <text x="307" y="84" textAnchor="middle" fill="#888" fontSize="9" fontFamily="DM Sans,sans-serif">(Inclusive, empowering)</text>
+          <svg viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <rect x="10" y="10" width="185" height="95" rx="12" fill="#fdf0ee" stroke="#c0392b" strokeWidth="1.5"/>
+            <text x="102" y="32" textAnchor="middle" fill="#c0392b" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">Avoid</text>
+            <text x="102" y="50" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"Male contraception will</text>
+            <text x="102" y="64" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">help slow population</text>
+            <text x="102" y="78" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">growth."</text>
+            <text x="102" y="95" textAnchor="middle" fill="#888" fontSize="9" fontFamily="DM Sans,sans-serif">(Exerts control, limits autonomy)</text>
+            <rect x="215" y="10" width="185" height="95" rx="12" fill="#e8f5ee" stroke="#1a7a4a" strokeWidth="1.5"/>
+            <text x="307" y="32" textAnchor="middle" fill="#1a7a4a" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">Use instead</text>
+            <text x="307" y="50" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">"Male contraception offers</text>
+            <text x="307" y="64" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">more options to reduce</text>
+            <text x="307" y="78" textAnchor="middle" fill="#555" fontSize="10" fontFamily="DM Sans,sans-serif">unintended pregnancies."</text>
+            <text x="307" y="95" textAnchor="middle" fill="#888" fontSize="9" fontFamily="DM Sans,sans-serif">(Inclusive, empowering)</text>
           </svg>
         )
       },
