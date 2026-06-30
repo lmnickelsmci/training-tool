@@ -974,29 +974,6 @@ function RegistrationScreen({ onBegin }) {
             </div>
           </div>
           <div className="divider"/>
-          <div style={{marginBottom:24}}>
-            <div style={{fontSize:15,fontWeight:700,color:'var(--navy)',marginBottom:12}}>This training will equip you to:</div>
-            <ul style={{listStyle:'none',padding:0,margin:0,display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))',gap:'8px 20px'}}>
-              {[
-                "Talk about the need for and potential impact of male contraception",
-                "Describe what MCI does",
-                "Understand the drug development process",
-                "Describe which male contraceptives are furthest along, and other methods in development",
-                "Understand male contraception in the context of reproductive justice and equity",
-                "Talk about side effects, safety, and methods of administration",
-                "Describe the male reproductive system and how male contraceptives work in it",
-                "Answer questions you may get, connect to resources, and advocate for male contraception",
-              ].map((obj,i)=>(
-                <li key={i} style={{display:'flex',alignItems:'flex-start',gap:8,fontSize:13.5,color:'#333',lineHeight:1.5}}>
-                  <span style={{marginTop:2,flexShrink:0,width:18,height:18,borderRadius:'50%',background:'var(--orange)',display:'flex',alignItems:'center',justifyContent:'center'}}>
-                    <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </span>
-                  <span>{obj}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="divider"/>
           <div style={{maxWidth:480}}>
             <div style={{marginBottom:20,fontSize:14,fontWeight:600,color:'var(--navy)'}}>Enter your details to get started</div>
             <div className="form-group">
