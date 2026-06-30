@@ -601,24 +601,24 @@ const MODULES = [
         callout: { label:"Key Distinction", text:"Non-hormonal does not mean less effective. Vasectomy is non-hormonal and nearly 100% effective. Effectiveness depends on the mechanism, not whether the method uses hormones." },
         visual: (
           <div>
-            <svg viewBox="0 0 420 182" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <svg viewBox="0 0 420 205" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
               {[
-                {x:10,y:10,label:"① Sperm Transport",sub:"Block vas / inhibit ejaculation",eg:"ADAM, Plan A + inhibitors",c:"#002D72"},
-                {x:215,y:10,label:"② Fertilization",sub:"Prevent sperm-egg binding",eg:"Various targets",c:"#002D72"},
-                {x:10,y:92,label:"③ Sperm Motility",sub:"Disable ability to swim",eg:"Various targets",c:"#D86018"},
-                {x:215,y:92,label:"④ Spermatogenesis",sub:"Reduce sperm production",eg:"YCT-529, NES/T",c:"#D86018"},
-              ].map(({x,y,label,sub,eg,c})=>(
+                {x:10,y:10,label:"Sperm Transport",sub:"Block vas / inhibit ejaculation",eg:"ADAM, Plan A + inhibitors",c:"#002D72"},
+                {x:215,y:10,label:"Fertilization",sub:"Prevent sperm-egg binding",eg:"Various targets such as",eg2:"TSSK6, CRISP1 / 2",c:"#002D72"},
+                {x:10,y:102,label:"Sperm Motility",sub:"Disable ability to swim",eg:"Various targets such as",eg2:"CatSper, NA/K ATPase",c:"#D86018"},
+                {x:215,y:102,label:"Spermatogenesis",sub:"Reduce sperm production",eg:"YCT-529, NES/T",c:"#D86018"},
+              ].map(({x,y,label,sub,eg,eg2,c})=>(
                 <g key={label}>
-                  <rect x={x} y={y} width="192" height="72" rx="10" fill={c}/>
+                  <rect x={x} y={y} width="192" height="82" rx="10" fill={c}/>
                   <text x={x+96} y={y+23} textAnchor="middle" fill="white" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
                   <text x={x+96} y={y+39} textAnchor="middle" fill="rgba(255,255,255,.9)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
                   <text x={x+96} y={y+55} textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="DM Sans,sans-serif">e.g.: {eg}</text>
+                  {eg2 && <text x={x+96} y={y+67} textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="DM Sans,sans-serif">{eg2}</text>}
                 </g>
               ))}
-              <text x="210" y="178" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Four distinct mechanisms — diversity in the pipeline is a strength</text>
+              <text x="210" y="198" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">Four distinct mechanisms — diversity in the pipeline is a strength</text>
             </svg>
             <div style={{marginTop:12}}>
-              <div style={{fontSize:12,color:'var(--text-muted)',marginBottom:8,textAlign:'center',fontStyle:'italic'}}>Mechanism illustrations (malecontraceptive.org):</div>
               <div style={{display:'flex',gap:8,justifyContent:'center',flexWrap:'wrap'}}>
                 {[
                   {src:'https://www.malecontraceptive.org/uploads/1/3/1/9/131958006/lnasset-1.png',label:'Sperm Transport'},
