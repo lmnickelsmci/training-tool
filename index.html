@@ -261,20 +261,44 @@ const MODULES = [
       },
       {
         headline: "Why This Matters Beyond Pregnancy",
-        body: "Male contraception is a reproductive equity issue, but expanding options also connects to multiple UN Sustainable Development Goals: reducing poverty, advancing gender equality, and improving health outcomes. Contraception access affects education, economic opportunity, and family stability. When people have multiple contraceptive options, men, women, and even queer people have more reproductive autonomy. Reproductive autonomy means everyone has options that work for their body, reproductive goals, and life stage.",
+        body: "Male contraception directly advances all 17 UN Sustainable Development Goals. The most direct links: reducing unintended pregnancies improves maternal and infant health (SDG 3), disrupts cycles of poverty (SDG 1), and advances gender equality — unintended pregnancies disproportionately disadvantage women and girls in education and economic opportunity (SDGs 4, 5, 8). SDG 10 specifically highlights the inequity: sperm-producing people currently have only two methods available while their partners have over a dozen. Environmentally, addressing unintended pregnancies could reduce global emissions by an estimated 40% long-term (SDG 13), and eases strain on water, food, and energy resources (SDGs 2, 6, 7). For every dollar invested in family planning, between $1.47 and $4.00 is saved in maternal and newborn health care (SDG 17). Expanding male options isn't a niche issue — it's a global one.",
         callout: { label:"Key Framing", text:"\"Reproductive autonomy for all\" — not a transaction where one partner acts and the other benefits, but a shared space where everyone has real options." },
         visual: (
-          <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
-            {[{x:20,label:"SDG 1",sub:"No Poverty",c:"#D86018"},{x:110,label:"SDG 3",sub:"Good Health",c:"#002D72"},{x:200,label:"SDG 5",sub:"Gender Equality",c:"#D86018"},{x:290,label:"SDG 10",sub1:"Reduced",sub2:"Inequalities",c:"#002D72"}].map(({x,label,sub,sub1,sub2,c})=>(
-              <g key={x}>
-                <rect x={x} y="10" width="80" height="80" rx="12" fill={c}/>
-                <text x={x+40} y="42" textAnchor="middle" fill="white" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
-                {sub && <text x={x+40} y="60" textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>}
-                {sub1 && <text x={x+40} y="56" textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub1}</text>}
-                {sub2 && <text x={x+40} y="68" textAnchor="middle" fill="rgba(255,255,255,.8)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub2}</text>}
-              </g>
-            ))}
-            <text x="210" y="104" textAnchor="middle" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">Male contraception advances multiple UN Sustainable Development Goals</text>
+          <svg viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            {[
+              {n:1,l1:"No",l2:"Poverty",c:"#E5243B"},
+              {n:2,l1:"Zero",l2:"Hunger",c:"#DDA63A"},
+              {n:3,l1:"Good",l2:"Health",c:"#4C9F38"},
+              {n:4,l1:"Quality",l2:"Education",c:"#C5192D"},
+              {n:5,l1:"Gender",l2:"Equality",c:"#FF3A21"},
+              {n:6,l1:"Clean",l2:"Water",c:"#26BDE2"},
+              {n:7,l1:"Clean",l2:"Energy",c:"#FCC30B"},
+              {n:8,l1:"Decent",l2:"Work",c:"#A21942"},
+              {n:9,l1:"Industry &",l2:"Innovation",c:"#FD6925"},
+              {n:10,l1:"Reduced",l2:"Inequality",c:"#DD1367"},
+              {n:11,l1:"Sust.",l2:"Cities",c:"#FD9D24"},
+              {n:12,l1:"Responsible",l2:"Production",c:"#BF8B2E"},
+              {n:13,l1:"Climate",l2:"Action",c:"#3F7E44"},
+              {n:14,l1:"Life Below",l2:"Water",c:"#0A97D9"},
+              {n:15,l1:"Life",l2:"on Land",c:"#56C02B"},
+              {n:16,l1:"Peace &",l2:"Justice",c:"#00689D"},
+              {n:17,l1:"Partner-",l2:"ships",c:"#19486A"},
+            ].map(({n,l1,l2,c},i)=>{
+              const col = i % 6;
+              const row = Math.floor(i / 6);
+              const x = 10 + col * 68;
+              const y = 5 + row * 56;
+              const cx = x + 32;
+              return (
+                <g key={n}>
+                  <rect x={x} y={y} width={64} height={52} rx={4} fill={c}/>
+                  <text x={cx} y={y+16} textAnchor="middle" fill="white" fontSize="14" fontFamily="DM Sans,sans-serif" fontWeight="900">{n}</text>
+                  <text x={cx} y={y+33} textAnchor="middle" fill="rgba(255,255,255,0.9)" fontSize="6.5" fontFamily="DM Sans,sans-serif">{l1}</text>
+                  <text x={cx} y={y+42} textAnchor="middle" fill="rgba(255,255,255,0.9)" fontSize="6.5" fontFamily="DM Sans,sans-serif">{l2}</text>
+                </g>
+              );
+            })}
+            <text x="210" y="174" textAnchor="middle" fill="#888" fontSize="10" fontFamily="DM Sans,sans-serif">Male contraception directly advances all 17 UN Sustainable Development Goals</text>
           </svg>
         )
       },
