@@ -696,15 +696,16 @@ const MODULES = [
         visual: (
           <svg viewBox="0 0 420 130" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
             {[
-              {x:10,c:"#002D72",stat:"10+",label:"Candidates",sub:"across all pipeline stages"},
-              {x:150,c:"#D86018",stat:"Phase 2b",label:"Reached",sub:"most advanced stage ever"},
-              {x:290,c:"#002D72",stat:"7",label:"Countries",sub:"demand documented globally"},
-            ].map(({x,c,stat,label,sub})=>(
+              {x:10,c:"#002D72",stat:"10+",label:"Candidates",sub:"across all",sub2:"pipeline stages"},
+              {x:150,c:"#D86018",stat:"Phase 2b",label:"Reached",sub:"most advanced",sub2:"stage ever"},
+              {x:290,c:"#002D72",stat:"7",label:"Countries",sub:"demand documented",sub2:"globally"},
+            ].map(({x,c,stat,label,sub,sub2})=>(
               <g key={x}>
-                <rect x={x} y="8" width="120" height="96" rx="14" fill={c}/>
-                <text x={x+60} y="46" textAnchor="middle" fill="white" fontSize="22" fontFamily="Playfair Display,serif" fontWeight="700">{stat}</text>
-                <text x={x+60} y="68" textAnchor="middle" fill="white" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
-                <text x={x+60} y="86" textAnchor="middle" fill="rgba(255,255,255,.75)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
+                <rect x={x} y="8" width="120" height="104" rx="14" fill={c}/>
+                <text x={x+60} y="42" textAnchor="middle" fill="white" fontSize="22" fontFamily="Playfair Display,serif" fontWeight="700">{stat}</text>
+                <text x={x+60} y="62" textAnchor="middle" fill="white" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
+                <text x={x+60} y="79" textAnchor="middle" fill="rgba(255,255,255,.75)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
+                <text x={x+60} y="91" textAnchor="middle" fill="rgba(255,255,255,.75)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub2}</text>
               </g>
             ))}
             <text x="210" y="122" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">The most active pipeline in the history of male contraceptive development</text>
@@ -794,7 +795,7 @@ const MODULES = [
         headline: "Cultural Framing That Works",
         body: (
           <div>
-            <p style={{fontSize:14,color:'#333',lineHeight:1.7,marginBottom:10}}>Right now, women largely carry the burden of contraception alone — navigating side effects, access barriers, and limited options. Male contraception changes that equation. Men stepping up to share reproductive responsibility is a core part of this story, and framing male contraception as a way for couples to share that responsibility together tends to resonate broadly — including in contexts where contraception has traditionally been seen as a woman's domain. Useful phrase: <strong>"This gives couples more choices together."</strong> Avoid framing that implies men are an obstacle, or that positions women as passive recipients. Center expanding options and shared agency.</p>
+            <p style={{fontSize:14,color:'#333',lineHeight:1.7,marginBottom:10}}>Right now, women largely carry the burden of contraception alone — navigating side effects, access barriers, and limited options. Male contraception changes that equation. Men stepping up to share reproductive responsibility is a core part of this story, and framing male contraception as a way for couples to share that responsibility together tends to resonate broadly — including in contexts where contraception has traditionally been seen as a woman's domain. Useful phrase: <strong>"This gives couples and individuals more choices."</strong> Avoid framing that implies men are an obstacle, or that positions women as passive recipients. Center expanding options and shared agency.</p>
             <p style={{fontSize:14,color:'#333',lineHeight:1.7}}>One framing to actively avoid: positioning male contraception as a way to "slow population growth." This framing exerts control and limits autonomy. Almost half of all pregnancies are unintended — the goal is giving people more options to choose when to have a baby, not reducing population. Male contraception helps people make that choice with more options that work for more bodies.</p>
           </div>
         ),
@@ -856,7 +857,7 @@ const MODULES = [
         callout: { label:"Your Goal", text:"\"I'm here to expand what people think is possible, and to give them accurate information. More options for everyone is good for everyone.\"" },
         visual: (
           <svg viewBox="0 0 420 108" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
-            {[{x:10,label:"Real Science",sub:"Grounded in evidence",c:"#002D72"},{x:148,label:"Field Is Moving",sub:"Active pipeline",c:"#002D72"},{x:286,label:"More Options",sub:"Good for everyone",c:"#D86018"}].map(({x,label,sub,c})=>(
+            {[{x:10,label:"Real Science",sub:"Grounded in evidence",c:"#002D72"},{x:148,label:"Field Is Moving",sub:"Active pipeline",c:"#002D72"},{x:286,label:"More Options",sub:"Good for everyone",c:"#002D72"}].map(({x,label,sub,c})=>(
               <g key={x}>
                 <rect x={x} y="12" width="124" height="72" rx="12" fill={c}/>
                 <text x={x+62} y="44" textAnchor="middle" fill="white" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
@@ -882,7 +883,7 @@ const MODULES = [
       { id:5, type:"tf", text:"True or False: Setbacks in male contraceptive clinical trials prove that the science is fundamentally flawed.", options:["True","False"], correct:1, explanation:"False. Setbacks are part of every area of drug development. They reveal safety signals or design issues to address, not proof the science doesn't work." },
       { id:6, type:"mc", text:"What is a Multipurpose Prevention Technology (MPT)?", options:["A combination hormonal and non-hormonal male method","A product designed to protect against STIs and unintended pregnancy simultaneously","A condom with added spermicide","A regulatory approval category"], correct:1, explanation:"MPTs are innovative health products designed to simultaneously protect against multiple sexual and reproductive health risks — specifically HIV, other STIs, and unintended pregnancy — in a single product." },
       { id:7, type:"mc", text:"When you are asked a question during advocacy that you cannot answer confidently, the best approach is:", options:["Give your best estimate to keep the conversation moving","Acknowledge you don't know, offer to follow up, and reach out to MCI staff","Redirect to a different topic","Say the information is not publicly available"], correct:1, explanation:"Honesty builds trust. Saying 'I don't know, but I can find out' and following up through MCI is always the right approach." },
-      { id:8, type:"tf", text:"True or False: When speaking to diverse audiences, leading with 'more choices for couples' tends to resonate more broadly than framing centered on blame or individual fault.", options:["True","False"], correct:0, explanation:"True. While men sharing contraceptive responsibility is a core value, leading with expanded options and shared agency tends to resonate across more cultural contexts — including some where contraception has traditionally been seen as a woman's domain." },
+      { id:8, type:"tf", text:"True or False: When speaking to diverse audiences, leading with 'more choices for couples and individuals' tends to resonate more broadly than framing centered on blame or individual fault.", options:["True","False"], correct:0, explanation:"True. While men sharing contraceptive responsibility is a core value, leading with expanded options and shared agency tends to resonate across more cultural contexts — including some where contraception has traditionally been seen as a woman's domain." },
     ]
   }
 ];
