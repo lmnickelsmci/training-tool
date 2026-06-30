@@ -685,14 +685,14 @@ const MODULES = [
             {[
               {x:10,c:"#002D72",stat:"10+",label:"Candidates",sub:"across all",sub2:"pipeline stages"},
               {x:150,c:"#D86018",stat:"Phase 2b",label:"Reached",sub:"most advanced",sub2:"stage ever"},
-              {x:290,c:"#002D72",stat:"7",label:"Countries",sub:"demand documented",sub2:"globally"},
+              {x:290,c:"#002D72",stat:"7",label:"Countries",sub:"global demand",sub2:"documented"},
             ].map(({x,c,stat,label,sub,sub2})=>(
               <g key={x}>
                 <rect x={x} y="8" width="120" height="104" rx="14" fill={c}/>
                 <text x={x+60} y="42" textAnchor="middle" fill="white" fontSize="22" fontFamily="Playfair Display,serif" fontWeight="700">{stat}</text>
                 <text x={x+60} y="62" textAnchor="middle" fill="white" fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="700">{label}</text>
-                <text x={x+60} y="79" textAnchor="middle" fill="rgba(255,255,255,.75)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub}</text>
-                <text x={x+60} y="91" textAnchor="middle" fill="rgba(255,255,255,.75)" fontSize="9" fontFamily="DM Sans,sans-serif">{sub2}</text>
+                <text x={x+60} y="79" textAnchor="middle" fill="rgba(255,255,255,.75)" fontSize="8" fontFamily="DM Sans,sans-serif">{sub}</text>
+                <text x={x+60} y="91" textAnchor="middle" fill="rgba(255,255,255,.75)" fontSize="8" fontFamily="DM Sans,sans-serif">{sub2}</text>
               </g>
             ))}
             <text x="210" y="122" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="DM Sans,sans-serif">The most active pipeline in the history of male contraceptive development</text>
