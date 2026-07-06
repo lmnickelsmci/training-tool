@@ -1432,6 +1432,7 @@ function App() {
   const [slideIndex, setSlideIndex] = React.useState(_saved?.slideIndex ?? 0);
   const [attempt, setAttempt] = React.useState(_saved?.attempt ?? 1);
   const [quizResults, setQuizResults] = React.useState(null);
+  const [showSavedMsg, setShowSavedMsg] = React.useState(false);
   const [scores, setScores] = React.useState(_saved?.scores ?? [null,null,null,null,null]);
   const [attempts, setAttempts] = React.useState(_saved?.attempts ?? [1,1,1,1,1]);
   const [modPassed, setModPassed] = React.useState(_saved?.modPassed ?? [false,false,false,false,false]);
@@ -1560,6 +1561,17 @@ function App() {
             onGoToModule={handleGoToModule} onRetakeModule={handleRetakeModule}/>
         )}
       </div>
+      {phase !== 'registration' && phase !== 'complete' && (
+        <div style={{textAlign:'center', padding:'6px 0 16px'}}>
+          {showSavedMsg
+            ? <span style={{fontSize:11, color:'#6b7280'}}>✓ Progress saved — close this tab whenever you're ready.</span>
+            : <button onClick={()=>{ setShowSavedMsg(true); setTimeout(()=>setShowSavedMsg(false), 4000); }}
+                style={{background:'none', border:'none', color:'#9ca3af', fontSize:11, cursor:'pointer', textDecoration:'underline', padding:'2px 6px'}}>
+                Save &amp; exit later
+              </button>
+          }
+        </div>
+      )}
     </div>
   );
 }
