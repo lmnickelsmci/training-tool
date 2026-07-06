@@ -936,7 +936,7 @@ function ScoreBar({ label, pct }) {
 
 // ─── TopBar ───────────────────────────────────────────────────────────────────
 
-function TopBar({ currentModIdx, phase }) {
+function TopBar({ currentModIdx, phase, onHome }) {
   // 8 steps: registration + intro + 5 modules + completion
   const totalSteps = 8;
   let doneCount = 0;
@@ -948,7 +948,7 @@ function TopBar({ currentModIdx, phase }) {
 
   return (
     <div className="top-bar">
-      <div className="logo-area">
+      <div className="logo-area" onClick={onHome} style={{cursor: onHome ? 'pointer' : 'default'}} title="Return to start">
         <img src="MCI_Logo_White.png" alt="MCI Logo" style={{height:36,width:'auto',objectFit:'contain'}}/>
         <div style={{marginLeft:8}}>
           <div className="logo-text">Advocate Training</div>
@@ -1432,6 +1432,13 @@ function App() {
   const mod = MODULES[currentModIdx];
   const isLastModule = currentModIdx === MODULES.length - 1;
 
+  function handleHome() {
+    setUser(null); setPhase('registration'); setCurrentModIdx(0);
+    setSlideIndex(0); setAttempt(1); setQuizResults(null);
+    setScores([null,null,null,null,null]); setAttempts([1,1,1,1,1]);
+    setModPassed([false,false,false,false,false]);
+  }
+
   function startModule(idx) {
     setCurrentModIdx(idx);
     setSlideIndex(0);
@@ -1511,7 +1518,7 @@ function App() {
 
   return (
     <div className="app-shell">
-      <TopBar currentModIdx={currentModIdx} phase={phase}/>
+      <TopBar currentModIdx={currentModIdx} phase={phase} onHome={handleHome}/>
       <div className="main-content">
         {phase==='registration' && <RegistrationScreen onBegin={handleBegin}/>}
         {phase==='intro' && <IntroScreen onBegin={()=>startModule(0)}/>}
