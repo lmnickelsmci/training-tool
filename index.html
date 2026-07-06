@@ -1420,21 +1420,34 @@ function CompletionScreen({ user, scores, attempts, onGoToModule, onRetakeModule
 
 // ─── App ──────────────────────────────────────────────────────────────────────
 
+const PROGRESS_KEY = 'mci_training_progress';
+const _saved = (() => { try { const s = localStorage.getItem(PROGRESS_KEY); return s ? JSON.parse(s) : null; } catch(e) { return null; } })();
+// Restore to slides if saved phase was mid-quiz (quiz state isn't persisted)
+const _safePhase = (p => (p==='quiz'||p==='results'||p==='misconceptions') ? 'slides' : (p||'registration'))(_saved?.phase);
+
 function App() {
-  const [user, setUser] = React.useState(null);
-  const [phase, setPhase] = React.useState('registration'); // registration | intro | slides | misconceptions | quiz | results | complete
-  const [currentModIdx, setCurrentModIdx] = React.useState(0); // 0-indexed
-  const [slideIndex, setSlideIndex] = React.useState(0);
-  const [attempt, setAttempt] = React.useState(1);
+  const [user, setUser] = React.useState(_saved?.user ?? null);
+  const [phase, setPhase] = React.useState(_safePhase); // registration | intro | slides | misconceptions | quiz | results | complete
+  const [currentModIdx, setCurrentModIdx] = React.useState(_saved?.currentModIdx ?? 0); // 0-indexed
+  const [slideIndex, setSlideIndex] = React.useState(_saved?.slideIndex ?? 0);
+  const [attempt, setAttempt] = React.useState(_saved?.attempt ?? 1);
   const [quizResults, setQuizResults] = React.useState(null);
-  const [scores, setScores] = React.useState([null,null,null,null,null]);
-  const [attempts, setAttempts] = React.useState([1,1,1,1,1]);
-  const [modPassed, setModPassed] = React.useState([false,false,false,false,false]);
+  const [scores, setScores] = React.useState(_saved?.scores ?? [null,null,null,null,null]);
+  const [attempts, setAttempts] = React.useState(_saved?.attempts ?? [1,1,1,1,1]);
+  const [modPassed, setModPassed] = React.useState(_saved?.modPassed ?? [false,false,false,false,false]);
+
+  React.useEffect(() => {
+    if (!user && phase === 'registration') return; // don't persist before user registers
+    try {
+      localStorage.setItem(PROGRESS_KEY, JSON.stringify({ user, phase, currentModIdx, slideIndex, attempt, scores, attempts, modPassed }));
+    } catch(e) {}
+  }, [user, phase, currentModIdx, slideIndex, attempt, scores, attempts, modPassed]);
 
   const mod = MODULES[currentModIdx];
   const isLastModule = currentModIdx === MODULES.length - 1;
 
   function handleHome() {
+    try { localStorage.removeItem(PROGRESS_KEY); } catch(e) {}
     setUser(null); setPhase('registration'); setCurrentModIdx(0);
     setSlideIndex(0); setAttempt(1); setQuizResults(null);
     setScores([null,null,null,null,null]); setAttempts([1,1,1,1,1]);
