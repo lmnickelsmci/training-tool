@@ -238,42 +238,33 @@ const MODULES = [
         headline: "What People Actually Want",
         body: (
           <div>
-            <p style={{fontSize:14,lineHeight:1.75,color:'#333',marginBottom:10}}>MCI consumer research tells a clear story: 8 in 10 men aged 18–44 in the U.S. are actively trying to prevent pregnancy. Of those, 80% prefer non-hormonal options, and 89% want something reversible — and many say they actively want to share contraceptive responsibility with their partner, not leave it entirely to women.</p>
-            <p style={{fontSize:14,lineHeight:1.75,color:'#333',marginBottom:10}}>On the other side of the equation: many women who currently use hormonal contraception report unwanted side effects — including mood changes, reduced libido, and difficulty finding a method that works for them — and surveys show a significant share would welcome their partner having a reliable option. This isn't just about adding methods for men; it's about responding to unmet need on both sides.</p>
-            <p style={{fontSize:14,lineHeight:1.75,color:'#333',marginBottom:0}}>Global market research of 12,435 men across Bangladesh, Vietnam, Kenya, Nigeria, DR Congo, and Côte d'Ivoire found that on average 61% would try a new male contraceptive in its first year of availability — reaching 76% in Nigeria and Bangladesh. Female partners across all six countries expressed strong trust in male contraceptive use. Expanding male options is about giving everyone more choices — globally.</p>
+            <p style={{fontSize:14,lineHeight:1.75,color:'#333',marginBottom:10}}>International market research by Kaur et al. (2024) surveyed 12,435 men across Bangladesh, Vietnam, Kenya, Nigeria, DR Congo, and Côte d'Ivoire. On average, 61% said they would try a new male contraceptive in its first year of availability — ranging from 39% (pre-Dobbs) and 49% (post-Dobbs) in the United States to 76% in Nigeria and Bangladesh. Female partners across all six countries expressed strong trust in male contraceptive use.</p>
+            <p style={{fontSize:14,lineHeight:1.75,color:'#333',marginBottom:0}}>On the other side of the equation: many women who currently use hormonal contraception report unwanted side effects — including mood changes, reduced libido, and difficulty finding a method that works for them — and surveys show a significant share would welcome their partner having a reliable option. This isn't just about adding methods for men; it's about responding to unmet need on both sides — globally.</p>
           </div>
         ),
-        callout: { label:"Key Fact", text:"The barrier to male contraceptive use isn't willingness — it's the absence of options. 8 in 10 U.S. men are actively trying to prevent pregnancy, and 61% of men across 6 low- and middle-income countries say they'd try a new male method in year one." },
+        callout: { label:"Key Fact", text:"The barrier to male contraceptive use isn't willingness — it's the absence of options. On average, 61% of men across 6 countries say they'd try a new male method in year one, reaching 76% in Nigeria and Bangladesh (Kaur et al. 2024)." },
         visual: (
-          <svg viewBox="0 0 420 185" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
-            <text x="10" y="12" fill="#002D72" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">U.S. Consumer Research (MCI)</text>
-            <g>
-              <text x="10" y="28" fill="#333" fontSize="10" fontFamily="DM Sans,sans-serif">Actively trying to prevent pregnancy</text>
-              <rect x="10" y="31" width="310" height="11" rx="5" fill="#eee"/>
-              <rect x="10" y="31" width="248" height="11" rx="5" fill="#002D72"/>
-              <text x="330" y="41" fill="#333" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">80%</text>
-            </g>
-            <text x="10" y="51" fill="#999" fontSize="8.5" fontFamily="DM Sans,sans-serif">↳ Of those men:</text>
-            <g>
-              <text x="10" y="66" fill="#333" fontSize="10" fontFamily="DM Sans,sans-serif">Prefer non-hormonal method</text>
-              <rect x="10" y="69" width="248" height="11" rx="5" fill="#eee"/>
-              <rect x="10" y="69" width="198" height="11" rx="5" fill="#002D72" opacity="0.75"/>
-              <text x="330" y="79" fill="#333" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">80%</text>
-            </g>
-            <g>
-              <text x="10" y="96" fill="#333" fontSize="10" fontFamily="DM Sans,sans-serif">Want reversible method</text>
-              <rect x="10" y="99" width="248" height="11" rx="5" fill="#eee"/>
-              <rect x="10" y="99" width="221" height="11" rx="5" fill="#002D72" opacity="0.75"/>
-              <text x="330" y="109" fill="#333" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">89%</text>
-            </g>
-            <line x1="10" y1="118" x2="410" y2="118" stroke="#e8e8e8" strokeWidth="1"/>
-            <text x="10" y="132" fill="#D86018" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">International Market Research (2024, 6 LMICs, n=12,435)</text>
-            <text x="10" y="148" fill="#333" fontSize="10" fontFamily="DM Sans,sans-serif">Would try new male contraceptive in year one</text>
-            <rect x="10" y="151" width="310" height="11" rx="5" fill="#eee"/>
-            <rect x="10" y="151" width={61*3.1} height="11" rx="5" fill="#D86018" opacity="0.5"/>
-            <rect x="10" y="151" width={61*3.1} height="11" rx="5" fill="none" stroke="#D86018" strokeWidth="1"/>
-            <text x="330" y="161" fill="#D86018" fontSize="12" fontFamily="DM Sans,sans-serif" fontWeight="700">61%</text>
-            <text x="10" y="176" fill="#888" fontSize="9" fontFamily="DM Sans,sans-serif">(avg across 6 countries; 76% in Nigeria &amp; Bangladesh) · Source: Kaur et al. 2024</text>
+          <svg viewBox="0 0 420 175" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+            <text x="10" y="13" fill="#D86018" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">Would try new male contraceptive in year one — Kaur et al. 2024</text>
+            {[
+              {label:"Global average",    pct:61, color:"#002D72", opacity:1},
+              {label:"USA (pre-Dobbs)",   pct:39, color:"#002D72", opacity:0.45},
+              {label:"USA (post-Dobbs)",  pct:49, color:"#002D72", opacity:0.6},
+              {label:"Nigeria",           pct:76, color:"#D86018", opacity:0.85},
+              {label:"Bangladesh",        pct:76, color:"#D86018", opacity:0.85},
+            ].map(({label, pct, color, opacity}, i) => {
+              const y = 25 + i * 27;
+              const barW = pct / 100 * 210;
+              return (
+                <g key={label}>
+                  <text x="10" y={y+9} fill="#333" fontSize="10" fontFamily="DM Sans,sans-serif">{label}</text>
+                  <rect x="155" y={y} width="210" height="13" rx="4" fill="#eee"/>
+                  <rect x="155" y={y} width={barW} height="13" rx="4" fill={color} opacity={opacity}/>
+                  <text x="372" y={y+10} fill={color} fontSize="11" fontFamily="DM Sans,sans-serif" fontWeight="700">{pct}%</text>
+                </g>
+              );
+            })}
+            <text x="10" y="168" fill="#aaa" fontSize="8.5" fontFamily="DM Sans,sans-serif">6 LMICs: Bangladesh, Vietnam, Kenya, Nigeria, DR Congo, Côte d'Ivoire · n=12,435</text>
           </svg>
         )
       },
@@ -333,18 +324,18 @@ const MODULES = [
     ],
     misconceptions: [
       { q:'"We already have condoms — why do we need more?"', a:"Condoms are barrier methods with real-world failure rates. Women have 10+ methods; men have 2. Many people — including women — want more options. More methods mean more couples can find what works for them." },
-      { q:'"Men won\'t use new methods."', a:"Consumer data says otherwise — 8 in 10 men are actively trying to prevent pregnancy. The question is whether trusted, accessible options exist." },
+      { q:'"Men won\'t use new methods."', a:"International research says otherwise — Kaur et al. (2024) found that on average 61% of men across 6 countries said they would try a new male contraceptive in its first year of availability. The question is whether trusted, accessible options exist." },
       { q:'"This is a Western issue."', a:"Unintended pregnancy rates are high globally — this is not a U.S.-only issue. Demand for male methods has been documented across multiple regions and income levels worldwide." },
-      { q:'"Women won\'t trust men to take contraception."', a:"Consumer research shows high and growing levels of trust in male methods among women. In MCI's research, a majority of women said they would trust a male partner to use a new male contraceptive. Trust is built through reliable, well-documented methods — which is exactly what the field is working to produce." },
+      { q:'"Women won\'t trust men to take contraception."', a:"International research shows otherwise — in Kaur et al. (2024), female partners across all six countries expressed strong trust in male contraceptive use. Trust is built through reliable, well-documented methods — which is exactly what the field is working to produce." },
     ],
     quiz: [
       { id:1, type:"mc", text:"Approximately what percentage of pregnancies globally are unintended?", options:["15%","30%","45%","60%"], correct:2, explanation:"Approximately 45% of all pregnancies globally are unintended, translating to roughly 121 million per year." },
-      { id:2, type:"mc", text:"According to MCI's consumer research, what percentage of men prefer a non-hormonal contraceptive method?", options:["38%","55%","65%","80%"], correct:3, explanation:"MCI's U.S. consumer research found 80% of men prefer non-hormonal options, and 89% want something reversible." },
+      { id:2, type:"mc", text:"According to Kaur et al. (2024), approximately what percentage of men on average said they would try a new male contraceptive in its first year of availability?", options:["About 39%","About 49%","About 61%","About 76%"], correct:2, explanation:"Kaur et al. (2024) surveyed 12,435 men across 6 countries and found that on average 61% said they would try a new male contraceptive in its first year — ranging from 39–49% in the U.S. to 76% in Nigeria and Bangladesh." },
       { id:3, type:"mc", text:"Which of the following is NOT a reason new male contraceptive methods are needed?", options:["Women bear a disproportionate contraceptive burden","Men have expressed interest in new options","Male contraception would eliminate STIs","More options allow couples to share responsibility"], correct:2, explanation:"Male contraceptives prevent pregnancy but do NOT protect against STIs. Only condoms provide STI protection." },
       { id:4, type:"mc", text:"MCI is best described as:", options:["A pharmaceutical company developing drugs in-house","A nonprofit that funds research and advances the field through advocacy","A government regulatory agency","A clinical trial site"], correct:1, explanation:"MCI is a U.S.-based nonprofit with a research arm (funding external researchers) and an advocacy arm (public engagement, policy, communications). It does not run an in-house lab." },
-      { id:5, type:"tf", text:"True or False: Consumer research suggests that interest in new male contraceptive methods is limited to men in the United States.", options:["True","False"], correct:1, explanation:"False. Data indicates this is a global pattern. Unintended pregnancy rates are high globally, and demand for male methods has been documented across multiple regions and income levels." },
+      { id:5, type:"tf", text:"True or False: According to Kaur et al. (2024), interest in new male contraceptive methods was highest in the United States compared to all other countries studied.", options:["True","False"], correct:1, explanation:"False. The U.S. actually had the lowest interest of the countries studied — 39% pre-Dobbs and 49% post-Dobbs. Interest was highest in Nigeria and Bangladesh, both at 76%, with a global average of 61% across all 6 countries." },
       { id:6, type:"mc", text:"What does MCI stand for?", options:["Male Contraception Institute","Male Contraceptive Initiative","Men's Contraception International","Male Clinical Initiative"], correct:1, explanation:"MCI stands for Male Contraceptive Initiative — a U.S.-based nonprofit that funds non-hormonal, reversible male contraceptive research and advances the field through advocacy." },
-      { id:7, type:"mc", text:"According to MCI consumer research, approximately what percentage of men want a reversible male contraceptive method?", options:["About 25%","About 50%","About 65%","About 89%"], correct:3, explanation:"MCI's U.S. consumer research found 89% of men want a reversible method — and 80% prefer non-hormonal options. Reversibility is a core design goal for all new methods in development." },
+      { id:7, type:"mc", text:"In Kaur et al. (2024), how did men's interest in new male contraceptives in the U.S. change after the Dobbs Supreme Court decision?", options:["It declined significantly","It increased from 39% to 49%","It stayed the same","It became the highest of all countries studied"], correct:1, explanation:"Kaur et al. found U.S. interest grew from 39% pre-Dobbs to 49% post-Dobbs — suggesting that major policy shifts affecting reproductive rights can increase men's motivation to take an active role in contraception." },
       { id:8, type:"mc", text:"Reproductive autonomy means:", options:["Men taking sole responsibility for contraception","Women choosing which method both partners use","Every person having the ability to decide if, when, and how to prevent pregnancy","Couples always agreeing on contraceptive choices"], correct:2, explanation:"Reproductive autonomy means every person — regardless of gender — having the power to decide if, when, and how to prevent pregnancy. Expanding male options advances this for everyone." },
     ]
   },
@@ -1367,7 +1358,7 @@ function CompletionScreen({ user, scores, attempts, onGoToModule, onRetakeModule
               { num:1, title:"Why It Matters", points:[
                 "45% of pregnancies globally are unintended — 121 million/year",
                 "Women have 10+ methods; men have 2 (condoms + vasectomy)",
-                "8 in 10 men are actively trying to prevent pregnancy (MCI research)",
+                "61% of men globally would try a new male contraceptive in year one; 76% in Nigeria & Bangladesh (Kaur et al. 2024)",
                 "8 in 10 prefer non-hormonal; 9 in 10 want reversible",
                 "MCI is a U.S. nonprofit — research arm + advocacy arm; no in-house lab",
               ]},
