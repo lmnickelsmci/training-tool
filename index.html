@@ -244,16 +244,20 @@ const MODULES = [
         ),
         callout: { label:"Key Fact", text:"The barrier to male contraceptive use isn't willingness — it's the absence of options. On average, 61% of men across 6 countries say they'd try a new male method in year one, reaching 76% in Nigeria and Bangladesh (Kaur et al. 2024)." },
         visual: (
-          <svg viewBox="0 0 420 175" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
+          <svg viewBox="0 0 420 262" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
             <text x="10" y="13" fill="#D86018" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">Would try new male contraceptive in year one — Kaur et al. 2024</text>
             {[
-              {label:"Global average",    pct:61, color:"#002D72", opacity:1},
-              {label:"USA (pre-Dobbs)",   pct:39, color:"#002D72", opacity:0.45},
-              {label:"USA (post-Dobbs)",  pct:49, color:"#002D72", opacity:0.6},
-              {label:"Nigeria",           pct:76, color:"#D86018", opacity:0.85},
-              {label:"Bangladesh",        pct:76, color:"#D86018", opacity:0.85},
+              {label:"Global average",   pct:61, color:"#D86018", opacity:1},
+              {label:"USA (pre-Dobbs)",  pct:39, color:"#5a6475", opacity:0.7},
+              {label:"USA (post-Dobbs)", pct:49, color:"#5a6475", opacity:0.9},
+              {label:"Kenya",            pct:52, color:"#002D72", opacity:0.45},
+              {label:"Côte d'Ivoire",    pct:62, color:"#002D72", opacity:0.57},
+              {label:"DR Congo",         pct:66, color:"#002D72", opacity:0.65},
+              {label:"Vietnam",          pct:70, color:"#002D72", opacity:0.75},
+              {label:"Nigeria",          pct:76, color:"#002D72", opacity:0.88},
+              {label:"Bangladesh",       pct:76, color:"#002D72", opacity:0.88},
             ].map(({label, pct, color, opacity}, i) => {
-              const y = 25 + i * 27;
+              const y = 25 + i * 25;
               const barW = pct / 100 * 210;
               return (
                 <g key={label}>
@@ -264,7 +268,7 @@ const MODULES = [
                 </g>
               );
             })}
-            <text x="10" y="168" fill="#aaa" fontSize="8.5" fontFamily="DM Sans,sans-serif">6 LMICs: Bangladesh, Vietnam, Kenya, Nigeria, DR Congo, Côte d'Ivoire · n=12,435</text>
+            <text x="10" y="256" fill="#aaa" fontSize="8.5" fontFamily="DM Sans,sans-serif">6 LMICs: Bangladesh, Vietnam, Kenya, Nigeria, DR Congo, Côte d'Ivoire · n=12,435</text>
           </svg>
         )
       },
