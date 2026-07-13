@@ -242,7 +242,7 @@ const MODULES = [
             <p style={{fontSize:14,lineHeight:1.75,color:'#333',marginBottom:0}}>On the other side of the equation: many women who currently use hormonal contraception report unwanted side effects — including mood changes, reduced libido, and difficulty finding a method that works for them — and surveys show a significant share would welcome their partner having a reliable option. This isn't just about adding methods for men; it's about responding to unmet need on both sides — globally.</p>
           </div>
         ),
-        callout: { label:"Key Fact", text:"The barrier to male contraceptive use isn't willingness — it's the absence of options. On average, 61% of men across 7 countries (6 LMICs + USA) say they'd try a new male method in year one, reaching 76% in Nigeria and Bangladesh (Kaur et al. 2024)." },
+        callout: { label:"Key Fact", text:"The barrier to male contraceptive use isn't willingness — it's the absence of options. On average, 61% of men across 7 countries (6 LMICs — Low- and Middle-Income Countries — + USA) say they'd try a new male method in year one, reaching 76% in Nigeria and Bangladesh (Kaur et al. 2024)." },
         visual: (
           <svg viewBox="0 0 420 262" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
             <text x="10" y="13" fill="#D86018" fontSize="10" fontFamily="DM Sans,sans-serif" fontWeight="700">Would try new male contraceptive in year one — Kaur et al. 2024</text>
@@ -380,7 +380,7 @@ const MODULES = [
               <li style={{marginBottom:6}}><strong>Phase I</strong> — first tested in a small group of humans, primarily for safety</li>
               <li style={{marginBottom:6}}><strong>Phase II</strong> — tested in a larger group for safety and early effectiveness</li>
               <li style={{marginBottom:6}}><strong>Phase III</strong> — large-scale trial to confirm effectiveness</li>
-              <li style={{marginBottom:6}}><strong>Approval</strong> — regulators (e.g., FDA in the U.S.) review the data before a drug can be sold</li>
+              <li style={{marginBottom:6}}><strong>Approval</strong> — regulators (e.g., the FDA — Food and Drug Administration — in the U.S., or an SRA — Stringent Regulatory Authority — in other countries) review the data before a drug can be sold</li>
             </ul>
             <p style={{fontSize:14,color:'var(--text-muted)',lineHeight:1.7}}>The average timeline from discovery to approval is 10–15 years and can cost $1–2 billion. This is not unique to male contraceptives — it is the standard timeline for any new drug.</p>
           </div>
@@ -575,31 +575,26 @@ const MODULES = [
     slides: [
       {
         headline: "What Exists for Men Today",
-        body: "As covered in Module 1, men currently have three widely used contraceptive options: condoms, vasectomy, and withdrawal. Condoms are barrier methods — about 85% effective with typical use, up to 98% with consistent, correct use — and they also protect against STIs. Vasectomy is a surgical procedure that is highly effective and intended to be permanent, though reversal is possible with declining success over time. Withdrawal is more effective than often assumed — about 78% with typical use — but provides no protection against STIs. None of these meets all needs. That gap reflects decades of underinvestment in male reproductive health — not a biological impossibility.",
-        callout: { label:"Quick Reminder", text:"Three options for men (condoms, vasectomy, withdrawal) vs. 10+ for women. That gap reflects decades of underinvestment — not a biological impossibility or lack of scientific targets." },
+        body: "As covered in Module 1, men currently have two widely used contraceptive options: condoms and vasectomy. Condoms are barrier methods — about 85% effective with typical use, up to 98% with consistent, correct use — and they also protect against STIs (Sexually Transmitted Infections). Vasectomy is a surgical procedure that is highly effective and intended to be permanent, though reversal is possible with declining success over time. Neither of these meets all needs. That gap reflects decades of underinvestment in male reproductive health — not a biological impossibility.",
+        callout: { label:"Quick Reminder", text:"Two options for men (condoms and vasectomy) vs. 10+ for women. That gap reflects decades of underinvestment — not a biological impossibility or lack of scientific targets." },
         visual: (
           <svg viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',maxWidth:420}}>
-            <rect x="10" y="15" width="120" height="90" rx="12" fill="#002D72"/>
-            <text x="70" y="43" textAnchor="middle" fill="white" fontSize="13" fontFamily="DM Sans,sans-serif" fontWeight="700">Condoms</text>
-            <text x="70" y="58" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="9" fontFamily="DM Sans,sans-serif">85–98% effective</text>
-            <text x="70" y="71" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="9" fontFamily="DM Sans,sans-serif">✓ Protects against STIs</text>
-            <text x="70" y="84" textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="DM Sans,sans-serif">Barrier / non-hormonal</text>
-            <rect x="150" y="15" width="120" height="90" rx="12" fill="#D86018"/>
-            <text x="210" y="43" textAnchor="middle" fill="white" fontSize="13" fontFamily="DM Sans,sans-serif" fontWeight="700">Vasectomy</text>
-            <text x="210" y="58" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="9" fontFamily="DM Sans,sans-serif">&gt;99% effective</text>
-            <text x="210" y="71" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="9" fontFamily="DM Sans,sans-serif">⚠ Intended as permanent</text>
-            <text x="210" y="84" textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="DM Sans,sans-serif">Surgical / non-hormonal</text>
-            <rect x="290" y="15" width="120" height="90" rx="12" fill="#5a6475"/>
-            <text x="350" y="43" textAnchor="middle" fill="white" fontSize="13" fontFamily="DM Sans,sans-serif" fontWeight="700">Withdrawal</text>
-            <text x="350" y="58" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="9" fontFamily="DM Sans,sans-serif">~78% typical use</text>
-            <text x="350" y="71" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="9" fontFamily="DM Sans,sans-serif">No STI protection</text>
-            <text x="350" y="84" textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="DM Sans,sans-serif">Behavioral / no device</text>
+            <rect x="60" y="15" width="130" height="90" rx="12" fill="#002D72"/>
+            <text x="125" y="43" textAnchor="middle" fill="white" fontSize="13" fontFamily="DM Sans,sans-serif" fontWeight="700">Condoms</text>
+            <text x="125" y="58" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="9" fontFamily="DM Sans,sans-serif">85–98% effective</text>
+            <text x="125" y="71" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="9" fontFamily="DM Sans,sans-serif">✓ Protects against STIs</text>
+            <text x="125" y="84" textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="DM Sans,sans-serif">Barrier / non-hormonal</text>
+            <rect x="230" y="15" width="130" height="90" rx="12" fill="#D86018"/>
+            <text x="295" y="43" textAnchor="middle" fill="white" fontSize="13" fontFamily="DM Sans,sans-serif" fontWeight="700">Vasectomy</text>
+            <text x="295" y="58" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="9" fontFamily="DM Sans,sans-serif">&gt;99% effective</text>
+            <text x="295" y="71" textAnchor="middle" fill="rgba(255,255,255,.85)" fontSize="9" fontFamily="DM Sans,sans-serif">⚠ Intended as permanent</text>
+            <text x="295" y="84" textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="DM Sans,sans-serif">Surgical / non-hormonal</text>
           </svg>
         )
       },
       {
         headline: "The Hormonal Approach",
-        body: "Hormonal male contraceptives work by using hormones to reduce brain signals that drive sperm production — the same general principle underlying many female hormonal methods. In clinical trials, scientists have gotten sperm counts down to near zero in over 90% of men — a significant achievement. NES/T, the current front-runner in Phase 2b, is a daily topical gel applied to the shoulders; men in trials have generally tolerated it well. It's worth noting that MCI funds non-hormonal research, but we actively support the development of hormonal methods too — hormonal contraceptives have worked effectively for many people for decades, and the goal is more options for everyone.",
+        body: "Hormonal male contraceptives work by using hormones to reduce brain signals that drive sperm production — the same general principle underlying many female hormonal methods. In clinical trials, scientists have gotten sperm counts down to near zero in over 90% of men — a significant achievement. NES/T (nestorone/testosterone), the current front-runner in Phase 2b, is a daily topical gel applied to the shoulders; men in trials have generally tolerated it well. It's worth noting that MCI funds non-hormonal research, but we actively support the development of hormonal methods too — hormonal contraceptives have worked effectively for many people for decades, and the goal is more options for everyone.",
         callout: { label:"MCI Funding Focus", text:"MCI funds non-hormonal research — not because hormonal methods are problematic, but because non-hormonal approaches are the gap the field needs to fill. Hormonal methods like NES/T have shown strong results in trials." },
         visual: (
           <div style={{textAlign:'center'}}>
@@ -672,7 +667,7 @@ const MODULES = [
               <li style={{marginBottom:4}}><strong>ADAM &amp; Plan A</strong> — reversible hydrogels injected into the vas deferens by a provider. Non-hormonal, non-systemic. Designed to be cleared and reversed.</li>
               <li style={{marginBottom:4}}><strong>YCT-529</strong> — daily non-hormonal pill targeting a retinoic acid receptor. Well tolerated in early trials.</li>
               <li style={{marginBottom:4}}><strong>Consilum</strong> — daily pill repurposed from a prostate treatment.</li>
-              <li><strong>NLS-133</strong> — on-demand pill taken ~1–2 hours before sex; two repurposed drugs combined.</li>
+              <li><strong>NLS-133</strong> — on-demand pill taken ~1–2 hours before sex; two repurposed drugs combined. <em>On-demand</em> means taken close to the time of intercourse rather than on a daily schedule.</li>
             </ul>
             <p style={{fontSize:12,fontWeight:700,color:'#5a6475',margin:'4px 0 4px 0'}}>Phase 1 (early human safety trials)</p>
             <ul style={{fontSize:13,color:'#333',lineHeight:1.7,paddingLeft:20,marginBottom:8}}>
@@ -789,7 +784,7 @@ const MODULES = [
             <div className="qa-item"><div className="qa-q">How will men get the methods?</div><div className="qa-a">It depends on the method. Pills and gels would likely be available through pharmacies with a prescription, similar to how women access hormonal contraceptives. Device-based methods (like vas-occlusive gels) would be administered in a clinical setting. Global access and affordability are active priorities in development strategy.</div></div>
             <div className="qa-item"><div className="qa-q">What about for queer and trans people?</div><div className="qa-a">Male contraceptive research focuses on men — meaning anyone who produces sperm — regardless of gender identity or sexual orientation. The field is increasingly working to use inclusive language and design studies that reflect diverse populations. Whether a method is right for someone depends on their individual body and goals — not their gender identity.</div></div>
             <div className="qa-item"><div className="qa-q">What if a woman wants to continue to take her own methods?</div><div className="qa-a">That's entirely her choice — and male contraception is about adding options, not replacing anyone's. Couples can use both methods simultaneously for extra peace of mind, the same way some currently use condoms alongside another method. More options means more flexibility for everyone.</div></div>
-            <div className="qa-item"><div className="qa-q">Will it be covered by insurance?</div><div className="qa-a">Coverage decisions happen after approval. In the U.S., the ACA requires coverage of FDA-approved contraceptives — so approved male methods would be expected to qualify. MCI advocates for equitable coverage as part of its policy work. Coverage in other countries will depend on their healthcare systems.</div></div>
+            <div className="qa-item"><div className="qa-q">Will it be covered by insurance?</div><div className="qa-a">Coverage decisions happen after approval. In the U.S., the ACA (Affordable Care Act) requires coverage of FDA-approved contraceptives — so approved male methods would be expected to qualify. MCI advocates for equitable coverage as part of its policy work. Coverage in other countries will depend on their healthcare systems.</div></div>
             <div className="qa-item"><div className="qa-q">How safe are they?</div><div className="qa-a">Safety is the highest bar in contraceptive development — these are healthy people, not patients treating disease, so regulators require exceptionally high safety standards. All candidates in human trials have passed rigorous preclinical testing. Trial data is actively monitored and published.</div></div>
             <div className="qa-item"><div className="qa-q">What are the side effects?</div><div className="qa-a">It depends on the method and the individual. Some methods in development may cause side effects such as mood changes, acne, or libido shifts. Others may have minimal systemic effects depending on how they work. All candidates are held to high safety standards in trials, and ongoing data is published as it becomes available.</div></div>
             <div className="qa-item"><div className="qa-q">Why would a man take responsibility for this?</div><div className="qa-a">Consumer data shows 8 in 10 men already want to prevent pregnancy. The barrier is the absence of options, not willingness.</div></div>
@@ -848,7 +843,7 @@ const MODULES = [
               <li>Don't say vasectomy is "easily reversible" — reversal success rates decline significantly over time.</li>
               <li>Don't predict a specific year when a male method will be available — you cannot know that, and it damages credibility when timelines shift.</li>
               <li>Don't say prior trials "failed" — setbacks are part of drug development, not proof the science doesn't work.</li>
-              <li>Don't attribute statistics to NIH or USAID without verified sourcing — stick to MCI's own consumer research and published literature.</li>
+              <li>Don't attribute statistics to NIH (National Institutes of Health) or USAID (U.S. Agency for International Development) without verified sourcing — stick to MCI's own consumer research and published literature.</li>
               <li>Don't make it divisive — avoid framing this as an issue for one political party or ideology. Stay on science, equity, and choice.</li>
               <li>When in doubt about any fact — reach out to MCI staff before repeating it publicly.</li>
             </ul>
